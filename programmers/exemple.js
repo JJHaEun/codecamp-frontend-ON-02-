@@ -6,7 +6,9 @@ const fruits = ["사과", "바나나", "파인애플"];
 // 004. 배열의 기능
 const newFruits = [];
 
-newFruit.push(fruits - 1);
+let nFruits = fruits[fruits.length - 1];
+
+newFruit.push(nFruits);
 
 //배열의 길이가 길면 인덱스를 구하기 어렵기에 인덱스는 0부터시작,
 //길이는 1부터 시작하므로 전체길이에서 1을 뺀인덱스를 구하면
@@ -36,6 +38,9 @@ newStu = students.slice(0, 2);
 const student = {};
 student.name = "철수";
 
+//student['name'] ='철수';
+//const student = {name : '철수'}
+
 // 009. 객체의 키&값 추가
 const student = {
   name: "철수",
@@ -47,3 +52,4 @@ const school = {
   teacher: "다람이",
 };
 student.school = school;
+//여기서의 .school은 키이름. 다른 이름으로 해도 무방하나 여기서는 결과와 같게  만들어야하기에 school사용

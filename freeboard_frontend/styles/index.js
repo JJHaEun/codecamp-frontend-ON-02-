@@ -36,9 +36,14 @@ export const Div2 = styled.div`
   margin-right: 103px;
   margin-top: 80px;
 `;
-export const Input3 = styled.input`
+// export const Input3Div = styled.div`
+//   text-align: initial;
+//   padding-top: 0px;
+// `;
+export const Text = styled.textarea`
   width: 996px;
   height: 480px;
+  resize: none;
   border: 1px solid #bdbdbd;
 `;
 export const Input4 = styled.input`
@@ -48,11 +53,14 @@ export const Input4 = styled.input`
   margin-bottom: 16px;
   border: 1px solid #bdbdbd;
 `;
-export const Images = styled.img`
+export const PottoButton = styled.button`
   width: 78px;
   height: 78px;
   margin-right: 15px;
   margin-top: 20px;
+  border: none;
+  background-color: #bdbdbd;
+  cursor: pointer;
 `;
 export const Div3 = styled.div`
   width: 282px;
@@ -76,6 +84,7 @@ export const Bt = styled.button`
   height: 52px;
   background: #ffd600;
   margin-bottom: 100px;
+  cursor: pointer;
 `;
 export const Div4 = styled.div`
   display: flex;
@@ -86,4 +95,9 @@ export const Bt1 = styled.button`
   height: 52px;
   color: #ffffff;
   background: black;
+  cursor: pointer;
+`;
+export const Empty = styled.div`
+  color: red;
+  font-size: 10px;
 `;
