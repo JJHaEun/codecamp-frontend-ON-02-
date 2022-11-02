@@ -24,56 +24,56 @@ export default function freeboardWrite() {
   const [pw, setPw] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [add, setAdd] = useState("");
 
   const [nameEmpty, setNameEmpty] = useState("");
   const [pwEmpty, setPwEmpty] = useState("");
   const [titleEmpty, setTitleEmpty] = useState("");
   const [contentEmpty, setContentEmpty] = useState("");
-  const [addEmpty, setAddEmpty] = useState("");
 
   function onChangeName(event) {
     setName(event.target.value);
+    if (event.target.value !== "") {
+      setNameEmpty("");
+    }
   }
   function onChangePw(event) {
     setPw(event.target.value);
+    if (event.target.value !== "") {
+      setPwEmpty("");
+    }
   }
   function onChangeTitle(event) {
     setTitle(event.target.value);
+    if (event.target.value !== "") {
+      setTitleEmpty("");
+    }
   }
   function onChangeContent(event) {
     setContent(event.target.value);
-  }
-  function onChangeAdd(event) {
-    setAdd(event.target.value);
-  }
-  function onClickSignIn() {
-    if (name === "") {
-      setNameEmpty("작성자를 입력해 주세요");
-    } else {
-      setNameEmpty("");
-    }
-    if (pw === "") {
-      setPwEmpty("비밀번호를 입력해 주세요");
-    } else {
-      setPwEmpty("");
-    }
-    if (title === "") {
-      setTitleEmpty("제목을 입력해 주세요");
-    } else {
-      setTitleEmpty("");
-    }
-    if (content === "") {
-      setContentEmpty("내용을 입력해 주세요");
-    } else {
+    if (event.target.value !== "") {
       setContentEmpty("");
     }
-    if (add === "") {
-      setAddEmpty("주소를 확인해주세요");
-    } else {
-      setAddEmpty("");
-    }
   }
+
+  function onClickSignIn() {
+    if (!name) {
+      setNameEmpty("작성자를 입력해 주세요");
+    }
+    if (!pw) {
+      setPwEmpty("비밀번호를 입력해 주세요");
+    }
+    if (!title) {
+      setTitleEmpty("제목을 입력해 주세요");
+    }
+    if (!content) {
+      setContentEmpty("내용을 입력해 주세요");
+    }
+
+    if (name & pw & title & content) {
+      // 메시지 알림 이전 백엔드에 API요청하기
+      alert("게시물이 등록되었습니다");
+    }
+  } //내용들이 다 채워지고 버튼을 누르면 메세지가 출력이 되어야하는데 출력되지 않음.
   return (
     <MainDiv>
       <H1>게시물 등록</H1>
@@ -117,11 +117,10 @@ export default function freeboardWrite() {
       </Div2>
       <Div2>
         <div>주소</div>
-        <Empty>{addEmpty}</Empty>
         <Input4 type="text" placeholder="07250" />
         <Bt1>우편번호 검색</Bt1>
         <Input2 type="text" />
-        <Input2 type="text" onChange={onChangeAdd} />
+        <Input2 type="text" />
       </Div2>
       <Div2>
         <div>유튜브</div>

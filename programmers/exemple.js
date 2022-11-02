@@ -1,6 +1,6 @@
 const limit = 100;
 const answer = Math.floor(limit / 2);
-
+// 11/01
 // 003. 배열의 선언과 할당
 const fruits = ["사과", "바나나", "파인애플"];
 // 004. 배열의 기능
@@ -53,3 +53,93 @@ const school = {
 };
 student.school = school;
 //여기서의 .school은 키이름. 다른 이름으로 해도 무방하나 여기서는 결과와 같게  만들어야하기에 school사용
+
+// 11/02
+// 018. 조건문 연습
+function boolean(input1, input2) {
+  // if (input1 === true || input2 === true) {
+  //  return true;
+  // } else {
+  //  return false;
+  // }
+  if (input1 || input2) {
+    return "true";
+  } else if (!input1 && !input2) {
+    return "false";
+  }
+}
+// 019. 홀짝
+
+function evenOdd(num) {
+  if (num === 0) {
+    return "Zero"; //예외처리를 먼저 할 것
+  } else if (num % 2 === 0) {
+    return "Even";
+    // } else if(num%1 !==0){
+    //   return "Odd"
+    // }
+  } else {
+    return "Odd";
+  }
+}
+
+// 020. 온도
+
+function temperature(num) {
+  if (num >= 24) {
+    return "조금 덥습니다";
+  } else if (num >= 19) {
+    return "날씨가 좋네요";
+  } else if (num <= 18) {
+    return "조금 춥네요";
+  }
+}
+
+// 021. 며칠
+function days(month) {
+  if (
+    month === 1 ||
+    month === 3 ||
+    month === 5 ||
+    month === 7 ||
+    month === 8 ||
+    month === 10 ||
+    month === 12
+  ) {
+    return 31;
+  } else if (month === 4 || month === 6 || month === 9 || month === 11) {
+    return 30;
+  } else {
+    return 28;
+  }
+}
+//객체로 푸는 법
+const monthList = {
+  1: 31,
+  2: 28,
+  3: 31,
+  4: 30,
+  5: 31,
+  6: 30,
+  7: 31,
+  8: 31,
+  9: 30,
+  10: 31,
+  11: 30,
+  12: 31,
+};
+function days(month) {
+  return monthList[month];
+}
+// 1월 : 31일
+// 2월 : 28일
+// 3월 : 31일
+// 4월 : 30일
+// 5월 : 31일
+// 6월 : 30일
+// 7월 : 31일
+// 8월 : 31일
+// 9월 : 30일
+// 10월 : 31일
+// 11월 : 30일
+// 12월 : 31일
