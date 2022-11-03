@@ -143,3 +143,75 @@ function days(month) {
 // 10월 : 31일
 // 11월 : 30일
 // 12월 : 31일
+
+//11/03
+
+//023. 숫자 더하기
+
+function sum(num) {
+  let count = 0;
+  for (let i = 1; i <= num; i++) {
+    count += i;
+  }
+  return count;
+}
+//024. 특정 문자열 세기
+function countLetter(str) {
+  let count = 0;
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === "A" || str[i] === "a") {
+      count++;
+    }
+  }
+  return count;
+}
+//또는 전부 소문자로 바꾸어 소문자 a만 찾을수 있게 하는 방법
+function countLetter(str) {
+  let count = 0;
+  str = str.toLowerCase();
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === "a") {
+      count++;
+    }
+  }
+  return count;
+}
+
+//025. 문자열 삽입** 다시풀이해보기
+function makeNumber(num) {
+  let str = "";
+  for (let i = 1; i <= num; i++) {
+    str += i;
+
+    if (i !== num) {
+      str += "-"; //i의값이 num과 동일하지 않을경우에만 "-"추가
+    }
+  }
+  return str;
+}
+
+//026. 홀수 문자열
+
+function makeOdd(num) {
+  let str = "";
+  for (let i = 1; i <= num; i++) {
+    if (i % 2 !== 0) {
+      str += i;
+    }
+  }
+  return str;
+}
+
+//027. 가장 큰 수 찾기**다시
+function bigNum(str) {
+  // console.log(Math.max(1,1,3,5,8,9,11))//Math.max사용
+  // console.log(Math.max(...[1,1,3,5,8,9,11]))배열로 Math.max를 하면 NaN값이 나옴. 따라서 스프레드 연산자(...) 사용해야함
+  let biggest = 0;
+  //   let biggest = Number(str[0])//초기에 인덱스 값으로 넣어주는 법
+  for (let i = 0; i <= str.length; i++) {
+    if (Number(str[i]) > biggest) {
+      biggest = Number(str[i]);
+    }
+  }
+  return biggest;
+}

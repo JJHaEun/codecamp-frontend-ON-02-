@@ -2,9 +2,9 @@ import { useState } from "react";
 
 export default function Quiz0201() {
   const [clickBt, setClickBt] = useState("안녕하세요");
-  function onclickBt(event) {
+  function onclickBt() {
     // document.getElementById("bt").innerText = "반갑습니다";
-    setClickBt((event.target.value = "반갑습니다"));
+    setClickBt("반갑습니다");
   }
   return (
     // <>

@@ -1,12 +1,15 @@
+import { gql, useMutation } from "@apollo/client";
 import { useState } from "react";
 
 import {
   H1,
   Div,
   Input,
+  Name_Pw,
   MainDiv,
   Input2,
   Div2,
+  Private,
   Text,
   Input4,
   PottoButton,
@@ -20,44 +23,42 @@ import {
 } from "../../styles/index";
 
 export default function freeboardWrite() {
-  const [name, setName] = useState("");
-  const [pw, setPw] = useState("");
+  const CREATE_BOARD = gql`
+    mutation createBoard($createBoardInput: CreateBoardInput!) {
+      createBoard(createBoardInput: $createBoardInput) {
+        _id
+        writer
+        title
+        contents
+      }
+    }
+  `;
+  const [writer, setWriter] = useState("");
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [contents, setContents] = useState("");
+  const [pw, setPw] = useState("");
 
-  const [nameEmpty, setNameEmpty] = useState("");
+  const [createBoard] = useMutation(CREATE_BOARD);
+
+  const [writerEmpty, setWriterEmpty] = useState("");
   const [pwEmpty, setPwEmpty] = useState("");
   const [titleEmpty, setTitleEmpty] = useState("");
-  const [contentEmpty, setContentEmpty] = useState("");
+  const [contentsEmpty, setContentsEmpty] = useState("");
 
-  function onChangeName(event) {
-    setName(event.target.value);
-    if (event.target.value !== "") {
-      setNameEmpty("");
-    }
-  }
-  function onChangePw(event) {
-    setPw(event.target.value);
-    if (event.target.value !== "") {
-      setPwEmpty("");
-    }
-  }
-  function onChangeTitle(event) {
-    setTitle(event.target.value);
-    if (event.target.value !== "") {
-      setTitleEmpty("");
-    }
-  }
-  function onChangeContent(event) {
-    setContent(event.target.value);
-    if (event.target.value !== "") {
-      setContentEmpty("");
-    }
-  }
+  const onClickSignIn = async () => {
+    const result = await createBoard({
+      variables: {
+        createBoardInput: {
+          writer: writer,
+          password: pw,
+          title: title,
+          contents: contents,
+        },
+      },
+    });
 
-  function onClickSignIn() {
-    if (!name) {
-      setNameEmpty("작성자를 입력해 주세요");
+    if (!writer) {
+      setWriterEmpty("작성자를 입력해 주세요");
     }
     if (!pw) {
       setPwEmpty("비밀번호를 입력해 주세요");
@@ -65,31 +66,58 @@ export default function freeboardWrite() {
     if (!title) {
       setTitleEmpty("제목을 입력해 주세요");
     }
-    if (!content) {
-      setContentEmpty("내용을 입력해 주세요");
+    if (!contents) {
+      setContentsEmpty("내용을 입력해 주세요");
     }
 
-    if (name & pw & title & content) {
+    if (writer && pw && title && contents) {
       // 메시지 알림 이전 백엔드에 API요청하기
-      alert("게시물이 등록되었습니다");
+      console.log(result);
+
+      alert("게시글이 등록되었습니다");
     }
-  } //내용들이 다 채워지고 버튼을 누르면 메세지가 출력이 되어야하는데 출력되지 않음.
+  };
+  const onChangeWriter = (event) => {
+    setWriter(event.target.value);
+    if (event.target.value !== "") {
+      setWriterEmpty("");
+    }
+  };
+  const onChangePw = (event) => {
+    setPw(event.target.value);
+    if (event.target.value !== "") {
+      setPwEmpty("");
+    }
+  };
+  const onChangeTitle = (event) => {
+    setTitle(event.target.value);
+    if (event.target.value !== "") {
+      setTitleEmpty("");
+    }
+  };
+  const onChangeContents = (event) => {
+    setContents(event.target.value);
+    if (event.target.value !== "") {
+      setContentsEmpty("");
+    }
+  };
+
   return (
     <MainDiv>
       <H1>게시물 등록</H1>
       <Div>
         <div>
-          <div>작성자</div>
-          <Empty>{nameEmpty}</Empty>
+          <Name_Pw>작성자</Name_Pw>
+          <Empty>{writerEmpty}</Empty>
           <Input
             type="text"
             placeholder="이름을 적어주세요"
-            onChange={onChangeName}
+            onChange={onChangeWriter}
           />
         </div>
 
         <div>
-          <div>비밀번호</div>
+          <Name_Pw>비밀번호</Name_Pw>
           <Empty>{pwEmpty}</Empty>
           <Input
             type="text"
@@ -109,14 +137,14 @@ export default function freeboardWrite() {
       </Div2>
       <Div2>
         <div>내용</div>
-        <Empty>{contentEmpty}</Empty>
+        <Empty>{contentsEmpty}</Empty>
         <Text
           placeholder="내용을 작성해주세요."
-          onChange={onChangeContent}
+          onChange={onChangeContents}
         ></Text>
       </Div2>
       <Div2>
-        <div>주소</div>
+        <Private>주소</Private>
         <Input4 type="text" placeholder="07250" />
         <Bt1>우편번호 검색</Bt1>
         <Input2 type="text" />

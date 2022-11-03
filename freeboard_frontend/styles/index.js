@@ -1,9 +1,11 @@
 import styled from "@emotion/styled";
 
 export const MainDiv = styled.div`
+  box-sizing: border-box;
   width: 1200px;
   display: flex;
   flex-direction: column;
+  border: 3px solid gray;
 `;
 export const H1 = styled.h1`
   display: flex;
@@ -13,21 +15,27 @@ export const H1 = styled.h1`
 `;
 export const Div = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   margin-left: 101px;
   margin-right: 103px;
   margin-top: 33px;
+`;
+export const Name_Pw = styled.div`
+  margin-left: 15px;
+  margin-bottom: 5px;
 `;
 export const Input = styled.input`
   width: 486px;
   height: 52px;
   margin-right: 10px;
+  margin-left: 15px;
   border: 1px solid #bdbdbd;
 `;
 
 export const Input2 = styled.input`
   width: 996px;
   height: 52px;
+  margin-top: 5px;
   margin-bottom: 16px;
   border: 1px solid #bdbdbd;
 `;
@@ -40,11 +48,16 @@ export const Div2 = styled.div`
 //   text-align: initial;
 //   padding-top: 0px;
 // `;
+
+export const Private = styled.div`
+  margin-bottom: 5px;
+`;
 export const Text = styled.textarea`
   width: 996px;
   height: 480px;
   resize: none;
   border: 1px solid #bdbdbd;
+  margin-top: 5px;
 `;
 export const Input4 = styled.input`
   width: 77px;
