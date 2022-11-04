@@ -1,11 +1,13 @@
 import styled from "@emotion/styled";
 
 export const MainDiv = styled.div`
-  box-sizing: border-box;
+  position: absolute;
   width: 1200px;
+
+  background: #ffffff;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
-  border: 3px solid gray;
 `;
 export const H1 = styled.h1`
   display: flex;
@@ -113,4 +115,9 @@ export const Bt1 = styled.button`
 export const Empty = styled.div`
   color: red;
   font-size: 10px;
+`;
+export const Empty1 = styled.div`
+  color: red;
+  font-size: 10px;
+  margin-left: 15px;
 `;

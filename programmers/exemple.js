@@ -204,7 +204,7 @@ function makeOdd(num) {
 
 //027. 가장 큰 수 찾기**다시
 function bigNum(str) {
-  // console.log(Math.max(1,1,3,5,8,9,11))//Math.max사용
+  // console.log(Math.max(1,1,3,5,8,9,11))//Math.max사용하여 구하는 방법
   // console.log(Math.max(...[1,1,3,5,8,9,11]))배열로 Math.max를 하면 NaN값이 나옴. 따라서 스프레드 연산자(...) 사용해야함
   let biggest = 0;
   //   let biggest = Number(str[0])//초기에 인덱스 값으로 넣어주는 법
@@ -215,3 +215,129 @@ function bigNum(str) {
   }
   return biggest;
 }
+
+//11/04
+
+//41. 조건문 실전 적용 - 점수에 따른 등급
+function grade(score) {
+  if (score < 0 || score > 100) {
+    return "잘못된 점수입니다";
+  } else if (score >= 90) {
+    return "A";
+  } else if (score >= 80) {
+    return "B";
+  } else if (score >= 70) {
+    return "C";
+  } else if (score >= 60) {
+    return "D";
+  } else {
+    return "F";
+  }
+}
+function grade(score) {
+  //return 이면 종료되기에 꼭 else if 사용하지 않아도 됨.
+  if (score < 0 || score > 100) {
+    return "잘못된 점수입니다";
+  }
+  let result = "";
+  if (score >= 90) {
+    result = "A";
+  } else if (score >= 80) {
+    result = "B";
+  } else if (score >= 70) {
+    result = "C";
+  } else if (score >= 60) {
+    result = "D";
+  } else {
+    result = "F";
+  }
+  return result;
+}
+
+//043. 마이페이지***다시... 어렵...
+const myShopping = [
+  { category: "과일", price: 12000 },
+  { category: "의류", price: 10000 },
+  { category: "의류", price: 20000 },
+  { category: "장난감", price: 9000 },
+  { category: "과일", price: 5000 },
+  { category: "의류", price: 10000 },
+  { category: "과일", price: 8000 },
+  { category: "의류", price: 7000 },
+  { category: "장난감", price: 5000 },
+  { category: "의류", price: 10000 },
+];
+
+//"0~2"  ⇒ Bronze
+
+//"3~4" ⇒ Silver
+
+//5이상 ⇒ Gold
+function myPage() {
+  let count = 0; //구매한횟수 담음
+  let amount = 0; //구매한 총 금액
+  let grade = ""; //등급
+
+  for (let i = 0; i < myShopping.length; i++) {
+    if (myShopping[i].category === "의류") {
+      count++;
+      amount += myShopping[i].price;
+    }
+  }
+
+  if (count >= 5) {
+    grade = "Gold";
+  } else if (count >= 3) {
+    grade = "Sliver";
+  } else if (count >= 0) {
+    grade = "Bronze";
+  }
+
+  // return "의류를 구매한 횟수는 총 "+count+"회 금액은 "+amount+"원이며 등급은 "+grade+"입니다"
+  return `의류를 구매한 횟수응 총 ${count}회 금액은 ${amount}원이며 등급은 ${grade}입니다`;
+}
+myPage();
+
+//다른 것들도 받아오는 법
+const myShopping = [
+  { category: "과일", price: 12000 },
+  { category: "의류", price: 10000 },
+  { category: "의류", price: 20000 },
+  { category: "장난감", price: 9000 },
+  { category: "과일", price: 5000 },
+  { category: "의류", price: 10000 },
+  { category: "과일", price: 8000 },
+  { category: "의류", price: 7000 },
+  { category: "장난감", price: 5000 },
+  { category: "의류", price: 10000 },
+];
+
+//"0~2"  ⇒ Bronze
+
+//"3~4" ⇒ Silver
+
+//5이상 ⇒ Gold
+function myPage(category) {
+  let count = 0; //구매한횟수 담음
+  let amount = 0; //구매한 총 금액
+  let grade = ""; //등급
+
+  for (let i = 0; i < myShopping.length; i++) {
+    if (myShopping[i].category === category) {
+      count++;
+      amount += myShopping[i].price;
+    }
+  }
+
+  if (count >= 5) {
+    grade = "Gold";
+  } else if (count >= 3) {
+    grade = "Sliver";
+  } else if (count >= 0) {
+    grade = "Bronze";
+  }
+
+  // return "의류를 구매한 횟수는 총 "+count+"회 금액은 "+amount+"원이며 등급은 "+grade+"입니다"
+  return `${category}을 구매한 횟수응 총 ${count}회 금액은 ${amount}원이며 등급은 ${grade}입니다`;
+}
+myPage("장난감");

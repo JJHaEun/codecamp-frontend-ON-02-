@@ -1,6 +1,6 @@
 import { gql, useMutation } from "@apollo/client";
 import { useState } from "react";
-
+// import { useRouter } from "react";
 import {
   H1,
   Div,
@@ -19,62 +19,67 @@ import {
   Bt,
   Div4,
   Bt1,
+  Empty1,
   Empty,
 } from "../../styles/index";
 
 export default function freeboardWrite() {
-  const CREATE_BOARD = gql`
-    mutation createBoard($createBoardInput: CreateBoardInput!) {
-      createBoard(createBoardInput: $createBoardInput) {
-        _id
-        writer
-        title
-        contents
-      }
-    }
-  `;
+  // const router = useRouter();
+
   const [writer, setWriter] = useState("");
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
   const [pw, setPw] = useState("");
-
-  const [createBoard] = useMutation(CREATE_BOARD);
 
   const [writerEmpty, setWriterEmpty] = useState("");
   const [pwEmpty, setPwEmpty] = useState("");
   const [titleEmpty, setTitleEmpty] = useState("");
   const [contentsEmpty, setContentsEmpty] = useState("");
 
+  const CREATE_BOARD = gql`
+    mutation createBoard($createBoardInput: CreateBoardInput!) {
+      createBoard(createBoardInput: $createBoardInput) {
+        writer
+        _id
+        title
+        contents
+      }
+    }
+  `;
+
+  const [createBoard] = useMutation(CREATE_BOARD);
+
   const onClickSignIn = async () => {
-    const result = await createBoard({
-      variables: {
-        createBoardInput: {
-          writer: writer,
-          password: pw,
-          title: title,
-          contents: contents,
-        },
-      },
-    });
-
-    if (!writer) {
-      setWriterEmpty("작성자를 입력해 주세요");
-    }
-    if (!pw) {
-      setPwEmpty("비밀번호를 입력해 주세요");
-    }
-    if (!title) {
-      setTitleEmpty("제목을 입력해 주세요");
-    }
-    if (!contents) {
-      setContentsEmpty("내용을 입력해 주세요");
-    }
-
-    if (writer && pw && title && contents) {
-      // 메시지 알림 이전 백엔드에 API요청하기
-      console.log(result);
-
-      alert("게시글이 등록되었습니다");
+    try {
+      if (!writer) {
+        setWriterEmpty("작성자를 입력해 주세요");
+      }
+      if (!pw) {
+        setPwEmpty("비밀번호를 입력해 주세요");
+      }
+      if (!title) {
+        setTitleEmpty("제목을 입력해 주세요");
+      }
+      if (!contents) {
+        setContentsEmpty("내용을 입력해 주세요");
+      }
+      if (writer && pw && title && contents) {
+        const result = await createBoard({
+          variables: {
+            createBoardInput: {
+              password: String(pw),
+              writer,
+              title,
+              contents,
+            },
+          },
+        });
+        console.log(result);
+        alert("게시물이 성공적으로 등록되었습니다.");
+        router.push(`/01/boards/${result.data.createBoard._id}`);
+      }
+    } catch (error) {
+      alert(error.message);
     }
   };
   const onChangeWriter = (event) => {
@@ -101,14 +106,13 @@ export default function freeboardWrite() {
       setContentsEmpty("");
     }
   };
-
   return (
     <MainDiv>
       <H1>게시물 등록</H1>
       <Div>
         <div>
           <Name_Pw>작성자</Name_Pw>
-          <Empty>{writerEmpty}</Empty>
+          <Empty1>{writerEmpty}</Empty1>
           <Input
             type="text"
             placeholder="이름을 적어주세요"
@@ -118,7 +122,7 @@ export default function freeboardWrite() {
 
         <div>
           <Name_Pw>비밀번호</Name_Pw>
-          <Empty>{pwEmpty}</Empty>
+          <Empty1>{pwEmpty}</Empty1>
           <Input
             type="text"
             placeholder="비밀번호를 작성해주세요."
