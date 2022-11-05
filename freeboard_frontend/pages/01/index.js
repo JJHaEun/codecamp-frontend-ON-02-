@@ -1,6 +1,6 @@
 import { gql, useMutation } from "@apollo/client";
 import { useState } from "react";
-// import { useRouter } from "react";
+import { useRouter } from "next/router";
 import {
   H1,
   Div,
@@ -24,8 +24,7 @@ import {
 } from "../../styles/index";
 
 export default function freeboardWrite() {
-  // const router = useRouter();
-
+  const router = useRouter();
   const [writer, setWriter] = useState("");
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
@@ -43,6 +42,7 @@ export default function freeboardWrite() {
         _id
         title
         contents
+        images
       }
     }
   `;
