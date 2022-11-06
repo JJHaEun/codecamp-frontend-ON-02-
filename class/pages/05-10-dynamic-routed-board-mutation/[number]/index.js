@@ -16,7 +16,7 @@ export default function DynamicRoutedPage() {
   const { data } = useQuery(FETCH_BOARD, {
     //실행할때
     variables: {
-      number: Number(router.query.number),
+      number: Number(router.query.number), //위 쿼리문 변수 이용해 받을 것.
     },
   });
   console.log(data);

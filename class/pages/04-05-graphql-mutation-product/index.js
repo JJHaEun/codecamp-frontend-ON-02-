@@ -1,21 +1,20 @@
 import { gql, useMutation } from "@apollo/client";
 import { useState } from "react";
-export default function GraphqlMutationPage() {
-  const CREATE_PRODUCT = gql`
-    mutation createProduct(
-      $seller: String
-      $createProductInput: CreateProductInput!
-    ) {
-      # 그래프큐엘 주석. 변수의 타입적는곳
-      createProduct(seller: $seller, createProductInput: $createProductInput) {
-        # 실제 우리가 전달할 변수 적는곳.
-        _id
-        number
-        message
-      }
+const CREATE_PRODUCT = gql`
+  mutation createProduct(
+    $seller: String
+    $createProductInput: CreateProductInput!
+  ) {
+    # 그래프큐엘 주석. 변수의 타입적는곳
+    createProduct(seller: $seller, createProductInput: $createProductInput) {
+      # 실제 우리가 전달할 변수 적는곳.
+      _id
+      number
+      message
     }
-  `;
-
+  }
+`;
+export default function GraphqlMutationPage() {
   const [나의함수] = useMutation(CREATE_PRODUCT);
   const onClickSubmit = async () => {
     //const writer = "qqq"// // 이함수에 있으면 현제스코프 적용

@@ -21,8 +21,22 @@ import {
   Bt1,
   Empty1,
   Empty,
-} from "../../styles/index";
+} from "../../styles/emotion";
 
+const CREATE_BOARD = gql`
+  mutation createBoard($createBoardInput: CreateBoardInput!) {
+    createBoard(createBoardInput: $createBoardInput) {
+      writer
+      _id
+      title
+      contents
+      likeCount
+      dislikeCount
+      youtubeUrl
+      images
+    }
+  }
+`;
 export default function freeboardWrite() {
   const router = useRouter();
   const [writer, setWriter] = useState("");
@@ -34,18 +48,6 @@ export default function freeboardWrite() {
   const [pwEmpty, setPwEmpty] = useState("");
   const [titleEmpty, setTitleEmpty] = useState("");
   const [contentsEmpty, setContentsEmpty] = useState("");
-
-  const CREATE_BOARD = gql`
-    mutation createBoard($createBoardInput: CreateBoardInput!) {
-      createBoard(createBoardInput: $createBoardInput) {
-        writer
-        _id
-        title
-        contents
-        images
-      }
-    }
-  `;
 
   const [createBoard] = useMutation(CREATE_BOARD);
 
@@ -74,7 +76,7 @@ export default function freeboardWrite() {
             },
           },
         });
-        console.log(result);
+
         alert("게시물이 성공적으로 등록되었습니다.");
         router.push(`/01/boards/${result.data.createBoard._id}`);
       }

@@ -1,23 +1,23 @@
 import { gql, useMutation } from "@apollo/client";
 import { useState } from "react";
+
+const CREATE_PRODUCT = gql`
+  mutation createProduct(
+    $seller: String
+    $createProductInput: CreateProductInput!
+  ) {
+    createProduct(seller: $seller, createProductInput: $createProductInput) {
+      _id
+      number
+      message
+    }
+  }
+`;
 export default function Graphql0402() {
   const [seller, setSeller] = useState("");
   const [name, setName] = useState("");
   const [detail, setDetail] = useState("");
   const [price, setPrice] = useState("");
-
-  const CREATE_PRODUCT = gql`
-    mutation createProduct(
-      $seller: String
-      $createProductInput: CreateProductInput!
-    ) {
-      createProduct(seller: $seller, createProductInput: $createProductInput) {
-        _id
-        number
-        message
-      }
-    }
-  `;
 
   const [createProduct] = useMutation(CREATE_PRODUCT);
 

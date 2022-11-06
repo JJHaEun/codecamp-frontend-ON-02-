@@ -2,22 +2,23 @@ import { gql, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
+const FETCH_PRODUCT = gql`
+  query fetchProduct($productId: ID) {
+    fetchProduct(productId: $productId) {
+      #받아올값
+      seller
+      name
+      detail
+      price
+    }
+  }
+`;
 export default function Dynamic05Board() {
   const [seller, setSeller] = useState("");
   const [name, setName] = useState("");
   const [detail, setDetail] = useState("");
   const [price, setPrice] = useState("");
-  const FETCH_PRODUCT = gql`
-    query fetchProduct($productId: ID) {
-      fetchProduct(productId: $productId) {
-        #받아올값
-        seller
-        name
-        detail
-        price
-      }
-    }
-  `;
+
   const router = useRouter();
 
   const { data } = useQuery(FETCH_PRODUCT, {

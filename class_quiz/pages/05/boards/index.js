@@ -2,24 +2,25 @@ import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
+const CREATE_PRODUCT = gql`
+  mutation createProduct(
+    $seller: String
+    $createProductInput: CreateProductInput!
+  ) {
+    createProduct(seller: $seller, createProductInput: $createProductInput) {
+      _id
+      number
+      message
+    }
+  }
+`;
 export default function Dynamic05() {
   const [seller, setSeller] = useState("");
   const [name, setName] = useState("");
   const [detail, setDetail] = useState("");
   const [price, setPrice] = useState("");
   const router = useRouter();
-  const CREATE_PRODUCT = gql`
-    mutation createProduct(
-      $seller: String
-      $createProductInput: CreateProductInput!
-    ) {
-      createProduct(seller: $seller, createProductInput: $createProductInput) {
-        _id
-        number
-        message
-      }
-    }
-  `;
+
   const [createProduct] = useMutation(CREATE_PRODUCT);
   const onClickButton = async () => {
     try {

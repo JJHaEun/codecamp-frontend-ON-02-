@@ -31,27 +31,29 @@ import {
   Content,
 } from "../../../../styles/routed-emotion";
 
-export default function freeboardWriteRouted() {
-  const FETCH_BOARD = gql`
-    query fetchBoard($boardId: ID!) {
-      fetchBoard(boardId: $boardId) {
-        writer
-        title
-        contents
-        likeCount
-        dislikeCount
-        createdAt
-      }
+const FETCH_BOARD = gql`
+  query fetchBoard($boardId: ID!) {
+    fetchBoard(boardId: $boardId) {
+      writer
+      title
+      contents
+      likeCount
+      dislikeCount
+      createdAt
+      images
+      youtubeUrl
     }
-  `;
+  }
+`;
+export default function freeboardWriteRouted() {
   const router = useRouter();
-  console.log(router);
+
   const { data } = useQuery(FETCH_BOARD, {
     variables: {
       boardId: router.query._id,
     },
   });
-  console.log(data);
+
   return (
     <Max>
       <MainBoard>
@@ -61,7 +63,7 @@ export default function freeboardWriteRouted() {
               <Image1 src="/profile.png"></Image1>
               <div>
                 <Writer>{data?.fetchBoard?.writer}</Writer>
-                <DateBox>Date:{data?.fetchBoard?.createdAt}</DateBox>
+                <DateBox>Date: {data?.fetchBoard?.createdAt}</DateBox>
               </div>
             </TopLeft>
 
