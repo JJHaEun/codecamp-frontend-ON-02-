@@ -341,3 +341,76 @@ function myPage(category) {
   return `${category}을 구매한 횟수응 총 ${count}회 금액은 ${amount}원이며 등급은 ${grade}입니다`;
 }
 myPage("장난감");
+
+//  프로그래머스 문제
+//11/07
+//문자열을 정수로 바꾸기
+function solution(s) {
+  var answer = parseInt(s);
+  return answer;
+}
+
+//다른풀이
+function solution(s) {
+  s = Number(s);
+  return s;
+}
+
+//같은 숫자는 싫어
+function solution(arr) {
+  const answer = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] !== arr[i + 1]) {
+      answer.push(arr[i]);
+    }
+  }
+  // [실행] 버튼을 누르면 출력 값을 볼 수 있습니다.
+
+  return answer;
+}
+
+//다른 풀이
+function solution(arr) {
+  const answer = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] !== arr[i - 1]) {
+      answer.push(arr[i]);
+    }
+  }
+
+  return answer;
+}
+//또다른 풀이
+function solution(arr) {
+  const answer = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] !== answer[answer.length - 1]) {
+      answer.push(arr[i]); //answer의 마지막데이터와 비교
+    }
+  }
+
+  return answer;
+}
+
+//핸드폰 번호 가리기
+function solution(phone_number) {
+  let answer = "";
+  for (let i = 0; i < phone_number.length; i++) {
+    if (i < phone_number.length - 4) {
+      answer += "*";
+    } else {
+      answer += phone_number[i]; //뒷 네자리를 그대로 둔다
+    }
+  }
+  return answer;
+}
+//메소드 사용 방법. slice==>배열, 문자열에 사용가능
+function solution2(phone_number) {
+  let answer = "";
+  answer = answer.padStart(phone_number.length - 4, "*");
+  answer += phone_number.slice(phone_number.length - 4, phone_number.length); //뒤네자리를 잘라넣음(몇번째 인덱스부터)==>시작점부터 끝까지 자름
+  //(0,3) 첫번째 인덱스부터 3번째인덱스는 제외하고 두번째인덱스까지 자름.따라서
+  //두번째 인덱스부분은 내가 잘라올 범위에서 하나 더한값 넣음. ==> 첫번째 인덱스부터 세번째인덱스까지 잘라오겠다(0,4)첫번째인덱스 잘라지고 세번째까지 출력.
+  // answer += phone_number.slice(phone_number.length - 4);
+  return answer;
+}

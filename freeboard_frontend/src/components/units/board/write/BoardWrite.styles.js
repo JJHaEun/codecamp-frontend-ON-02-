@@ -1,10 +1,12 @@
 import styled from "@emotion/styled";
-
+export const WriterMain = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 export const MainDiv = styled.div`
-  position: absolute;
   width: 1200px;
 
-  background: #ffffff;
+  background: #fafbfc;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
@@ -13,7 +15,7 @@ export const H1 = styled.h1`
   display: flex;
   justify-content: center;
 
-  margin-top: 60px;
+  margin-top: 40px;
 `;
 export const Div = styled.div`
   display: flex;
@@ -44,7 +46,7 @@ export const Input2 = styled.input`
 export const Div2 = styled.div`
   margin-left: 101px;
   margin-right: 103px;
-  margin-top: 80px;
+  margin-top: 60px;
 `;
 // export const Input3Div = styled.div`
 //   text-align: initial;
@@ -98,8 +100,22 @@ export const Bt = styled.button`
   width: 179px;
   height: 52px;
   background: #ffd600;
-  margin-bottom: 100px;
+  margin-bottom: 70px;
   cursor: pointer;
+  border-radius: 8px;
+  border: 1px solid #dcdcdc;
+  cursor: pointer;
+  font-weight: bold;
+
+  &:hover {
+    background: linear-gradient(to bottom, #ffff00 1%, #ffd600 100%);
+    background-color: #f6f6f6;
+  }
+  &:active {
+    position: relative;
+    top: 1px;
+    left: 2px;
+  }
 `;
 export const Div4 = styled.div`
   display: flex;

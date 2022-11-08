@@ -1,6 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import { useState } from "react";
 
 const FETCH_PRODUCT = gql`
   query fetchProduct($productId: ID) {
@@ -14,11 +13,6 @@ const FETCH_PRODUCT = gql`
   }
 `;
 export default function Dynamic05Board() {
-  const [seller, setSeller] = useState("");
-  const [name, setName] = useState("");
-  const [detail, setDetail] = useState("");
-  const [price, setPrice] = useState("");
-
   const router = useRouter();
 
   const { data } = useQuery(FETCH_PRODUCT, {
