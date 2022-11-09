@@ -1,4 +1,6 @@
-import * as St from "./BoardWriteFetch.styles";
+import { getDate } from "../../../commons/utils/utils";
+import * as St from "./BoardWriteFetchAndDelete.styles";
+
 export default function BoardWriteFetchUI(props) {
   return (
     <St.Max>
@@ -10,7 +12,7 @@ export default function BoardWriteFetchUI(props) {
               <div>
                 <St.Writer>{props.data?.fetchBoard?.writer}</St.Writer>
                 <St.DateBox>
-                  Date: {props.data?.fetchBoard?.createdAt}
+                  Date: {getDate(props.data?.fetchBoard?.createdAt)}
                 </St.DateBox>
               </div>
             </St.TopLeft>
@@ -56,9 +58,9 @@ export default function BoardWriteFetchUI(props) {
       </St.MainBoard>
 
       <St.ButtonGroup>
-        <St.Button1>목록으로</St.Button1>
-        <St.Button1>수정하기</St.Button1>
-        <St.Button1>삭제하기</St.Button1>
+        <St.Button1 onClick={props.onClickList}>목록으로</St.Button1>
+        <St.Button1 onClick={props.onClickUpdate}>수정하기</St.Button1>
+        <St.Button1 onClick={props.onClickDelete}>삭제하기</St.Button1>
       </St.ButtonGroup>
     </St.Max>
   );

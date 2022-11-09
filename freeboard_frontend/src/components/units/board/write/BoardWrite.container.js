@@ -3,9 +3,10 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 
 import BoardWriteUI from "./BoardWrite.presenter";
-import { CREATE_BOARD } from "./BoardWrite.queries";
+import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
 
-export default function BoardWrite() {
+export default function BoardWrite(props) {
+  const [bt, setBt] = useState(false);
   const router = useRouter();
   const [writer, setWriter] = useState("");
   const [title, setTitle] = useState("");
@@ -18,6 +19,55 @@ export default function BoardWrite() {
   const [contentsEmpty, setContentsEmpty] = useState("");
 
   const [createBoard] = useMutation(CREATE_BOARD);
+  const [updateBoard] = useMutation(UPDATE_BOARD);
+  const onChangeWriter = (event) => {
+    setWriter(event.target.value);
+
+    if (event.target.value !== "") {
+      setWriterEmpty("");
+    }
+    if (event.target.value && pw && title && contents) {
+      setBt(true);
+    } else {
+      setBt(false);
+    }
+  };
+  const onChangePw = (event) => {
+    setPw(event.target.value);
+
+    if (event.target.value !== "") {
+      setPwEmpty("");
+    }
+    if (writer && event.target.value && title && contents) {
+      setBt(true);
+    } else {
+      setBt(false);
+    }
+  };
+  const onChangeTitle = (event) => {
+    setTitle(event.target.value);
+
+    if (event.target.value !== "") {
+      setTitleEmpty("");
+    }
+    if (writer && pw && event.target.value && contents) {
+      setBt(true);
+    } else {
+      setBt(false);
+    }
+  };
+  const onChangeContents = (event) => {
+    setContents(event.target.value);
+
+    if (event.target.value !== "") {
+      setContentsEmpty("");
+    }
+    if (writer && pw && title && event.target.value) {
+      setBt(true);
+    } else {
+      setBt(false);
+    }
+  };
 
   const onClickSignIn = async () => {
     try {
@@ -37,7 +87,7 @@ export default function BoardWrite() {
         const result = await createBoard({
           variables: {
             createBoardInput: {
-              password: String(pw),
+              password: pw,
               writer,
               title,
               contents,
@@ -52,34 +102,29 @@ export default function BoardWrite() {
       alert(error.message);
     }
   };
-  const onChangeWriter = (event) => {
-    setWriter(event.target.value);
-    if (event.target.value !== "") {
-      setWriterEmpty("");
-    }
-  };
-  const onChangePw = (event) => {
-    setPw(event.target.value);
-    if (event.target.value !== "") {
-      setPwEmpty("");
-    }
-  };
-  const onChangeTitle = (event) => {
-    setTitle(event.target.value);
-    if (event.target.value !== "") {
-      setTitleEmpty("");
-    }
-  };
-  const onChangeContents = (event) => {
-    setContents(event.target.value);
-    if (event.target.value !== "") {
-      setContentsEmpty("");
-    }
-  };
+  const onClickUpdate = async () => {
+    try {
+      const result = await updateBoard({
+        variables: {
+          updateBoardInput: {
+            title,
+            contents,
+          },
+          boardId: router.query._id,
+          password: pw,
+        },
+      });
 
+      alert("게시물이 수정되었습니다");
+      router.push(`/boards`);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   return (
     <BoardWriteUI
       onClickSignIn={onClickSignIn}
+      onClickUpdate={onClickUpdate}
       onChangeWriter={onChangeWriter}
       onChangePw={onChangePw}
       onChangeTitle={onChangeTitle}
@@ -88,6 +133,8 @@ export default function BoardWrite() {
       pwEmpty={pwEmpty}
       titleEmpty={titleEmpty}
       contentsEmpty={contentsEmpty}
+      bt={bt}
+      isEdit={props.isEdit}
     />
   );
 }

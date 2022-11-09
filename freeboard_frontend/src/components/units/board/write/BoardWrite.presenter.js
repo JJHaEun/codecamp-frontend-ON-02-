@@ -4,7 +4,7 @@ export default function BoardWriteUI(props) {
   return (
     <St.WriterMain>
       <St.MainDiv>
-        <St.H1>게시물 등록</St.H1>
+        <St.H1>게시물 {props.isEdit ? "수정" : "등록"}</St.H1>
         <St.Div>
           <div>
             <St.Name_Pw>작성자</St.Name_Pw>
@@ -69,7 +69,12 @@ export default function BoardWriteUI(props) {
           사진
         </St.Div3>
         <St.Div4>
-          <St.Bt onClick={props.onClickSignIn}>등록하기</St.Bt>
+          <St.Bt
+            changes={props.bt}
+            onClick={props.isEdit ? props.onClickUpdate : props.onClickSignIn}
+          >
+            {props.isEdit ? "수정" : "등록"}하기
+          </St.Bt>
         </St.Div4>
       </St.MainDiv>
     </St.WriterMain>

@@ -10,6 +10,7 @@ export const MainDiv = styled.div`
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
+  justify-content: center;
 `;
 export const H1 = styled.h1`
   display: flex;
@@ -99,18 +100,15 @@ export const InputR2 = styled.input`
 export const Bt = styled.button`
   width: 179px;
   height: 52px;
-  background: #ffd600;
-  margin-bottom: 70px;
-  cursor: pointer;
+  margin-bottom: 80px;
+  background: ${(props) => (props.changes ? "yellow" : "none")};
+  border: ${(props) => (props.changes ? "3px solid #0ebfeb" : "none")};
+  cursor: ${(props) => (props.changes ? "pointer" : "default")};
+
   border-radius: 8px;
-  border: 1px solid #dcdcdc;
-  cursor: pointer;
+
   font-weight: bold;
 
-  &:hover {
-    background: linear-gradient(to bottom, #ffff00 1%, #ffd600 100%);
-    background-color: #f6f6f6;
-  }
   &:active {
     position: relative;
     top: 1px;

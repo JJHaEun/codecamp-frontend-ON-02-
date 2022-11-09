@@ -414,3 +414,141 @@ function solution2(phone_number) {
   // answer += phone_number.slice(phone_number.length - 4);
   return answer;
 }
+
+//11/08 화요일
+//짝수와 홀수
+function solution(num) {
+  let answer = "";
+  if (num % 2 !== 0) {
+    answer = "Odd";
+  } else {
+    answer = "Even";
+  }
+  return answer;
+}
+
+//if 문 사용안하는 법
+function solution(num) {
+  return num % 2 === 0 ? "Even" : "Odd";
+}
+
+//평균 구하기**다시풀기
+function solution(arr) {
+  let answer = 0;
+  for (let i = 0; i < arr.length; i++) {
+    answer += arr[i];
+  }
+
+  return answer / arr.length;
+}
+
+//다른방법
+function solution(arr) {
+  const sum = arr.reduce((cu, el) => {
+    return cu + el;
+  }, 0);
+  return sum / arr.length;
+}
+
+//가운데 글자 가져오기
+function solution(s) {
+  const center = Math.floor(s.length / 2); //소수점 제거
+  let answer = s[center];
+  if (s.length % 2 === 0) {
+    answer = s[center - 1] + answer;
+  }
+  return answer;
+}
+
+//삼항연산자,slice 사용법
+function solution(s) {
+  const center = Math.floor(s.length / 2); //소수점 제거
+  let answer = s.length % 2 === 1 ? s[center] : s.slice(center - 1, center + 1); //슬라이스 뒤쪽부분은 해당 인덱스의 앞에까지 내보냄
+  return answer;
+}
+
+//문자열 다루기**
+function solution(s) {
+  if (s.length !== 4 && s.length !== 6) {
+    return false;
+  }
+
+  for (let i = 0; i < s.length; i++) {
+    console.log(isNaN(s[i]), s[i]);
+    if (isNaN(s[i])) {
+      return false;
+    }
+  }
+  return true;
+}
+
+//2번째방법**
+
+function solution(s) {
+  if (s.length !== 4 && s.length !== 6) {
+    return false;
+  }
+  const answer = s
+    .split("") //빈문자열 기준으로 문자열데이터 하나씩 쪼개기
+    .filter((num) => {
+      //num(데이터)가 숫자가 아닌 문자타입만 남김. 즉,
+      //isNaN의 결과가 true인 데이터만 남김.(문자일경우임)
+      return isNaN(num);
+    });
+  return answer.length === 0; //전체가 숫자이니 문자열을 검증하는 필터에서 남지 않고 빈배열만 나옴.==>true리턴
+  //length값이 0이 아니면 남아있는 데이터가 있다==>숫자중에 문자가 섞여있다.==>false리턴
+}
+
+//약수의 합**
+function solution(n) {
+  //     let answer = 0;
+  //     for(let i = 1;i<=n;i++){
+  //       if(n%i===0){
+  //           answer +=i
+  //       }
+  //     }return answer
+  //약수는 자기자신을 2로 나눈 데이터 까지만약수로 받아옴
+  //조건식에 (for)문에서 n를 2로 나누고, answer에는 자기자신을 넣어주는 방법도 있음..
+}
+
+//사분면구하기 2주차 알고리즘 레포**
+function quadrant(x, y) {
+  if (x > 0 && y > 0) return 1;
+  if (x < 0 && y > 0) return 2;
+  if (x < 0 && y < 0) return 3;
+  return 4;
+}
+
+//시험성적 2주차 알고리즘 레포**
+function score(num) {
+  if (num >= 90) {
+    return "A";
+  } else if (num >= 80) {
+    return "B";
+  } else if (num >= 70) {
+    return "C";
+  } else if (num >= 60) {
+    return "D";
+  } else {
+    return "F";
+  }
+}
+//KDA 2주차 알고리즘
+function kda(array) {
+  const k = array[0];
+  const d = array[1];
+  const a = array[2];
+
+  if (k + a < d || d === 0) {
+    return "hasu";
+  }
+
+  return "gosu";
+}
+
+// 또는
+
+function kda(array) {
+  const [k, d, a] = array; // 구조분해할당
+  return k + a < d || d === 0 ? "hasu" : "gosu"; //삼항연산자
+}
