@@ -1,0 +1,164 @@
+import { useMutation, useQuery } from "@apollo/client";
+import { ChangeEvent, useState } from "react";
+import { useRouter } from "next/router";
+
+import BoardWriteUI from "./BoardWrite.presenter";
+import { CREATE_BOARD, FETCH_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
+
+interface IBoardWriteProps {
+  isEdit: boolean;
+}
+
+export default function BoardWrite(props: IBoardWriteProps) {
+  const router = useRouter();
+  const { data } = useQuery(FETCH_BOARD, {
+    variables: {
+      boardId: router.query._id,
+    },
+  });
+  const [bt, setBt] = useState(false);
+
+  const [writer, setWriter] = useState("");
+  const [title, setTitle] = useState("");
+  const [contents, setContents] = useState("");
+  const [pw, setPw] = useState("");
+
+  const [writerEmpty, setWriterEmpty] = useState("");
+  const [pwEmpty, setPwEmpty] = useState("");
+  const [titleEmpty, setTitleEmpty] = useState("");
+  const [contentsEmpty, setContentsEmpty] = useState("");
+
+  const [createBoard] = useMutation(CREATE_BOARD);
+  const [updateBoard] = useMutation(UPDATE_BOARD);
+
+  const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) => {
+    setWriter(event.target.value);
+
+    if (event.target.value !== "") {
+      setWriterEmpty("");
+    }
+    if (event.target.value && pw && title && contents) {
+      setBt(true);
+    } else {
+      setBt(false);
+    }
+  };
+  const onChangePw = (event: ChangeEvent<HTMLInputElement>) => {
+    setPw(event.target.value);
+
+    if (event.target.value !== "") {
+      setPwEmpty("");
+    }
+    if (writer && event.target.value && title && contents) {
+      setBt(true);
+    } else {
+      setBt(false);
+    }
+  };
+  const onChangeTitle = (event: ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
+
+    if (event.target.value !== "") {
+      setTitleEmpty("");
+    }
+    if (writer && pw && event.target.value && contents) {
+      setBt(true);
+    } else {
+      setBt(false);
+    }
+  };
+  const onChangeContents = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setContents(event.target.value);
+
+    if (event.target.value !== "") {
+      setContentsEmpty("");
+    }
+    if (writer && pw && title && event.target.value) {
+      setBt(true);
+    } else {
+      setBt(false);
+    }
+  };
+
+  const onClickSignIn = async () => {
+    try {
+      if (!writer) {
+        setWriterEmpty("작성자를 입력해 주세요");
+      }
+      if (!pw) {
+        setPwEmpty("비밀번호를 입력해 주세요");
+      }
+      if (!title) {
+        setTitleEmpty("제목을 입력해 주세요");
+      }
+      if (!contents) {
+        setContentsEmpty("내용을 입력해 주세요");
+      }
+      if (writer && pw && title && contents) {
+        const result = await createBoard({
+          variables: {
+            createBoardInput: {
+              password: pw,
+              writer,
+              title,
+              contents,
+            },
+          },
+        });
+
+        alert("게시물이 성공적으로 등록되었습니다.");
+        router.push(`/boards/${result.data.createBoard._id}`);
+      }
+    } catch (error: any) {
+      alert(error.message);
+    }
+  };
+
+  const onClickUpdate = async () => {
+    if (!title && !contents) {
+      if (confirm("수정하시겠습니까?")) {
+        alert("변경사항이 없습니다");
+        return;
+      } else {
+        router.push(`/boards`);
+        return;
+      }
+    }
+    const replace: any = {
+      boardId: router.query._id,
+      password: pw,
+      updateBoardInput: {},
+    };
+    if (writer) replace.updateBoardInput.writer = writer;
+    if (title) replace.updateBoardInput.title = title;
+    if (contents) replace.updateBoardInput.contents = contents;
+    try {
+      await updateBoard({
+        variables: replace,
+      });
+
+      alert("게시물이 수정되었습니다");
+      router.push(`/boards`);
+    } catch (error: any) {
+      alert(error.message);
+    }
+  };
+
+  return (
+    <BoardWriteUI
+      onClickSignIn={onClickSignIn}
+      onClickUpdate={onClickUpdate}
+      onChangeWriter={onChangeWriter}
+      onChangePw={onChangePw}
+      onChangeTitle={onChangeTitle}
+      onChangeContents={onChangeContents}
+      writerEmpty={writerEmpty}
+      pwEmpty={pwEmpty}
+      titleEmpty={titleEmpty}
+      contentsEmpty={contentsEmpty}
+      bt={bt}
+      isEdit={props.isEdit}
+      data={data}
+    />
+  );
+}
