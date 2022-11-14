@@ -1,5 +1,10 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
+import { MouseEvent } from "react";
+import {
+  IQuery,
+  IQueryFetchBoardCommentsArgs,
+} from "../../../../commons/types/generated/types";
 import CommentWritListUI from "./CommentsList.presenter";
 import {
   FETCH_BOARD_COMMENT,
@@ -8,15 +13,17 @@ import {
 
 export default function CommentWritList() {
   const router = useRouter();
-  const { data } = useQuery(FETCH_BOARD_COMMENT, {
+  const { data } = useQuery<
+    Pick<IQuery, "fetchBoardComments">,
+    IQueryFetchBoardCommentsArgs
+  >(FETCH_BOARD_COMMENT, {
     variables: {
-      boardId: router.query._id,
+      boardId: String(router.query._id),
     },
   });
   const [deleteBoardComment] = useMutation(DELETE_BOARD_COMMENT);
 
-  const OnclickDeleteComment = async (event: any) => {
-    console.log(event.target.id);
+  const OnclickDeleteComment = async (event: MouseEvent<HTMLButtonElement>) => {
     if (confirm("삭제하시겠습니까?")) {
     } else {
       return;
@@ -26,7 +33,7 @@ export default function CommentWritList() {
       await deleteBoardComment({
         variables: {
           password: Password,
-          boardCommentId: event.target.id,
+          boardCommentId: event.currentTarget.id,
         },
 
         refetchQueries: [
@@ -37,14 +44,22 @@ export default function CommentWritList() {
         ],
       });
       alert("삭제되었습니다");
-    } catch (error: any) {
-      alert(error.message);
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
     }
   };
+  const OnClickCommentsBody = (event: MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+    alert(event.currentTarget.id + "님이 작성한 글입니다");
+  };
+
   return (
     <CommentWritListUI
       data={data}
       OnclickDeleteComment={OnclickDeleteComment}
+      OnClickCommentsBody={OnClickCommentsBody}
     />
   );
 }

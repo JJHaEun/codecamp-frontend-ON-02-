@@ -8,7 +8,21 @@ export const WriterMain = styled.div`
 export const MainDiv = styled.div`
   width: 1200px;
 
-  background: #fafbfc;
+  position: relative;
+
+  :before {
+    content: "";
+    position: absolute;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.001), rgba(0, 0, 0, 0.01)),
+      url("https://source.unsplash.com/featured/?vacation");
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    filter: blur(6px);
+    background-size: cover;
+  }
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
@@ -17,7 +31,7 @@ export const MainDiv = styled.div`
 export const H1 = styled.h1`
   display: flex;
   justify-content: center;
-
+  font-size: 50px;
   margin-top: 40px;
 `;
 export const Div = styled.div`
@@ -37,6 +51,8 @@ export const Input = styled.input`
   margin-right: 10px;
   margin-left: 15px;
   border: 1px solid #bdbdbd;
+  border-radius: 8px;
+  padding-left: 5px;
 `;
 
 export const Input2 = styled.input`
@@ -45,6 +61,8 @@ export const Input2 = styled.input`
   margin-top: 5px;
   margin-bottom: 16px;
   border: 1px solid #bdbdbd;
+  border-radius: 8px;
+  padding-left: 5px;
 `;
 export const Div2 = styled.div`
   margin-left: 101px;
@@ -60,7 +78,9 @@ export const Text = styled.textarea`
   height: 480px;
   resize: none;
   border: 1px solid #bdbdbd;
+  border-radius: 8px;
   margin-top: 5px;
+  padding: 5px;
 `;
 export const Input4 = styled.input`
   width: 77px;
@@ -68,6 +88,8 @@ export const Input4 = styled.input`
   margin-right: 16px;
   margin-bottom: 16px;
   border: 1px solid #bdbdbd;
+  border-radius: 8px;
+  padding-left: 5px;
 `;
 export const PottoButton = styled.button`
   width: 78px;
@@ -99,9 +121,9 @@ export const Bt = styled.button`
   width: 179px;
   height: 52px;
   margin-bottom: 80px;
-  background: ${(props: IBtProps) => (props.changes ? "yellow" : "none")};
+  background: ${(props: IBtProps) => (props.changes ? "#f0f8ff" : "none")};
   border: ${(props: IBtProps) =>
-    props.changes ? "3px solid #0ebfeb" : "none"};
+    props.changes ? "3px solid #0ebfeb" : "2px solid black"};
   cursor: ${(props: IBtProps) => (props.changes ? "pointer" : "default")};
 
   border-radius: 8px;

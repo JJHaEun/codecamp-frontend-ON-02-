@@ -1,9 +1,9 @@
 import { BlueButton, RedInput } from "./BoardWrite.styles";
 
 export default function BoardWriteUI(props) {
-  //자바스크립트 영역
+  // 자바스크립트 영역
 
-  //html영역(return 아래)
+  // html영역(return 아래)
   return (
     <>
       작성자: <RedInput type="text" onChange={props.onChangeWriter} />

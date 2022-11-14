@@ -5,7 +5,7 @@ export const Max = styled.div`
   height: 583px;
   border: 3px solid #a0dfe1;
   border-radius: 15px;
-  background: white;
+  background: rgba(204, 255, 000, 0.3);
   margin-top: 50px;
 `;
 export const Row = styled.div`
@@ -18,20 +18,15 @@ export const Column = styled.div`
   width: 25%;
   cursor: pointer;
   font-weight: 800;
-  :hover {
-    background: linear-gradient(60deg, #22d6b2, #ffe1e6);
-    color: transparent;
-    -webkit-background-clip: text;
-  }
 `;
 export const Column_1 = styled.div`
   width: 25%;
   cursor: pointer;
   font-size: 20px;
   :hover {
-    background: linear-gradient(60deg, #22d6b2, #ffe1e6);
-    color: transparent;
-    -webkit-background-clip: text;
+    text-decoration: underline;
+    text-underline-position: under;
+    color: #22d6b2;
   }
 `;
 export const Column2 = styled.div`
@@ -75,13 +70,31 @@ export const Send = styled.button`
   }
 `;
 export const Page = styled.div`
+  position: relative;
   width: 1200px;
   height: 1562px;
-  background: rgba(0, 225, 255, 0.1);
+
+  
+  :before {
+    content: "";
+    position: absolute;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.001), rgba(0, 0, 0, 0.01)),
+      url("https://source.unsplash.com/featured/?autumn");
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    filter: blur(6px);
+    background-size: cover;
+  }
+
   display: flex;
   flex-direction: column;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
   border: 2px solid #9bfa73;
+  
+  }
 `;
 export const All = styled.div`
   display: flex;
@@ -94,12 +107,12 @@ export const H1title = styled.h1`
   align-items: center;
   margin-top: 50px;
   font-size: 50px;
+  background: linear-gradient(to left, #6666cc, #33cccc);
+  color: transparent;
+  -webkit-background-clip: text;
 `;
-export const Under = styled.div`
-  width: 1197px;
-  height: 500px;
-  background-size: cover;
-  background-image: url("https://source.unsplash.com/featured/?autumn");
-  opacity: 0.3;
-  filter: blur(3px);
-`;
+// export const Upper = styled.div`
+//   width: 1200px;
+//   height: 550px;
+//   background-image: url("https://source.unsplash.com/featured/?spring");
+// `;

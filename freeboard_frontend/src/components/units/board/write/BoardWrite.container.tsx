@@ -4,18 +4,30 @@ import { useRouter } from "next/router";
 
 import BoardWriteUI from "./BoardWrite.presenter";
 import { CREATE_BOARD, FETCH_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
-
-interface IBoardWriteProps {
-  isEdit: boolean;
-}
+import {
+  IMutation,
+  IMutationCreateBoardArgs,
+  IMutationUpdateBoardArgs,
+  IQuery,
+  IQueryFetchBoardArgs,
+} from "../../../../commons/types/generated/types";
+import { IBoardWriteProps, IUpdateBoardInput } from "./BoardWrite.types";
 
 export default function BoardWrite(props: IBoardWriteProps) {
   const router = useRouter();
-  const { data } = useQuery(FETCH_BOARD, {
-    variables: {
-      boardId: router.query._id,
-    },
-  });
+  // 빈페이지로보내기
+  // if(typeof router.query._id !== "string"){
+  //   router.push("/")
+  //   return<></>   //boardId부분을 sting 처리 할수도 있고, 아니면 string이 아닐때 빈패이지로 잠시 보내는 방법도 있음
+  // }
+  const { data } = useQuery<Pick<IQuery, "fetchBoard">, IQueryFetchBoardArgs>(
+    FETCH_BOARD,
+    {
+      variables: {
+        boardId: String(router.query._id), // sting처리
+      },
+    }
+  );
   const [bt, setBt] = useState(false);
 
   const [writer, setWriter] = useState("");
@@ -28,8 +40,14 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const [titleEmpty, setTitleEmpty] = useState("");
   const [contentsEmpty, setContentsEmpty] = useState("");
 
-  const [createBoard] = useMutation(CREATE_BOARD);
-  const [updateBoard] = useMutation(UPDATE_BOARD);
+  const [createBoard] = useMutation<
+    Pick<IMutation, "createBoard">,
+    IMutationCreateBoardArgs
+  >(CREATE_BOARD);
+  const [updateBoard] = useMutation<
+    Pick<IMutation, "updateBoard">,
+    IMutationUpdateBoardArgs
+  >(UPDATE_BOARD);
 
   const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) => {
     setWriter(event.target.value);
@@ -107,10 +125,12 @@ export default function BoardWrite(props: IBoardWriteProps) {
         });
 
         alert("게시물이 성공적으로 등록되었습니다.");
-        router.push(`/boards/${result.data.createBoard._id}`);
+        router.push(`/boards/${result.data?.createBoard._id}`);
       }
-    } catch (error: any) {
-      alert(error.message);
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
     }
   };
 
@@ -124,23 +144,25 @@ export default function BoardWrite(props: IBoardWriteProps) {
         return;
       }
     }
-    const replace: any = {
-      boardId: router.query._id,
-      password: pw,
-      updateBoardInput: {},
-    };
-    if (writer) replace.updateBoardInput.writer = writer;
-    if (title) replace.updateBoardInput.title = title;
-    if (contents) replace.updateBoardInput.contents = contents;
+    const updateBoardInput: IUpdateBoardInput = {};
+    if (writer) updateBoardInput.writer = writer;
+    if (title) updateBoardInput.title = title;
+    if (contents) updateBoardInput.contents = contents;
     try {
       await updateBoard({
-        variables: replace,
+        variables: {
+          boardId: String(router.query._id),
+          password: pw,
+          updateBoardInput,
+        },
       });
 
       alert("게시물이 수정되었습니다");
       router.push(`/boards`);
-    } catch (error: any) {
-      alert(error.message);
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
     }
   };
 

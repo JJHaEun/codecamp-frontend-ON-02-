@@ -6,6 +6,7 @@ export default function BoardListUI(props: IBoardListUIProps) {
   return (
     <S.All>
       <S.Page>
+        {/* <S.Upper></S.Upper> */}
         <S.H1title>우리의 휴식~</S.H1title>
         <S.Div>
           <S.Max>
@@ -16,14 +17,10 @@ export default function BoardListUI(props: IBoardListUIProps) {
               <S.Column>날짜</S.Column>
             </S.Row>
             {props.data?.fetchBoards.map((el: any, index: number) => (
-              <S.Row key={el._id}>
+              <S.Row key={el._id} id={el._id} onClick={props.onClickMoveDetail}>
                 <S.Column1_1>{index + 1}</S.Column1_1>
-                <S.Column_1 id={el._id} onClick={props.onClickMoveDetail}>
-                  {el.writer}
-                </S.Column_1>
-                <S.Column_1 id={el._id} onClick={props.onClickMoveDetail}>
-                  {el.title}
-                </S.Column_1>
+                <S.Column_1>{el.writer}</S.Column_1>
+                <S.Column_1>{el.title}</S.Column_1>
                 <S.Column2>{getDate(el.createdAt)}</S.Column2>
               </S.Row>
             ))}
@@ -32,7 +29,6 @@ export default function BoardListUI(props: IBoardListUIProps) {
         <S.Bt>
           <S.Send onClick={props.onClickMoveNew}>등록하기</S.Send>
         </S.Bt>
-        <S.Under></S.Under>
       </S.Page>
     </S.All>
   );

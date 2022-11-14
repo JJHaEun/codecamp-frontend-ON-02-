@@ -392,7 +392,7 @@ function solution(arr) {
   return answer;
 }
 
-//핸드폰 번호 가리기
+//핸드폰 번호 가리기*****
 function solution(phone_number) {
   let answer = "";
   for (let i = 0; i < phone_number.length; i++) {
@@ -551,4 +551,264 @@ function kda(array) {
 function kda(array) {
   const [k, d, a] = array; // 구조분해할당
   return k + a < d || d === 0 ? "hasu" : "gosu"; //삼항연산자
+}
+
+//김서방 찾기
+function solution(seoul) {
+  let x = 0; //김서방의 위치 저장
+  for (let i = 0; i < seoul.length; i++) {
+    if (seoul[i] === "Kim") {
+      // // x = i;
+      // // break;//Kim을 찾으면 반복문 중단시킴.
+      //또는 return `김서방은 ${i}에 있다`
+    }
+  }
+  // // return `김서방은 ${x}에 있다`
+}
+
+// for문 대신 indexOf라는 메서드 사용하는 방법.배열에 있다면 해당 인덳, 값을, 없다면 -1을 리턴해줌.
+function solution(seoul) {
+  const x = seoul.indexOf("Kim");
+  return `김서방은 ${x}에 있다`;
+}
+
+// 11/10
+//자릿수 더하기**
+
+function solution(n) {
+  let answer = 0;
+  n = String(n);
+  for (let i = 0; i < n.length; i++) {
+    answer += Number(n[i]); //i를 숫자로 다시 변경해 answer에 넣어주기
+  }
+  return answer;
+}
+//다른방법**
+function solution(n) {
+  const answer = String(n)
+    .split("")
+    .reduce((cu, el) => {
+      return cu + Number(el);
+    }, 0);
+  return answer;
+}
+//다른방법**
+function solution(n) {
+  const answer = String(n)
+    .split("")
+    .reduce((cu, el) => {
+      return Number(cu) + Number(el);
+    });
+  return answer;
+}
+
+//x만큼 간격이 있는 n개의 숫자**
+
+function solution(x, n) {
+  const answer = [];
+  for (let i = 1; i <= n; i++) {
+    answer.push(i * x);
+  }
+  return answer;
+}
+
+//map을 사용하는 방법
+function solution(x, n) {
+  const answer = new Array(n).fill(1).map((num, i) => {
+    return (num + i) * x;
+  }); //맵은 리턴을 배열로함.
+  return answer;
+}
+
+//숫자정렬
+const arr = [10, 9, 1, 7, 97, 102];
+arr.sort((a, b) => {
+  console.log(a, b);
+  return a - b;
+
+  //a는 두번째인자, b는 첫번째인자로 찍힘.
+  //a-b를 해서 오름차순정렬. sort사용시 arr 자동변경됨.
+  //b-a면 내림차순정렬
+});
+//
+
+const arr = ["a", "A", "Z", "b", "f", "h"];
+arr.sort((a, b) => {
+  console.log(a, b);
+  return a < b ? 1 : -1;
+
+  //a는 두번째인자, b는 첫번째인자로 찍힘.
+  //a-b를 해서 오름차순정렬. sort사용시 arr 자동변경됨.
+  //b-a면 내림차순정렬
+});
+
+//문자는 유니코드로 순서 비교
+//유니코드로 문자 출력하기
+
+String.fromCharCode(90); //Z
+String.fromCharCode(97); //소문자a 따라서 대문자가 소문자보다 작음.
+
+// [ 'h', 'f', 'b', 'a', 'Z', 'A' ]
+
+// 'A' 'a'
+// 'Z' 'A'
+// 'Z' 'A'
+// 'Z' 'a'
+// 'b' 'Z'
+// 'b' 'a'
+// 'f' 'Z'
+// 'f' 'a'
+// 'f' 'b'
+// 'h' 'a'
+// 'h' 'b'
+// 'h' 'f'
+
+// 'Z'
+// 'a'
+
+//문자열 내림차순으로 배치하기
+function solution(s) {
+  const arr = [];
+  //문자열을 배열로 바꾸기. 정렬 메서드 sort
+  for (let i = 0; i < s.length; i++) {
+    arr.push(s[i]);
+  }
+  arr.sort((a, b) => {
+    return a > b ? -1 : 1; //작은순서대로(오름차순)
+    // return a < b ? -1:1 //큰순서대로(내림차순)
+  });
+  //배열을 문자열로 바꾸기
+  let answer = "";
+  for (let i = 0; i < arr.length; i++) {
+    answer += arr[i];
+  }
+  return answer;
+}
+
+//메서드를 사용한 방법
+function solution(s) {
+  const arr = [];
+  const answer = s
+    .split("")
+    .sort((a, b) => {
+      return a > b ? -1 : 1;
+    })
+    .join(""); //split으로쪼갠 문자열 빈문자열로 묶기
+  return answer;
+}
+
+// 문자열 내의 p와 y의 개수
+
+function solution(s) {
+  let answer = true;
+  let count = 0;
+  let count2 = 0;
+  s = s.toLowerCase();
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === "p") {
+      count++;
+    } else if (s[i] === "y") {
+      count2++;
+    }
+    if (count !== count2) {
+      answer = false;
+    } else {
+      answer = true;
+    }
+  }
+  return answer;
+}
+
+// 다른방법
+function solution(s) {
+  let answer = true;
+  let count = 0;
+  let count2 = 0;
+
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === "p" || s[i] === "P") {
+      count++;
+    } else if (s[i] === "y" || s[i] === "Y") {
+      count2++;
+    }
+  }
+  answer = count === count2;
+  return answer;
+}
+//another
+function solution(s) {
+  s = s.toLowerCase(); //문자열을 소문자로 변환
+  const obj = { p: 0, y: 0 };
+  // let count = 0;
+  // let count2 = 0;
+
+  for (let i = 0; i < s.length; i++) {
+    obj[s[i]] === undefined // 객체에서 찾을 수 없을경우
+      ? (obj[s[i]] = 1) // undefined일때는 새로추가.빈객체여도 초기값은 1
+      : obj[s[i]]++; //있는 데이터라면 하나씩 증가
+  }
+  return obj.p === obj.y;
+}
+//
+function solution(s) {
+  s = s.toLowerCase(); //문자열을 소문자로 변환
+  const obj = {};
+  s.split("");
+  forEach((str) => {
+    obj[str] === undefined // 키값으로 접근
+      ? (obj[str] = 1) // undefined일때는 새로추가.빈객체여도 초기값은 1
+      : obj[str]++;
+  });
+
+  return obj.p === obj.y;
+}
+
+//  이상한 문자 만들기***
+function solution(s) {
+  let answer = "";
+
+  let idx = 0;
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === " ") {
+      answer += " ";
+      //공백을 만나면 그냥 공백을 넣어줌(예외처리)
+      idx = 0;
+      //idx초기화
+    } else {
+      answer += idx % 2 === 0 ? s[i].toUpperCase() : s[i].toLowerCase();
+      idx++;
+    }
+  }
+  return answer;
+}
+
+//다른풀이
+function solution(s) {
+  const answer = s
+    .split(" ") //빈문자열로 나누고
+    .map((word) => {
+      return word
+        .split("") // 나눈 각각의 문자들을 다시 하나씩 쪼갠다
+        .map((letter, i) => {
+          //console.log(letter,i)  ==>>
+          // t 0
+          // r 1
+          // y 2
+          // h 0
+          // e 1
+          // l 2
+          // l 3
+          // o 4
+          // w 0
+          // o 1
+          // r 2
+          // l 3
+          // d 4
+          return i % 2 === 0 ? letter.toUpperCase() : letter.toLowerCase();
+          //map은 기본적으로 배열로 리턴.
+        })
+        .join(""); //문자열로 묶기
+    })
+    .join(" ");
+  return answer;
 }

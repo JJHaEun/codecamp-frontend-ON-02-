@@ -1,6 +1,10 @@
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
+import {
+  IMutation,
+  IMutationCreateBoardCommentArgs,
+} from "../../../../commons/types/generated/types";
 import { FETCH_BOARD_COMMENT } from "../list/CommentsList.queries";
 import CommentsWriteUI from "./Comments.presenter";
 import { CREATE_BOARD_COMMENT } from "./Comments.queries";
@@ -10,7 +14,10 @@ export default function CommentsWrite() {
   const [writer, setWriter] = useState("");
   const [password, setPassword] = useState("");
   const [contents, setContents] = useState("");
-  const [createBoardComment] = useMutation(CREATE_BOARD_COMMENT);
+  const [createBoardComment] = useMutation<
+    Pick<IMutation, "createBoardComment">,
+    IMutationCreateBoardCommentArgs
+  >(CREATE_BOARD_COMMENT);
   const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) => {
     setWriter(event.target.value);
   };
@@ -25,7 +32,7 @@ export default function CommentsWrite() {
     try {
       const result = await createBoardComment({
         variables: {
-          boardId: router.query._id,
+          boardId: String(router.query._id),
           createBoardCommentInput: {
             writer,
             contents,
@@ -40,8 +47,10 @@ export default function CommentsWrite() {
           },
         ],
       });
-    } catch (error: any) {
-      alert(error.message);
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
     }
   };
   return (

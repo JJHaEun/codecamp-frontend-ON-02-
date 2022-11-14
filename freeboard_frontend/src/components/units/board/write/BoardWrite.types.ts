@@ -1,5 +1,10 @@
 import { ChangeEvent } from "react";
+import { IQuery } from "../../../../commons/types/generated/types";
 
+export interface IBoardWriteProps {
+  isEdit: boolean;
+  data?: Pick<IQuery, "fetchBoard">;
+}
 export interface IBoardWriteUIProps {
   onClickSignIn: () => void;
   onClickUpdate: () => void;
@@ -13,9 +18,14 @@ export interface IBoardWriteUIProps {
   contentsEmpty?: string;
   bt: boolean;
   isEdit: boolean;
-  //   data?: Pick<IQuery, "fetchBoard">;
-  data: any;
+  data?: Pick<IQuery, "fetchBoard">;
+  // data: any;
 }
 export interface IBtProps {
   changes: boolean;
+}
+export interface IUpdateBoardInput {
+  writer?: string | undefined;
+  contents?: string;
+  title?: string;
 }

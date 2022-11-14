@@ -5,7 +5,7 @@ export default function CommentWritListUI(props: ICommentWritListUIProps) {
   return (
     <S.CommentList>
       {props.data?.fetchBoardComments.map((el: any) => (
-        <S.All>
+        <S.All id={el.writer} onClick={props.OnClickCommentsBody}>
           <S.Img src="/messenger.png"></S.Img>
 
           <div>
@@ -18,8 +18,11 @@ export default function CommentWritListUI(props: ICommentWritListUIProps) {
                 <S.Button>수정</S.Button>
               </div>
               <div>
-                <S.Button2 onClick={props.OnclickDeleteComment} id={el._id}>
-                  <S.ButtonImg src="/delete-button.png"></S.ButtonImg>
+                <S.Button2 id={el._id} onClick={props.OnclickDeleteComment}>
+                  <S.ButtonImg
+                    id={el._id}
+                    src="/delete-button.png"
+                  ></S.ButtonImg>
                 </S.Button2>
               </div>
             </S.ButtonGroup>

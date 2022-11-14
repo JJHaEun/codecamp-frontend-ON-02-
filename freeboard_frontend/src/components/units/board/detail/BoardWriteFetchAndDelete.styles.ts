@@ -3,7 +3,21 @@ import styled from "@emotion/styled";
 export const MainBoard = styled.div`
   width: 1200px;
   height: 1562px;
-  background: #fafbfc;
+  position: relative;
+
+  :before {
+    content: "";
+    position: absolute;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.001), rgba(0, 0, 0, 0.01)),
+      url("https://source.unsplash.com/featured/?vacation");
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    filter: blur(6px);
+    background-size: cover;
+  }
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
   display: flex;
   border: 2px solid #9bfa73;
@@ -57,6 +71,7 @@ export const Img3 = styled.img`
 export const Title = styled.h2`
   margin-top: 80px;
   margin-bottom: 50px;
+  font-size: 40px;
 `;
 export const MainMiddle = styled.div`
   margin: 50px 106px 15px 106px;
@@ -107,6 +122,8 @@ export const Contents = styled.div`
   height: 96px;
   resize: none;
   margin-top: 40px;
+  font-size: 20px;
+  font-weight: 600;
 `;
 export const ButtonGroup = styled.div`
   display: flex;
@@ -166,5 +183,3 @@ export const Max = styled.div`
   justify-content: center;
   align-items: center;
 `;
-`;
-// export const Under = styled.div`;
