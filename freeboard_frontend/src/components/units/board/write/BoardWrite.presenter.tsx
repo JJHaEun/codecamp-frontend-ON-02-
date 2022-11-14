@@ -8,7 +8,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
         <St.H1>게시물 {props.isEdit ? "수정" : "등록"}</St.H1>
         <St.Div>
           <div>
-            <St.Name_Pw>작성자</St.Name_Pw>
+            <St.NamePw>작성자</St.NamePw>
             <St.Empty1>{props.writerEmpty}</St.Empty1>
             <St.Input
               type="text"
@@ -19,7 +19,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
           </div>
 
           <div>
-            <St.Name_Pw>비밀번호</St.Name_Pw>
+            <St.NamePw>비밀번호</St.NamePw>
             <St.Empty1>{props.pwEmpty}</St.Empty1>
             <St.Input
               type="text"

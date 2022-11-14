@@ -41,7 +41,7 @@ export const Div = styled.div`
   margin-right: 103px;
   margin-top: 33px;
 `;
-export const Name_Pw = styled.div`
+export const NamePw = styled.div`
   margin-left: 15px;
   margin-bottom: 5px;
 `;
