@@ -4,6 +4,11 @@ import { IQuery } from "../../../../commons/types/generated/types";
 export interface IBoardWriteProps {
   isEdit: boolean;
   data?: Pick<IQuery, "fetchBoard">;
+  writerEmpty?: string;
+  pwEmpty?: string;
+  titleEmpty?: string;
+  contentsEmpty?: string;
+  bt: boolean;
 }
 export interface IBoardWriteUIProps {
   onClickSignIn: () => void;
@@ -25,7 +30,7 @@ export interface IBtProps {
   changes: boolean;
 }
 export interface IUpdateBoardInput {
-  writer?: string | undefined;
+  writer?: string;
   contents?: string;
   title?: string;
 }
