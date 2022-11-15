@@ -49,10 +49,19 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
         </St.Div2>
         <St.Div2>
           <St.Private>주소</St.Private>
-          <St.Input4 type="text" placeholder="07250" />
-          <St.Bt1>우편번호 검색</St.Bt1>
-          <St.Input2 type="text" />
-          <St.Input2 type="text" />
+          <St.Input4 type="text" placeholder="우편번호" id="sample6_postcode" />
+          <St.Bt1 onclick="sample6_execDaumPostcode()">우편번호 검색</St.Bt1>
+          <St.Input2 type="text" id="sample6_address" placeholder="주소" />
+          <St.Input2
+            type="text"
+            id="sample6_detailAddress"
+            placeholder="상세주소"
+          />
+          <St.Input2
+            type="text"
+            id="sample6_extraAddress"
+            placeholder="참고항목"
+          />
         </St.Div2>
         <St.Div2>
           <div>유튜브</div>
@@ -84,6 +93,3 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
     </St.WriterMain>
   );
 }
-// {
-//   /* <Button onClick={() => setOpen(true)}>모달열기</Button>; */
-// }

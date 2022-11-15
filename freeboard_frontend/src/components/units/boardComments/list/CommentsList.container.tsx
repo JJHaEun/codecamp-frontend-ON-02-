@@ -2,6 +2,8 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { MouseEvent } from "react";
 import {
+  IMutation,
+  IMutationDeleteBoardCommentArgs,
   IQuery,
   IQueryFetchBoardCommentsArgs,
 } from "../../../../commons/types/generated/types";
@@ -23,7 +25,10 @@ export default function CommentWritList() {
     },
   });
 
-  const [deleteBoardComment] = useMutation(DELETE_BOARD_COMMENT);
+  const [deleteBoardComment] = useMutation<
+    Pick<IMutation, "deleteBoardComment">,
+    IMutationDeleteBoardCommentArgs
+  >(DELETE_BOARD_COMMENT);
 
   const OnclickDeleteComment = async (event: MouseEvent<HTMLButtonElement>) => {
     if (confirm("삭제하시겠습니까?")) {
