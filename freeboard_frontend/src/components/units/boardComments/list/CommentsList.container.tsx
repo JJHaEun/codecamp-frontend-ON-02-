@@ -13,6 +13,7 @@ import {
 
 export default function CommentWritList() {
   const router = useRouter();
+
   const { data } = useQuery<
     Pick<IQuery, "fetchBoardComments">,
     IQueryFetchBoardCommentsArgs
@@ -21,10 +22,12 @@ export default function CommentWritList() {
       boardId: String(router.query._id),
     },
   });
+
   const [deleteBoardComment] = useMutation(DELETE_BOARD_COMMENT);
 
   const OnclickDeleteComment = async (event: MouseEvent<HTMLButtonElement>) => {
     if (confirm("삭제하시겠습니까?")) {
+      alert("삭제를 진행합니다");
     } else {
       return;
     }

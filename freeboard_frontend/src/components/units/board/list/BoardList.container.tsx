@@ -16,11 +16,11 @@ export default function BoardList() {
   );
 
   const onClickMoveNew = () => {
-    router.push("/boards/new");
+    void router.push("/boards/new");
   };
 
   const onClickMoveDetail = (event: MouseEvent<HTMLDivElement>) => {
-    router.push(`/boards/${event.currentTarget.id}`);
+    void router.push(`/boards/${event.currentTarget.id}`);
   };
   return (
     <BoardListUI

@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { ChangeEvent, useState } from "react";
 import { useRouter } from "next/router";
-
+import { Modal } from "antd";
 import BoardWriteUI from "./BoardWrite.presenter";
 import { CREATE_BOARD, FETCH_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
 import {
@@ -14,6 +14,7 @@ import {
 import { IBoardWriteProps, IUpdateBoardInput } from "./BoardWrite.types";
 
 export default function BoardWrite(props: IBoardWriteProps) {
+  const [open, setOpen] = useState(false);
   const router = useRouter();
   // 빈페이지로보내기
   // if(typeof router.query._id !== "string"){
@@ -125,7 +126,16 @@ export default function BoardWrite(props: IBoardWriteProps) {
         });
 
         alert("게시물이 성공적으로 등록되었습니다.");
-        router.push(`/boards/${result.data?.createBoard._id}`);
+        <Modal
+          title="게시글 등록"
+          centered
+          open={open}
+          onOk={() => setOpen(false)}
+          width={400}
+        >
+          <p>게시글이 등록되었습니다</p>
+        </Modal>;
+        void router.push(`/boards/${result.data?.createBoard._id ?? ""}`);
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -140,7 +150,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
         alert("변경사항이 없습니다");
         return;
       } else {
-        router.push(`/boards`);
+        void router.push(`/boards`);
         return;
       }
     }
@@ -158,7 +168,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
       });
 
       alert("게시물이 수정되었습니다");
-      router.push(`/boards`);
+      void router.push(`/boards`);
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message);
@@ -167,20 +177,22 @@ export default function BoardWrite(props: IBoardWriteProps) {
   };
 
   return (
-    <BoardWriteUI
-      onClickSignIn={onClickSignIn}
-      onClickUpdate={onClickUpdate}
-      onChangeWriter={onChangeWriter}
-      onChangePw={onChangePw}
-      onChangeTitle={onChangeTitle}
-      onChangeContents={onChangeContents}
-      writerEmpty={writerEmpty}
-      pwEmpty={pwEmpty}
-      titleEmpty={titleEmpty}
-      contentsEmpty={contentsEmpty}
-      bt={bt}
-      isEdit={props.isEdit}
-      data={data}
-    />
+    <>
+      <BoardWriteUI
+        onClickSignIn={onClickSignIn}
+        onClickUpdate={onClickUpdate}
+        onChangeWriter={onChangeWriter}
+        onChangePw={onChangePw}
+        onChangeTitle={onChangeTitle}
+        onChangeContents={onChangeContents}
+        writerEmpty={writerEmpty}
+        pwEmpty={pwEmpty}
+        titleEmpty={titleEmpty}
+        contentsEmpty={contentsEmpty}
+        bt={bt}
+        isEdit={props.isEdit}
+        data={data}
+      />
+    </>
   );
 }

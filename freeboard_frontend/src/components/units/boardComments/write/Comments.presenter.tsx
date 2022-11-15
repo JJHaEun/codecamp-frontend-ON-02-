@@ -1,5 +1,6 @@
 import * as St from "./Comments.styles";
 import { ICommentsWriteUIProps } from "./Comments.types";
+import { Rate } from "antd";
 
 export default function CommentsWriteUI(props: ICommentsWriteUIProps) {
   return (
@@ -24,6 +25,7 @@ export default function CommentsWriteUI(props: ICommentsWriteUIProps) {
                 onChange={props.onChangePassWord}
               />
             </St.InputGroup>
+            <Rate allowHalf onChange={props.onChangeStar} />
             <div>
               <St.TextArea
                 placeholder="여기에서 댓글을 작성하세요"

@@ -40,14 +40,14 @@ export default function BoardWriteFetchUI(props: IBoardWriteFetchUIProps) {
             </St.UnderVideo>
             <St.Score>
               <St.Count>
-                <St.Button2>
+                <St.Button2 onClick={props.onClickLike}>
                   <St.ScoreImg src="/like.png" />
                 </St.Button2>
 
                 <St.Count1>{props.data?.fetchBoard?.likeCount}</St.Count1>
               </St.Count>
               <St.Count>
-                <St.Button2>
+                <St.Button2 onClick={props.onClickDisLike}>
                   <St.ScoreImg src="/dislike.png" />
                 </St.Button2>
 

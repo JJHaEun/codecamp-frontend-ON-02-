@@ -14,10 +14,15 @@ export default function CommentsWrite() {
   const [writer, setWriter] = useState("");
   const [password, setPassword] = useState("");
   const [contents, setContents] = useState("");
+  const [value, setValue] = useState(1);
   const [createBoardComment] = useMutation<
     Pick<IMutation, "createBoardComment">,
     IMutationCreateBoardCommentArgs
   >(CREATE_BOARD_COMMENT);
+  const onChangeStar = (value: number) => {
+    setValue(value);
+  };
+
   const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) => {
     setWriter(event.target.value);
   };
@@ -30,14 +35,14 @@ export default function CommentsWrite() {
 
   const onClickCommentSubmit = async () => {
     try {
-      const result = await createBoardComment({
+      await createBoardComment({
         variables: {
           boardId: String(router.query._id),
           createBoardCommentInput: {
             writer,
             contents,
             password,
-            rating: 0,
+            rating: value,
           },
         },
         refetchQueries: [
@@ -59,6 +64,7 @@ export default function CommentsWrite() {
       onChangeWriter={onChangeWriter}
       onChangeComment={onChangeComment}
       onChangePassWord={onChangePassWord}
+      onChangeStar={onChangeStar}
     />
   );
 }

@@ -84,3 +84,6 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
     </St.WriterMain>
   );
 }
+// {
+//   /* <Button onClick={() => setOpen(true)}>모달열기</Button>; */
+// }

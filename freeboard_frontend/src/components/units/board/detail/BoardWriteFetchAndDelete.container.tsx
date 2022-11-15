@@ -2,13 +2,20 @@ import { useRouter } from "next/router";
 import { useQuery, useMutation } from "@apollo/client";
 
 import BoardWriteFetchUI from "./BoardWriteFetchAndDelete.presenter";
-import { FETCH_BOARD, DELETE_BOARD } from "./BoardWriteFetchAndDelete.queries";
+import {
+  FETCH_BOARD,
+  DELETE_BOARD,
+  LIKE_BOARD,
+  DISLIKE_BOARD,
+} from "./BoardWriteFetchAndDelete.queries";
 import {
   IQuery,
   IQueryFetchBoardArgs,
 } from "../../../../commons/types/generated/types";
 
 export default function BoardWriteFetch() {
+  const [likeBoard] = useMutation(LIKE_BOARD);
+  const [dislikeBoard] = useMutation(DISLIKE_BOARD);
   const [deleteBoard] = useMutation(DELETE_BOARD);
   const router = useRouter();
   const { data } = useQuery<Pick<IQuery, "fetchBoard">, IQueryFetchBoardArgs>(
@@ -19,22 +26,45 @@ export default function BoardWriteFetch() {
       },
     }
   );
-
+  const onClickLike = async () => {
+    try {
+      await likeBoard({
+        variables: {
+          boardId: router.query._id,
+        },
+        refetchQueries: [
+          { query: FETCH_BOARD, variables: { boardId: router.query._id } },
+        ],
+      });
+    } catch {}
+  };
+  const onClickDisLike = async () => {
+    try {
+      await dislikeBoard({
+        variables: {
+          boardId: router.query._id,
+        },
+        refetchQueries: [
+          { query: FETCH_BOARD, variables: { boardId: router.query._id } },
+        ],
+      });
+    } catch {}
+  };
   const onClickList = () => {
-    router.push(`/boards`);
+    void router.push(`/boards`);
   };
   const onClickUpdate = () => {
-    router.push(`/boards/${router.query._id}/edit`);
+    void router.push(`/boards/${router.query._id}/edit`);
   };
   const onClickDelete = async () => {
     try {
-      const result = await deleteBoard({
+      await deleteBoard({
         variables: {
           boardId: router.query._id,
         },
       });
       alert("삭제가 완료되었습니다.");
-      router.push(`/boards`);
+      void router.push(`/boards`);
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message);
@@ -48,6 +78,8 @@ export default function BoardWriteFetch() {
       onClickList={onClickList}
       onClickUpdate={onClickUpdate}
       onClickDelete={onClickDelete}
+      onClickLike={onClickLike}
+      onClickDisLike={onClickDisLike}
     />
   );
 }
