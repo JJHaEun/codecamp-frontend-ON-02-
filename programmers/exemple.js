@@ -812,3 +812,98 @@ function solution(s) {
     .join(" ");
   return answer;
 }
+
+//자연수 뒤집어 배열로 만들기**
+function solution(n) {
+  n = n.toString();
+  const answer = [];
+  for (let i = n.length - 1; i >= 0; i--) {
+    answer.push(Number(n[i]));
+  }
+  return answer;
+}
+
+// 메서드 사용법
+function solution(n) {
+  const answer = n
+    .toString()
+    .split("")
+    .reverse()
+    .map((num) => {
+      return Number(num);
+    });
+  return answer;
+}
+
+//   나누어 떨어지는 숫자 배열**
+function solution(arr, divisor) {
+  const answer = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] % divisor === 0) {
+      answer.push(arr[i]);
+    }
+  }
+  return answer.length === 0 ? [-1] : answer.sort((a, b) => a - b);
+}
+
+//메서드 사용법
+function solution(arr, divisor) {
+  const answer = arr.filter((number) => {
+    return number % divisor === 0; //나눴을때 나머지가 0인것만 필터로 걸러 배열로 만들어줌.
+  });
+
+  return answer.length === 0 ? [-1] : answer.sort((a, b) => a - b); //오름차순으로 sort
+}
+
+//콜라츠 추측**
+
+function solution(num) {
+  let answer = 0;
+  for (let i = 0; i < 500; i++) {
+    if (num === 1) {
+      break;
+    }
+    answer++;
+
+    if (num % 2 === 0) {
+      num = num / 2;
+    } else {
+      num = num * 3 + 1;
+    }
+  }
+  return num != 1 ? -1 : answer;
+}
+
+//**
+function solution(num) {
+  let answer = 0;
+  for (let i = 0; i < 500; i++) {
+    if (num === 1) {
+      return answer;
+    }
+    answer++;
+
+    if (num % 2 === 0) {
+      num = num / 2;
+    } else {
+      num = num * 3 + 1;
+    }
+  }
+  return -1;
+}
+
+//** 메서드 사용법. 다른 메서드들과는 다르게 위에서 쓴 for문이 더 효율적임. */
+
+function solution(num) {
+  let answer = 0;
+  //foreach 사용. 배열필요. 빈배열 만들기
+  new Array(500).fill(1).forEach((el) => {
+    if (num !== 1) {
+      // forEach문 중단위해 조건문을 넣음. break나 return 쓰지 못하기에.그래도 반복문을 종료하지는 않음.반복문 중단은 아니다. 배열만큼 돌고있다.
+      answer++;
+
+      num = num % 2 === 0 ? num / 2 : num * 3 + 1;
+    }
+  });
+  return num != 1 ? -1 : answer;
+}

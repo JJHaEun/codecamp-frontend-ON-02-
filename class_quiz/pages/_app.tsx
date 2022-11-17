@@ -1,17 +1,22 @@
-import "../styles/globals.css";
-import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+// import "../styles/globals.css";
 import "antd/dist/antd.css";
 import React from "react";
+import ApolloSetting from "../src/components/commons/apollo";
+import { AppProps } from "next/app";
+import { Global } from "@emotion/react";
+import { globalStyles } from "../src/commons/styles/globalStyles";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-function MyApp({ Component, pageProps }) {
-  const client = new ApolloClient({
-    uri: "http://practice.codebootcamp.co.kr/graphql",
-    cache: new InMemoryCache(),
-  });
+function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ApolloProvider client={client}>
-      <Component {...pageProps} />
-    </ApolloProvider>
+    <ApolloSetting>
+      <>
+        <Global styles={globalStyles} />
+
+        <Component {...pageProps} />
+      </>
+    </ApolloSetting>
   );
 }
 
