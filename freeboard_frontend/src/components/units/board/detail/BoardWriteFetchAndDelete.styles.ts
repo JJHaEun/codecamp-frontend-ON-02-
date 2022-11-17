@@ -18,9 +18,9 @@ export const MainBoard = styled.div`
     filter: blur(6px);
     background-size: cover;
   }
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+  // box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
   display: flex;
-  border: 2px solid #9bfa73;
+  // border: 2px solid #9bfa73;
 `;
 
 export const Image1 = styled.img`
@@ -68,6 +68,9 @@ export const Img3 = styled.img`
   width: 30px;
   height: 30px;
 `;
+
+export const Img4 = styled.img``;
+
 export const Title = styled.h2`
   margin-top: 80px;
   margin-bottom: 50px;
@@ -137,6 +140,7 @@ export const ButtonGroup = styled.div`
 `;
 
 export const Button1 = styled.button`
+  font-size: 16px;
   width: 179px;
   height: 52px;
   padding: 14px 60px;
@@ -161,8 +165,8 @@ export const Button1 = styled.button`
   }
 `;
 export const ButtonImg = styled.img`
-  width: 20px;
-  height: 15px;
+  width: 15px;
+  height: 10px;
   padding-right: 5px;
   padding-bottom: 1px;
   text-align: center;

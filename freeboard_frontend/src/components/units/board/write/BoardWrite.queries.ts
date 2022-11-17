@@ -11,6 +11,8 @@ export const CREATE_BOARD = gql`
       dislikeCount
       youtubeUrl
       images
+      boardAddress
+      createdAt
     }
   }
 `;
@@ -29,6 +31,15 @@ export const UPDATE_BOARD = gql`
       writer
       title
       contents
+      likeCount
+      dislikeCount
+      youtubeUrl
+      images
+      boardAddress {
+        zipcode
+        address
+        addressDetail
+      }
     }
   }
 `;
@@ -44,6 +55,11 @@ export const FETCH_BOARD = gql`
       createdAt
       images
       youtubeUrl
+      boardAddress {
+        zipcode
+        address
+        addressDetail
+      }
     }
   }
 `;

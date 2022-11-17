@@ -28,6 +28,7 @@ export const MainDiv = styled.div`
   flex-direction: column;
   justify-content: center;
 `;
+
 export const H1 = styled.h1`
   display: flex;
   justify-content: center;
@@ -63,6 +64,7 @@ export const Input2 = styled.input`
   border: 1px solid #bdbdbd;
   border-radius: 8px;
   padding-left: 5px;
+  font-size: 16px;
 `;
 export const Div2 = styled.div`
   margin-left: 101px;
@@ -120,6 +122,7 @@ export const InputR2 = styled.input`
 export const Bt = styled.button`
   width: 179px;
   height: 52px;
+  font-size: 16px;
   margin-bottom: 80px;
   background: ${(props: IBtProps) => (props.changes ? "#f0f8ff" : "none")};
   border: ${(props: IBtProps) =>
@@ -146,6 +149,7 @@ export const Bt1 = styled.button`
   color: #ffffff;
   background: black;
   cursor: pointer;
+  font-size: 16px;
 `;
 export const Empty = styled.div`
   color: red;

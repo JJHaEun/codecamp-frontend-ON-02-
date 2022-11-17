@@ -8,9 +8,15 @@ export const FETCH_BOARD = gql`
       contents
       likeCount
       dislikeCount
+
       createdAt
       images
       youtubeUrl
+      boardAddress {
+        zipcode
+        address
+        addressDetail
+      }
     }
   }
 `;

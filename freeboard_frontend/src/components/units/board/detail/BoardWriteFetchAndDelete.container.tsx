@@ -54,6 +54,7 @@ export default function BoardWriteFetch() {
     void router.push(`/boards`);
   };
   const onClickUpdate = () => {
+    if (typeof router.query._id !== "string") return;
     void router.push(`/boards/${router.query._id}/edit`);
   };
   const onClickDelete = async () => {

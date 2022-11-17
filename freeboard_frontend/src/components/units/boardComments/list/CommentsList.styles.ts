@@ -36,6 +36,7 @@ export const ButtonGroup = styled.div`
 `;
 
 export const Button = styled.button`
+  font-size: 16px;
   width: 80px;
   height: 30px;
   border-radius: 10px;
@@ -52,6 +53,7 @@ export const Button = styled.button`
   }
 `;
 export const Button2 = styled.button`
+  font-size: 16px;
   width: 80px;
   height: 30px;
   border-radius: 10px;

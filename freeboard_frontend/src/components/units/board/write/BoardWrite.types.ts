@@ -17,6 +17,10 @@ export interface IBoardWriteUIProps {
   onChangePw?: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangeTitle?: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangeContents?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  onChangeYoutubeUrl: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChangeAddressDetail: (event: ChangeEvent<HTMLInputElement>) => void;
+  onClickAddress: () => void;
+  onCompleteAddress: (data: any) => void;
   writerEmpty?: string;
   pwEmpty?: string;
   titleEmpty?: string;
@@ -24,7 +28,13 @@ export interface IBoardWriteUIProps {
   bt: boolean;
   isEdit: boolean;
   data?: Pick<IQuery, "fetchBoard">;
+
   // data: any;
+  isOpen: boolean;
+  zipcode: string;
+  address: string;
+  addressDetail: string;
+  youtubeUrl: string;
 }
 export interface IBtProps {
   changes: boolean;
@@ -33,4 +43,10 @@ export interface IUpdateBoardInput {
   writer?: string;
   contents?: string;
   title?: string;
+  youtubeUrl?: string;
+  boardAddress?: {
+    zipcode?: string;
+    address?: string;
+    addressDetail?: string;
+  };
 }

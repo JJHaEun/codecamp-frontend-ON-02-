@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Rate } from "antd";
 
 export const Max = styled.div`
   display: flex;
@@ -31,6 +32,9 @@ export const InPut = styled.input`
 export const Under = styled.div`
   display: flex;
   flex-direction: column;
+`;
+export const Star = styled(Rate)`
+  margin-bottom: 5px;
 `;
 export const TextArea = styled.textarea`
   resize: none;

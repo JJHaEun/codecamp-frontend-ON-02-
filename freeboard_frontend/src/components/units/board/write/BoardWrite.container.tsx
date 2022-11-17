@@ -12,8 +12,8 @@ import {
   IQueryFetchBoardArgs,
 } from "../../../../commons/types/generated/types";
 import { IBoardWriteProps, IUpdateBoardInput } from "./BoardWrite.types";
-
 import { Modal } from "antd";
+import { Address } from "react-daum-postcode";
 
 export default function BoardWrite(props: IBoardWriteProps) {
   const router = useRouter();
@@ -31,11 +31,15 @@ export default function BoardWrite(props: IBoardWriteProps) {
     }
   );
   const [bt, setBt] = useState(false);
-
+  const [isOpen, setIsOpen] = useState(false);
   const [writer, setWriter] = useState("");
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
   const [pw, setPw] = useState("");
+  const [youtubeUrl, setYoutubeUrl] = useState("");
+  const [zipcode, setZipcode] = useState("");
+  const [address, setAddress] = useState("");
+  const [addressDetail, setAddressDetail] = useState("");
 
   const [writerEmpty, setWriterEmpty] = useState("");
   const [pwEmpty, setPwEmpty] = useState("");
@@ -99,7 +103,23 @@ export default function BoardWrite(props: IBoardWriteProps) {
       setBt(false);
     }
   };
+  const onChangeYoutubeUrl = (event: ChangeEvent<HTMLInputElement>) => {
+    setYoutubeUrl(event.target.value);
+  };
 
+  const onChangeAddressDetail = (event: ChangeEvent<HTMLInputElement>) => {
+    setAddressDetail(event.target.value);
+  };
+
+  const onClickAddress = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  const onCompleteAddress = (address: Address) => {
+    setAddress(address.address);
+    setZipcode(address.zonecode);
+    setIsOpen((prev) => !prev);
+  };
   const onClickSignIn = async () => {
     try {
       if (!writer) {
@@ -122,6 +142,12 @@ export default function BoardWrite(props: IBoardWriteProps) {
               writer,
               title,
               contents,
+              youtubeUrl,
+              boardAddress: {
+                zipcode,
+                address,
+                addressDetail,
+              },
             },
           },
         });
@@ -135,7 +161,14 @@ export default function BoardWrite(props: IBoardWriteProps) {
   };
 
   const onClickUpdate = async () => {
-    if (!title && !contents) {
+    if (
+      !title &&
+      !contents &&
+      !youtubeUrl &&
+      !zipcode &&
+      !address &&
+      !addressDetail
+    ) {
       if (confirm("수정하시겠습니까?")) {
         alert("변경사항이 없습니다");
         return;
@@ -145,21 +178,37 @@ export default function BoardWrite(props: IBoardWriteProps) {
       }
     }
     const updateBoardInput: IUpdateBoardInput = {};
+
     if (writer) updateBoardInput.writer = writer;
     if (title) updateBoardInput.title = title;
     if (contents) updateBoardInput.contents = contents;
+    if (youtubeUrl) updateBoardInput.youtubeUrl = youtubeUrl;
+    // if (zipcode || address || addressDetail) {
+    updateBoardInput.boardAddress = {};
+    if (zipcode) updateBoardInput.boardAddress.zipcode = zipcode;
+    if (address) updateBoardInput.boardAddress.address = address;
+    if (addressDetail)
+      updateBoardInput.boardAddress.addressDetail = addressDetail;
+    // }
     try {
       await updateBoard({
         variables: {
           boardId: String(router.query._id),
           password: pw,
-          updateBoardInput,
+          updateBoardInput: {
+            youtubeUrl,
+            boardAddress: {
+              zipcode,
+              address,
+              addressDetail,
+            },
+          },
         },
       });
 
-      alert("게시물이 수정되었습니다");
+      // alert("게시물이 수정되었습니다");
       success();
-      void router.push(`/boards`);
+      void router.push(`/boards/`);
     } catch (error) {
       // if (error instanceof Error) alert(error.message);
       if (error instanceof Error) Modal.error({ content: error.message });
@@ -182,6 +231,15 @@ export default function BoardWrite(props: IBoardWriteProps) {
         bt={bt}
         isEdit={props.isEdit}
         data={data}
+        onChangeYoutubeUrl={onChangeYoutubeUrl}
+        onChangeAddressDetail={onChangeAddressDetail}
+        onClickAddress={onClickAddress}
+        onCompleteAddress={onCompleteAddress}
+        isOpen={isOpen}
+        zipcode={zipcode}
+        address={address}
+        addressDetail={addressDetail}
+        youtubeUrl={youtubeUrl}
       />
     </>
   );
