@@ -10,16 +10,11 @@ export default function LayOutBannerUI() {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    autoplay: true,
   };
   return (
     <S.Banner>
-      <Slider
-        dots={settings.dots}
-        infinite={settings.infinite}
-        speed={settings.speed}
-        slidesToShow={settings.slidesToShow}
-        slidesToScroll={settings.slidesToScroll}
-      >
+      <Slider {...settings}>
         <div>
           <S.Img src="/undraw_Beach_day.png" />
         </div>

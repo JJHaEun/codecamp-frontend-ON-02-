@@ -907,3 +907,82 @@ function solution(num) {
   });
   return num != 1 ? -1 : answer;
 }
+
+//(배열에서)두개 뽑아서 더하기***
+function solution(numbers) {
+  const answer = [];
+
+  for (let i = 0; i < numbers.length; i++) {
+    //현재 0번째 인덱스를 가지고 있으니 첫번째 인덱스부터 배열끝까지  가져오기
+    for (let j = i + 1; j < numbers.length; j++) {
+      const sum = numbers[i] + numbers[j];
+      if (answer.includes(sum) === false) {
+        //answer에 sum이 포함되지 암ㅎ으면 answer에 담아주기(중복제거)
+        answer.push(sum);
+      }
+    }
+  }
+
+  return answer.sort((a, b) => a - b);
+}
+//** */
+
+new Set();
+a = new Set([1, 2, 3, 4, 5, 6]);
+//특징. 배열형태를 가지는 객체데이터., 인덱스갑도 가지고, 데이터 넣어줄 수 있다.다만, 배열은 아님.
+///고유한값만 저장이됨(즉, 중복되는 데이터 들어오지 않음
+// 또는 new Set([]);
+
+//데이터 추가
+// a.add(추가할 데이터)
+
+//데이터 삭제
+//a.delete(삭제할데이터)
+
+//데이터조회
+//a.has(조회할데이터) ==>true,false로 나옴
+
+//데이터 길이조회
+//a.size
+
+//데이터 비우기
+//a.clear()
+
+//배열로 변환
+
+b = Array.from(a);
+
+//반복문
+a.forEach((el) => {
+  console.log(el); // ==>각각의 숫자를 받아오게됨
+});
+
+//new Set을 이용한 방법******!!
+function solution(numbers) {
+  const answer = new Set([]);
+
+  for (let i = 0; i < numbers.length; i++) {
+    //현재 0번째 인덱스를 가지고 있으니 첫번째 인덱스부터 배열끝까지  가져오기
+    for (let j = i + 1; j < numbers.length; j++) {
+      const sum = numbers[i] + numbers[j];
+      answer.add(sum);
+    }
+  }
+
+  return Array.from(answer).sort((a, b) => a - b);
+  // return [...answer].sort((a,b)=>a-b) 이렇게도 표현가능.
+}
+//forEach 사용
+function solution(numbers) {
+  const answer = new Set([]);
+
+  numbers.forEach((num1, i) => {
+    number
+      .slice(i + 1, number.length) // 앞에꺼부터자르며 맨뒤인덱스제외하고.즉 현재의 다음꺼부터배열의 맨뒤꺼 까지
+      .forEach((num2) => {
+        const sum = num1 + num2;
+        answer.add(sum); // 배열의 answer.push와 동일.
+      });
+  });
+  return Array.from(answer).sort((a, b) => a - b);
+}

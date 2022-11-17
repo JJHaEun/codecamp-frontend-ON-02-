@@ -19,6 +19,7 @@ export const Column = styled.div`
   cursor: pointer;
   font-weight: 800;
 `;
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const Column_1 = styled.div`
   width: 25%;
   cursor: pointer;
@@ -42,6 +43,7 @@ export const Column1 = styled.div`
   text-align: center;
   font-weight: 800;
 `;
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const Column1_1 = styled.div`
   width: 25%;
   text-align: center;
