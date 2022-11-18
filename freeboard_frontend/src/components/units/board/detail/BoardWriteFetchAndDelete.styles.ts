@@ -8,8 +8,8 @@ export const MainBoard = styled.div`
   :before {
     content: "";
     position: absolute;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.001), rgba(0, 0, 0, 0.01)),
-      url("https://source.unsplash.com/featured/?vacation");
+    background-image: url("https://source.unsplash.com/featured/?vacation");
+    opacity: 0.3;
     top: 0;
     left: 0;
     right: 0;

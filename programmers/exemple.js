@@ -986,3 +986,84 @@ function solution(numbers) {
   });
   return Array.from(answer).sort((a, b) => a - b);
 }
+// 11/18
+
+// 두 점수사이의 합 구하기 프로그래머스.**
+function solution(a, b) {
+  //두 점수가 같으면 아무거나 리턴,
+  // 둘의 대소관계는 정해지 있지않음.
+  // a가 3이고, b가 5이면
+  //3+ 4+ 5 =12를 리턴.
+  let answer = 0;
+
+  if (a === b) {
+    return a; //또는 B리턴
+  } else {
+    //최솟값
+    //반복문이 실행될 때 설정되는 초기값(a와 b중 작은값이 들어온다.
+    // const start =  a > b ?  b : a
+    const start = Math.min(a, b); // 둘중 작은값을 start에 넣어준다.
+
+    //최댓값 구하기.
+    //반복문이 종료되는 시점 설정
+    //a와 b중 큰값이 들어오게됨.
+    // const end = a > b ? a : b;
+    const end = Math.max(a, b);
+
+    for (let i = start; i <= end; i++) {
+      answer += i;
+    }
+  }
+  return answer;
+}
+
+//정수 제곱근판별**
+function solution(n) {
+  // 제곱근. 제곱의 기준이되는 숫자. 즉, 원래의 숫자.
+  // 그 숫자로 제곱을 한것이 제곱근
+  let answer = -1;
+
+  for (let i = 1; i * i <= n; i++) {
+    if (i * i === n) {
+      //제곱근을 찾은경우
+      answer = i + 1;
+      return answer * answer;
+    }
+  }
+  //제곱근 찾지못한경우
+  return answer;
+}
+
+//******** */
+function solution(n) {
+  // 제곱근. 제곱의 기준이되는 숫자. 즉, 원래의 숫자.
+  // 그 숫자로 제곱을 한것이 제곱근
+  let answer = -1;
+
+  for (let i = 1; i * i <= n; i++) {
+    if (i * i === n) {
+      //제곱근을 찾은경우
+      // return i +1 * i+1
+      //앞에는 제곱할 숫자. **하고 몇제곱할건지.
+      //거듭제곱연산자
+      return (i + 1) ** 2;
+    }
+  }
+  //제곱근 찾지못한경우
+  return answer;
+}
+
+//메서드 이용법 *****
+function solution(n) {
+  //메서드 이용
+  let sqrt = Math.sqrt(n); // 해당 숫자가 제곱이라면 제곱근찾아서 해당 변수에담아줌.
+  //정수인지 아닌지 boolean으로판단
+  if (Number.isInteger(sqrt)) {
+    //true인경우(제곱근이 있는경우)
+    // return (sqrt + 1) ** 2
+    //거듭제곱 메서드사용법
+    return Math.pow(sqrt + 1, 2); // 앞의 숫자를 두번째 인자값(2니까 제곱) 해주겠다.
+  } else {
+    return -1;
+  }
+}

@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from "@apollo/client";
+// import { Modal } from "antd";
 import { useRouter } from "next/router";
 import { ChangeEvent, MouseEvent, useState } from "react";
 import {
@@ -7,16 +8,19 @@ import {
   IQuery,
   IQueryFetchBoardCommentsArgs,
 } from "../../../../commons/types/generated/types";
+// import { success } from "../../board/alert/Alert";
 import CommentWritListUI from "./CommentsList.presenter";
 import {
   FETCH_BOARD_COMMENT,
   DELETE_BOARD_COMMENT,
+  // UPDATE_BOARD_COMMENT,
 } from "./CommentsList.queries";
 
 export default function CommentWritList() {
   const router = useRouter();
+  // const [isEdit, setIsEdit] = useState(false);
 
-  const { data } = useQuery<
+  const { data, fetchMore } = useQuery<
     Pick<IQuery, "fetchBoardComments">,
     IQueryFetchBoardCommentsArgs
   >(FETCH_BOARD_COMMENT, {
@@ -27,11 +31,20 @@ export default function CommentWritList() {
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [boardCommentId, setBoardCommentId] = useState("");
   const [password, setPassword] = useState("");
+  // const [contents, setContents] = useState("");
+  // const [value, setValue] = useState(1);
+
+  // const onClickEdit = () => {
+  //   setIsEdit((prev) => !prev);
+  // };
   const [deleteBoardComment] = useMutation<
     Pick<IMutation, "deleteBoardComment">,
     IMutationDeleteBoardCommentArgs
   >(DELETE_BOARD_COMMENT);
-
+  // const [updateBoardComment] = useMutation<
+  //   Pick<IMutation, "updateBoardComment">,
+  //   IMutationUpdateBoardCommentArgs
+  // >(UPDATE_BOARD_COMMENT);
   const OnclickDeleteComment = async (event: MouseEvent<HTMLButtonElement>) => {
     try {
       await deleteBoardComment({
@@ -48,6 +61,7 @@ export default function CommentWritList() {
         ],
       });
       setIsOpenDelete((prev) => !prev);
+      // 삭제완료 창  띄면 좋을것.
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message);
@@ -55,7 +69,9 @@ export default function CommentWritList() {
     }
   };
 
-  const onClickOpenDeleteModal = (event: MouseEvent<HTMLButtonElement>) => {
+  const onClickcheckPermissionDeleteModal = (
+    event: MouseEvent<HTMLButtonElement>
+  ) => {
     setBoardCommentId(event.currentTarget.id);
     setIsOpenDelete((prev) => !prev);
   };
@@ -73,6 +89,53 @@ export default function CommentWritList() {
     setIsOpenDelete((prev) => !prev);
     void router.push(`/boards/${router.query._id}`);
   };
+
+  // const onClickEditFinish = async () => {
+  //   if (!contents) {
+  //     if (confirm("수정하시겠습니까?")) {
+  //       alert("변경사항이 없습니다");
+  //       return;
+  //     } else {
+  //       void router.push(`/boards`);
+  //       return;
+  //     }
+  //   }
+  //   try {
+  //     await updateBoardComment({
+  //       variables: {
+  //         boardCommentId: String(router.query._id),
+  //         password,
+  //         updateBoardCommentInput: {
+  //           contents,
+  //           rating: value,
+  //         },
+  //       },
+  //     });
+  //     success();
+  //   } catch (error) {
+  //     if (error instanceof Error) Modal.error({ content: error.message });
+  //   }
+  // };
+  const onLoadMore = () => {
+    if (data === undefined) return;
+    void fetchMore({
+      variables: { page: Math.ceil(data?.fetchBoardComments?.length / 10) + 1 },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (fetchMoreResult.fetchBoardComments === undefined) {
+          return {
+            fetchBoards: [...prev.fetchBoardComments],
+          };
+        }
+        return {
+          fetchBoards: [
+            ...prev.fetchBoardComments,
+            ...fetchMoreResult.fetchBoardComments,
+          ],
+        };
+      },
+    });
+  };
+
   return (
     <CommentWritListUI
       data={data}
@@ -80,8 +143,10 @@ export default function CommentWritList() {
       handleCancel={handleCancel}
       OnclickDeleteComment={OnclickDeleteComment}
       OnClickCommentsBody={OnClickCommentsBody}
-      onClickOpenDeleteModal={onClickOpenDeleteModal}
+      onClickcheckPermissionDeleteModal={onClickcheckPermissionDeleteModal}
       onChangeDeletePassword={onChangeDeletePassword}
+      // onClickEdit={onClickEdit}
+      onLoadMore={onLoadMore}
     />
   );
 }

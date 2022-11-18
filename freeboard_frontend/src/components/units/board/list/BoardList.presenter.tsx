@@ -1,3 +1,4 @@
+import Pagenation01 from "../../../commons/pagenation/01/pagenation01.container";
 import { getDate } from "../../../commons/utils/utils";
 import * as S from "./BoardList.styles";
 import { IBoardListUIProps } from "./BoardList.types";
@@ -7,7 +8,7 @@ export default function BoardListUI(props: IBoardListUIProps) {
     <S.All>
       <S.Page>
         {/* <S.Upper></S.Upper> */}
-        <S.H1title>우리의 휴식~</S.H1title>
+        <S.H1title>우리들의 휴식</S.H1title>
         <S.Div>
           <S.Max>
             <S.Row>
@@ -29,6 +30,7 @@ export default function BoardListUI(props: IBoardListUIProps) {
         <S.Bt>
           <S.Send onClick={props.onClickMoveNew}>등록하기</S.Send>
         </S.Bt>
+        <Pagenation01 refetch={props.refetch} countBoards={props.countBoards} />
       </S.Page>
     </S.All>
   );

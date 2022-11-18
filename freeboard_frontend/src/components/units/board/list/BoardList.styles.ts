@@ -76,18 +76,17 @@ export const Page = styled.div`
   width: 1200px;
   height: 1562px;
 
-  
   :before {
     content: "";
     position: absolute;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.001), rgba(0, 0, 0, 0.01)),
-      url("https://source.unsplash.com/featured/?autumn");
+    background-image: url("https://source.unsplash.com/featured/?sky");
+    opacity: 0.3;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: -1;
-    filter: blur(6px);
+    filter: blur(8px);
     background-size: cover;
   }
 
@@ -95,8 +94,6 @@ export const Page = styled.div`
   flex-direction: column;
   // box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
   // border: 2px solid #9bfa73;
-  
-  }
 `;
 export const All = styled.div`
   display: flex;

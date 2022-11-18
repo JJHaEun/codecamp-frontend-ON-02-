@@ -11,7 +11,11 @@ export const CREATE_BOARD = gql`
       dislikeCount
       youtubeUrl
       images
-      boardAddress
+      boardAddress {
+        zipcode
+        address
+        addressDetail
+      }
       createdAt
     }
   }

@@ -5,12 +5,13 @@ import Slider from "react-slick";
 
 export default function LayOutBannerUI() {
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
-    speed: 500,
+    speed: 600,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
+    autoplaySpeed: 4000,
   };
   return (
     <S.Banner>

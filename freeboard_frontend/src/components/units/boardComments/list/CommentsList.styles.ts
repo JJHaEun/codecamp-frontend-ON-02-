@@ -72,3 +72,7 @@ export const ButtonImg = styled.img`
   width: 25px;
   height: 25px;
 `;
+export const Scroll = styled.div`
+  height: 700px;
+  overflow: auto;
+`;

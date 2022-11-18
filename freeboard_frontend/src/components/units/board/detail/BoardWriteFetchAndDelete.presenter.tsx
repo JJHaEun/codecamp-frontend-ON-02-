@@ -23,12 +23,14 @@ export default function BoardWriteFetchUI(props: IBoardWriteFetchUIProps) {
             <St.TopRight>
               <St.Img3 src="/link.png"></St.Img3>
               <div>
-                <Tooltip
-                  color="geekblue"
-                  title={`${props.data?.fetchBoard.boardAddress?.address}     ${props.data?.fetchBoard.boardAddress.addressDetail}`}
-                >
-                  <St.Img4 src="/location.png" />
-                </Tooltip>
+                {props.data?.fetchBoard.boardAddress && (
+                  <Tooltip
+                    color="geekblue"
+                    title={`${props.data?.fetchBoard.boardAddress?.address} ${props.data?.fetchBoard.boardAddress?.addressDetail}`}
+                  >
+                    <St.Img4 src="/location.png" />
+                  </Tooltip>
+                )}
               </div>
             </St.TopRight>
           </St.Top>

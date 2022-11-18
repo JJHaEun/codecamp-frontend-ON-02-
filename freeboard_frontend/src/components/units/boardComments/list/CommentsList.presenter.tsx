@@ -2,6 +2,7 @@ import { getDate } from "../../../commons/utils/utils";
 import { ICommentWritListUIProps } from "./CommentsList.types";
 import * as S from "./CommentsList.styles";
 import { Rate, Modal } from "antd";
+import InfiniteScroll from "react-infinite-scroller";
 
 export default function CommentWritListUI(props: ICommentWritListUIProps) {
   return (
@@ -19,35 +20,47 @@ export default function CommentWritListUI(props: ICommentWritListUIProps) {
         </Modal>
       )}
       <S.CommentList>
-        {props.data?.fetchBoardComments.map((el: any) => (
-          <S.All
-            key={el._id}
-            id={el.writer}
-            onClick={props.OnClickCommentsBody}
+        <S.Scroll>
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={props.onLoadMore}
+            hasMore={true}
+            useWindow={false}
           >
-            <S.Img src="/messenger.png"></S.Img>
+            {props.data?.fetchBoardComments.map((el) => (
+              <S.All
+                key={el._id}
+                id={el.writer}
+                onClick={props.OnClickCommentsBody}
+              >
+                <S.Img src="/messenger.png"></S.Img>
 
-            <div>
-              <Rate allowHalf disabled value={el?.rating} />
-              <S.Writer>{el?.writer}</S.Writer>
-              <S.Contents>{el?.contents}</S.Contents>
-              <S.Date>{getDate(el?.createdAt)}</S.Date>
-              <S.ButtonGroup>
                 <div>
-                  <S.Button>수정</S.Button>
+                  <Rate allowHalf disabled value={el?.rating} />
+                  <S.Writer>{el?.writer}</S.Writer>
+                  <S.Contents>{el?.contents}</S.Contents>
+                  <S.Date>{getDate(el?.createdAt)}</S.Date>
+                  <S.ButtonGroup>
+                    <div>
+                      <S.Button>수정</S.Button>
+                    </div>
+                    <div>
+                      <S.Button2
+                        id={el._id}
+                        onClick={props.onClickcheckPermissionDeleteModal}
+                      >
+                        <S.ButtonImg
+                          id={el._id}
+                          src="/delete-button.png"
+                        ></S.ButtonImg>
+                      </S.Button2>
+                    </div>
+                  </S.ButtonGroup>
                 </div>
-                <div>
-                  <S.Button2 id={el._id} onClick={props.onClickOpenDeleteModal}>
-                    <S.ButtonImg
-                      id={el._id}
-                      src="/delete-button.png"
-                    ></S.ButtonImg>
-                  </S.Button2>
-                </div>
-              </S.ButtonGroup>
-            </div>
-          </S.All>
-        ))}
+              </S.All>
+            ))}
+          </InfiniteScroll>
+        </S.Scroll>
       </S.CommentList>
     </div>
   );
