@@ -2,9 +2,10 @@ import { getDate } from "../../../commons/utils/utils";
 import * as St from "./BoardWriteFetchAndDelete.styles";
 import { IBoardWriteFetchUIProps } from "./BoardWriterFetchAndDelete.types";
 import { Tooltip } from "antd";
+import ReactPlayer from "react-player/youtube";
 
 export default function BoardWriteFetchUI(props: IBoardWriteFetchUIProps) {
-  console.log(props.data?.fetchBoard.boardAddress?.address);
+  console.log(props.data?.fetchBoard?.boardAddress?.address);
   return (
     <St.Max>
       <St.MainBoard>
@@ -21,12 +22,24 @@ export default function BoardWriteFetchUI(props: IBoardWriteFetchUIProps) {
             </St.TopLeft>
 
             <St.TopRight>
-              <St.Img3 src="/link.png"></St.Img3>
+              <div>
+                {props.data?.fetchBoard.youtubeUrl && (
+                  <Tooltip
+                    placement="topRight"
+                    color="cyan"
+                    title={`${props.data?.fetchBoard.youtubeUrl}`}
+                  >
+                    <St.Img3 src="/link.png" />
+                  </Tooltip>
+                )}
+              </div>
+
               <div>
                 {props.data?.fetchBoard.boardAddress && (
                   <Tooltip
+                    placement="topRight"
                     color="geekblue"
-                    title={`${props.data?.fetchBoard.boardAddress?.address} ${props.data?.fetchBoard.boardAddress?.addressDetail}`}
+                    title={`${props.data?.fetchBoard.boardAddress?.address}  ${props.data?.fetchBoard.boardAddress?.addressDetail}`}
                   >
                     <St.Img4 src="/location.png" />
                   </Tooltip>
@@ -47,22 +60,46 @@ export default function BoardWriteFetchUI(props: IBoardWriteFetchUIProps) {
           </St.MainMiddle>
           <div>
             <St.UnderVideo>
-              <img src="/video.png" />
+              <St.VideoBox>
+                <ReactPlayer
+                  className="react-player"
+                  url={`${props.data?.fetchBoard.youtubeUrl}`} // 플레이어 url
+                  playing={true}
+                  muted={true}
+                  controls={true}
+                  light={false}
+                  pip={true} // pip 모드 설정 여부
+                />
+              </St.VideoBox>
             </St.UnderVideo>
             <St.Score>
               <St.Count>
                 <St.Button2 onClick={props.onClickLike}>
-                  <St.ScoreImg src="/like.png" />
+                  <Tooltip
+                    placement="topRight"
+                    color="magenta"
+                    title={`${props.data?.fetchBoard?.likeCount}`}
+                  >
+                    <St.ScoreImg src="/like.png" />
+                  </Tooltip>
                 </St.Button2>
-
-                <St.Count1>{props.data?.fetchBoard?.likeCount}</St.Count1>
+                <St.likeCountNumber>
+                  {props.data?.fetchBoard?.likeCount}
+                </St.likeCountNumber>
               </St.Count>
               <St.Count>
                 <St.Button2 onClick={props.onClickDisLike}>
-                  <St.ScoreImg src="/dislike.png" />
+                  <Tooltip
+                    placement="topRight"
+                    color="gold"
+                    title={`${props.data?.fetchBoard?.dislikeCount}`}
+                  >
+                    <St.ScoreImg src="/dislike.png" />
+                  </Tooltip>
+                  <St.DislikeCountNumber>
+                    {props.data?.fetchBoard?.dislikeCount}
+                  </St.DislikeCountNumber>
                 </St.Button2>
-
-                <St.Count2>{props.data?.fetchBoard?.dislikeCount}</St.Count2>
               </St.Count>
             </St.Score>
           </div>

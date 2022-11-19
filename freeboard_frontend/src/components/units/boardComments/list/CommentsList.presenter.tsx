@@ -27,12 +27,8 @@ export default function CommentWritListUI(props: ICommentWritListUIProps) {
             hasMore={true}
             useWindow={false}
           >
-            {props.data?.fetchBoardComments.map((el) => (
-              <S.All
-                key={el._id}
-                id={el.writer}
-                onClick={props.OnClickCommentsBody}
-              >
+            {props.data?.fetchBoardComments.map((el, index) => (
+              <S.All key={el._id} id={el.writer}>
                 <S.Img src="/messenger.png"></S.Img>
 
                 <div>
@@ -58,7 +54,7 @@ export default function CommentWritListUI(props: ICommentWritListUIProps) {
                   </S.ButtonGroup>
                 </div>
               </S.All>
-            ))}
+            )) ?? <div></div>}
           </InfiniteScroll>
         </S.Scroll>
       </S.CommentList>

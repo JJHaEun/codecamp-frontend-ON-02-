@@ -13,6 +13,11 @@ export const Row = styled.div`
   border-top: 1px solid #a0dfe1;
   height: 9.1%;
   align-items: center;
+  :hover {
+    text-decoration: underline;
+    text-underline-position: under;
+    color: #22d6b2;
+  }
 `;
 export const Column = styled.div`
   width: 25%;
@@ -24,11 +29,6 @@ export const Column_1 = styled.div`
   width: 25%;
   cursor: pointer;
   font-size: 20px;
-  :hover {
-    text-decoration: underline;
-    text-underline-position: under;
-    color: #22d6b2;
-  }
 `;
 export const Column2 = styled.div`
   width: 25%;
@@ -108,10 +108,5 @@ export const H1title = styled.h1`
   font-size: 50px;
   background: linear-gradient(to left, #6666cc, #33cccc);
   color: transparent;
-  -webkit-background-clip: text;
+  background-clip: text;
 `;
-// export const Upper = styled.div`
-//   width: 1200px;
-//   height: 550px;
-//   background-image: url("https://source.unsplash.com/featured/?spring");
-// `;

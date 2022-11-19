@@ -45,7 +45,7 @@ export const Button = styled.button`
   margin-left: 20px;
   background: linear-gradient(to right top, #861657, #ffa69e);
   color: transparent;
-  -webkit-background-clip: text;
+  background-clip: text;
   cursor: pointer;
   :active {
     position: relative;

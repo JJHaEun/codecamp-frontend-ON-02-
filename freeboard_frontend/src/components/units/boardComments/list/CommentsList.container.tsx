@@ -18,7 +18,7 @@ import {
 
 export default function CommentWritList() {
   const router = useRouter();
-  // const [isEdit, setIsEdit] = useState(false);
+  // const [currentIndex, setCurrentIndex] = useState(0);
 
   const { data, fetchMore } = useQuery<
     Pick<IQuery, "fetchBoardComments">,
@@ -28,14 +28,15 @@ export default function CommentWritList() {
       boardId: String(router.query._id),
     },
   });
+  console.log(data?.fetchBoardComments);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [boardCommentId, setBoardCommentId] = useState("");
   const [password, setPassword] = useState("");
   // const [contents, setContents] = useState("");
   // const [value, setValue] = useState(1);
 
-  // const onClickEdit = () => {
-  //   setIsEdit((prev) => !prev);
+  // const onClickEdit = (event: MouseEvent<HTMLButtonElement>) => {
+  //   setCurrentIndex(Number(event.currentTarget.id));
   // };
   const [deleteBoardComment] = useMutation<
     Pick<IMutation, "deleteBoardComment">,
@@ -45,7 +46,8 @@ export default function CommentWritList() {
   //   Pick<IMutation, "updateBoardComment">,
   //   IMutationUpdateBoardCommentArgs
   // >(UPDATE_BOARD_COMMENT);
-  const OnclickDeleteComment = async (event: MouseEvent<HTMLButtonElement>) => {
+  const OnclickDeleteComment = async (event: MouseEvent<HTMLElement>) => {
+    if (!(event.target instanceof HTMLElement)) return;
     try {
       await deleteBoardComment({
         variables: {
@@ -63,9 +65,7 @@ export default function CommentWritList() {
       setIsOpenDelete((prev) => !prev);
       // 삭제완료 창  띄면 좋을것.
     } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message);
-      }
+      if (error instanceof Error) alert(error.message);
     }
   };
 
@@ -76,10 +76,6 @@ export default function CommentWritList() {
     setIsOpenDelete((prev) => !prev);
   };
 
-  const OnClickCommentsBody = (event: MouseEvent<HTMLDivElement>) => {
-    event.stopPropagation();
-    alert(event.currentTarget.id + "님이 작성한 글입니다");
-  };
   const onChangeDeletePassword = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
@@ -116,18 +112,18 @@ export default function CommentWritList() {
   //     if (error instanceof Error) Modal.error({ content: error.message });
   //   }
   // };
-  const onLoadMore = () => {
-    if (data === undefined) return;
-    void fetchMore({
+  const onLoadMore = async () => {
+    if (!data) return;
+    await fetchMore({
       variables: { page: Math.ceil(data?.fetchBoardComments?.length / 10) + 1 },
       updateQuery: (prev, { fetchMoreResult }) => {
         if (fetchMoreResult.fetchBoardComments === undefined) {
           return {
-            fetchBoards: [...prev.fetchBoardComments],
+            fetchBoardComments: [...prev.fetchBoardComments],
           };
         }
         return {
-          fetchBoards: [
+          fetchBoardComments: [
             ...prev.fetchBoardComments,
             ...fetchMoreResult.fetchBoardComments,
           ],
@@ -138,11 +134,11 @@ export default function CommentWritList() {
 
   return (
     <CommentWritListUI
+      // currentIndex={currentIndex}
       data={data}
       isOpenDelete={isOpenDelete}
       handleCancel={handleCancel}
       OnclickDeleteComment={OnclickDeleteComment}
-      OnClickCommentsBody={OnClickCommentsBody}
       onClickcheckPermissionDeleteModal={onClickcheckPermissionDeleteModal}
       onChangeDeletePassword={onChangeDeletePassword}
       // onClickEdit={onClickEdit}

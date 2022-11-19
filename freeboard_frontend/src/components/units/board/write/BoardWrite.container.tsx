@@ -183,35 +183,27 @@ export default function BoardWrite(props: IBoardWriteProps) {
     if (title) updateBoardInput.title = title;
     if (contents) updateBoardInput.contents = contents;
     if (youtubeUrl) updateBoardInput.youtubeUrl = youtubeUrl;
-    // if (zipcode || address || addressDetail) {
-    updateBoardInput.boardAddress = {};
-    if (zipcode) updateBoardInput.boardAddress.zipcode = zipcode;
-    if (address) updateBoardInput.boardAddress.address = address;
-    if (addressDetail)
-      updateBoardInput.boardAddress.addressDetail = addressDetail;
-    // }
+    if (zipcode || address || addressDetail) {
+      updateBoardInput.boardAddress = {};
+      if (zipcode) updateBoardInput.boardAddress.zipcode = zipcode;
+      if (address) updateBoardInput.boardAddress.address = address;
+      if (addressDetail)
+        updateBoardInput.boardAddress.addressDetail = addressDetail;
+    }
     try {
-      await updateBoard({
+      const result = await updateBoard({
         variables: {
           boardId: String(router.query._id),
           password: pw,
-          updateBoardInput: {
-            youtubeUrl,
-            boardAddress: {
-              zipcode,
-              address,
-              addressDetail,
-            },
-          },
+          updateBoardInput,
         },
       });
 
       // alert("게시물이 수정되었습니다");
       success();
-      void router.push(`/boards/`);
+      void router.push(`/boards/${result.data?.updateBoard._id}`);
     } catch (error) {
-      // if (error instanceof Error) alert(error.message);
-      if (error instanceof Error) Modal.error({ content: error.message });
+      if (error instanceof Error) alert(error.message);
     }
   };
 

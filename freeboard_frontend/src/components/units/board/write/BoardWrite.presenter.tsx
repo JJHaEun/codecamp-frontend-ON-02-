@@ -4,6 +4,7 @@ import DaumPostcode from "react-daum-postcode";
 import { Modal } from "antd";
 
 export default function BoardWriteUI(props: IBoardWriteUIProps) {
+  console.log(props.data?.fetchBoard?.boardAddress?.address);
   return (
     <>
       {props.isOpen && (
@@ -64,7 +65,8 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
               readOnly
               value={
                 props.zipcode ||
-                (props.data?.fetchBoard.boardAddress?.zipcode ?? "")
+                props.data?.fetchBoard.boardAddress?.zipcode ||
+                ""
               }
             />
             <St.Bt1 onClick={props.onClickAddress}>우편번호 검색</St.Bt1>
@@ -92,9 +94,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
               type="text"
               onChange={props.onChangeYoutubeUrl}
               placeholder="링크를 복사해주세요."
-              value={
-                props.youtubeUrl || (props.data?.fetchBoard.youtubeUrl ?? "")
-              }
+              defaultValue={props.data?.fetchBoard.youtubeUrl || ""}
             />
           </St.Div2>
 

@@ -65,11 +65,15 @@ export const TopRight = styled.div`
   height: 22px;
 `;
 export const Img3 = styled.img`
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
 `;
 
-export const Img4 = styled.img``;
+export const Img4 = styled.img`
+  width: 30px;
+  margin-right: 10px;
+`;
 
 export const Title = styled.h2`
   margin-top: 80px;
@@ -83,19 +87,23 @@ export const UnderVideo = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: 120px;
+  margin-top: 80px;
+`;
+export const VideoBox = styled.div`
+  margin-bottom: 40px;
 `;
 export const Score = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: 56px;
+
   gap: 80px;
 `;
 export const ScoreImg = styled.img`
   width: 30px;
   height: 30px;
 `;
+
 export const Button2 = styled.button`
   width: 50px;
   height: 30px;
@@ -108,17 +116,22 @@ export const Button2 = styled.button`
 export const Count = styled.div`
   justify-content: center;
 `;
-export const Count1 = styled.div`
+
+export const likeCountNumber = styled.div`
   display: flex;
   flex-direction: row;
   color: #cd3861;
   margin-left: 20px;
+  font-weight: 600;
+  margin-top: 5px;
 `;
-export const Count2 = styled.div`
+export const DislikeCountNumber = styled.div`
   display: flex;
   flex-direction: row;
   color: #828282;
-  margin-left: 20px;
+  margin-left: 18px;
+  font-weight: 600;
+  margin-top: 15px;
 `;
 export const Contents = styled.div`
   width: 996px;

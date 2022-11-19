@@ -35,8 +35,6 @@ export const UPDATE_BOARD = gql`
       writer
       title
       contents
-      likeCount
-      dislikeCount
       youtubeUrl
       images
       boardAddress {

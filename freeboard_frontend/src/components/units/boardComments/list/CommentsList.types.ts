@@ -5,14 +5,14 @@ export interface ICommentWritListUIProps {
   data?: Pick<IQuery, "fetchBoardComments">;
   isOpenDelete: boolean;
   handleCancel: () => void;
-  OnclickDeleteComment: (event: MouseEvent<HTMLButtonElement>) => void;
-  OnClickCommentsBody: (event: MouseEvent<HTMLDivElement>) => void;
+  OnclickDeleteComment: (event: MouseEvent<HTMLElement>) => void;
+
   onChangeDeletePassword: (event: ChangeEvent<HTMLInputElement>) => void;
   // onClickEditFinish: () => void;
   onClickcheckPermissionDeleteModal: (
     event: MouseEvent<HTMLButtonElement>
   ) => void;
-  // onClickEdit: () => void;
-  // isEdit: boolean;
+  // onClickEdit: (event: MouseEvent<HTMLButtonElement>) => void;
+  // currentIndex: number;
   onLoadMore: () => void;
 }

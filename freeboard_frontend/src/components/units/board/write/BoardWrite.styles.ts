@@ -13,8 +13,8 @@ export const MainDiv = styled.div`
   :before {
     content: "";
     position: absolute;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.001), rgba(0, 0, 0, 0.01)),
-      url("https://source.unsplash.com/featured/?vacation");
+    background-image: url("https://source.unsplash.com/featured/?date&vacation");
+    opacity: 0.4;
     top: 0;
     left: 0;
     right: 0;
@@ -23,7 +23,7 @@ export const MainDiv = styled.div`
     filter: blur(6px);
     background-size: cover;
   }
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+
   display: flex;
   flex-direction: column;
   justify-content: center;
