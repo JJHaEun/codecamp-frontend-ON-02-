@@ -1,3 +1,4 @@
+import { HomeTwoTone } from "@ant-design/icons";
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
@@ -31,9 +32,10 @@ export const TitleBox = styled.div`
   justify-content: center;
   margin: auto;
 `;
-export const Home = styled.img`
-  width: 30px;
-  height: 30px;
+export const Home = styled(HomeTwoTone)`
+  * {
+    font-size: 20px;
+  }
   cursor: pointer;
   :active {
     position: relative;

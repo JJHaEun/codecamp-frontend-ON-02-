@@ -7,7 +7,7 @@ export default function LayOutHeaderUI(props: IPropsLayOutHeaderUI) {
       <S.Top>
         <S.Login onClick={props.onClickHeaderLogin}>LogIn</S.Login>
         <div onClick={props.onClickBoards}>
-          <S.Home src="/home.png"></S.Home>
+          <S.Home />
         </div>
       </S.Top>
       <S.TitleBox>

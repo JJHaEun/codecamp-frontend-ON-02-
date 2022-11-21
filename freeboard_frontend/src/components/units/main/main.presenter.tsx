@@ -5,9 +5,7 @@ import * as S from "./main.styles";
 
 export default function MainPageUI() {
   const settings = {
-    className: "center",
     infinite: true,
-    centerMode: true,
     speed: 600,
     slidesToShow: 3,
     autoplay: true,
@@ -37,8 +35,6 @@ export default function MainPageUI() {
           <S.Images src="/undraw_eat_food.png" />
 
           <S.Images src="/undraw_Gaming.png" />
-
-          <S.Images src="/undraw_Happy_feeling.png" />
 
           <S.Images src="/undraw_Hiking.png" />
 
