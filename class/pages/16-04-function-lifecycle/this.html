@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>this의 이해</title>
+    <script>
+      // 자바스크립트 추가
+      class Counter {
+        count = 10;
+        onClickButton() {
+          console.log("현재카운트: ", this.count);
+        }
+        // onClickButton  = ()=>{
+        //      console.log("현재카운트: ", this.count);
+        // }// 화살표 함수로 변경하는 방법
+        render() {
+          const button = document.createElement("button"); // 자바 스크립트 작동 방식으로 html zhem aksemfrl
+          button.innerText = "클릭하세요";
+          button.addEventListener("click", this.onClickButton.bind(this)); // .bind(this)를 통해 연결시키는 방법
+          document.body.appendChild(button); // 버튼을 바디의 자식으로 추가
+        }
+      }
+      // 로드가 끝나고 나면 실행될 함수
+      window.onload = function () {
+        const counter = new Counter(); // 클래스함수 실행(만듬)
+        counter.render(); // 클래스 안의 렌더 실행
+      };
+    </script>
+  </head>
+  <body></body>
+</html>

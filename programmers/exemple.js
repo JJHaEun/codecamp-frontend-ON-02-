@@ -1067,3 +1067,26 @@ function solution(n) {
     return -1;
   }
 }
+
+// 하샤드 수 구하기**
+function solution(x) {
+  let answer = 0;
+  x = String(x);
+  for (let i = 0; i < x.length; i++) {
+    answer += Number(x[i]);
+  }
+  // return x % answer === 0 ? true : false
+  return x % answer === 0; // 얘 자체가 true false값을 리턴하니 삼항연산자 사용하지 않아도 됨.
+}
+
+//reduce 사용***
+function solution(x) {
+  // 메서드 사용법. 반복과 연산된결과로 가져오기.
+  // reduce 사용
+  const answer = String(x)
+    .split("")
+    .reduce((cu, el) => {
+      return cu + Number(el);
+    }, 0);
+  return x % answer === 0;
+}

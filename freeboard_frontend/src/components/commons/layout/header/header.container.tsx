@@ -9,7 +9,7 @@ export default function LayOutHeader() {
   };
 
   const onClickBoards = () => {
-    void router.push(`/boards`);
+    void router.push(`/`);
   };
 
   return (
