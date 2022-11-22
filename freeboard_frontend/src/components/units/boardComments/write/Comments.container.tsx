@@ -11,9 +11,13 @@ import { CREATE_BOARD_COMMENT } from "./Comments.queries";
 
 export default function CommentsWrite() {
   const router = useRouter();
-  const [writer, setWriter] = useState("");
-  const [password, setPassword] = useState("");
+  // const [writer, setWriter] = useState("");
+  // const [password, setPassword] = useState("");
   const [contents, setContents] = useState("");
+  const [inputs, setInputs] = useState({
+    writer: "",
+    password: "",
+  });
   const [value, setValue] = useState(1);
   const [createBoardComment] = useMutation<
     Pick<IMutation, "createBoardComment">,
@@ -23,25 +27,32 @@ export default function CommentsWrite() {
     setValue(value);
   };
 
-  const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) => {
-    setWriter(event.target.value);
-  };
+  // const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) => {
+  //   setWriter(event.target.value);
+  // };
   const onChangeComment = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setContents(event.target.value);
   };
-  const onChangePassWord = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
+  // const onChangePassWord = (event: ChangeEvent<HTMLInputElement>) => {
+  //   setPassword(event.target.value);
+  // };
+  const onChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
+    setInputs({
+      ...inputs,
+      [event.target.id]: event.target.value,
+    });
   };
-
   const onClickCommentSubmit = async () => {
     try {
       await createBoardComment({
         variables: {
           boardId: String(router.query._id),
           createBoardCommentInput: {
-            writer,
+            // writer,
+            // contents,
+            // password,
+            ...inputs,
             contents,
-            password,
             rating: value,
           },
         },
@@ -61,9 +72,10 @@ export default function CommentsWrite() {
   return (
     <CommentsWriteUI
       onClickCommentSubmit={onClickCommentSubmit}
-      onChangeWriter={onChangeWriter}
+      onChangeInput={onChangeInput}
+      // onChangeWriter={onChangeWriter}
       onChangeComment={onChangeComment}
-      onChangePassWord={onChangePassWord}
+      // onChangePassWord={onChangePassWord}
       onChangeStar={onChangeStar}
     />
   );

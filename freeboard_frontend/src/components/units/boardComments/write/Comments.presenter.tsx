@@ -14,14 +14,16 @@ export default function CommentsWriteUI(props: ICommentsWriteUIProps) {
           <div>
             <St.InputGroup>
               <St.InPut
+                id="writer"
                 type="text"
                 placeholder="작성자"
-                onChange={props.onChangeWriter}
+                onChange={props.onChangeInput}
               />
               <St.InPut
+                id="password"
                 type="text"
                 placeholder="비밀번호"
-                onChange={props.onChangePassWord}
+                onChange={props.onChangeInput}
               />
             </St.InputGroup>
             <St.Star allowHalf onChange={props.onChangeStar} />

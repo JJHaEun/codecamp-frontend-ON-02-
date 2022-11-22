@@ -32,6 +32,12 @@ export default function CommentWritList() {
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [boardCommentId, setBoardCommentId] = useState("");
   const [password, setPassword] = useState("");
+  // const [inputs, setInputs] = useState({
+  //   // inputs라는 객체 만들어 각각을 넣음
+  //   boardCommentId: "",
+  //   password: "",
+
+  // });
   // const [contents, setContents] = useState("");
   // const [value, setValue] = useState(1);
 
@@ -51,8 +57,9 @@ export default function CommentWritList() {
     try {
       await deleteBoardComment({
         variables: {
-          password,
+          //  ...inputs
           boardCommentId,
+          password,
         },
 
         refetchQueries: [
