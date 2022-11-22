@@ -5,6 +5,7 @@ const MenuBar = [
   { id: "/boards", name: "게시판" },
   { id: "/market", name: "상품" },
   { id: "/mypage", name: "마이페이지" },
+  { id: "/openapi", name: "강아지사진모음" },
 ];
 export default function LayOutNavigationUI(props: IPropsLayOutNavigationUI) {
   return (

@@ -1090,3 +1090,29 @@ function solution(x) {
     }, 0);
   return x % answer === 0;
 }
+
+//내적** 내풀이(틀림)a와 b의 같은 인덱스끼리 곱해 전부합한것
+function solution(a, b) {
+  let answer = 0;
+  for (let i = 0; i < a.length; i++) {
+    for (let j = 0; j < b.length; j++) {
+      answer += a[i] * b[j];
+    }
+  }
+  return answer;
+}
+//******* */
+
+// 제일작은 수  제거하기. 내풀이(틀림)
+function solution(arr) {
+  const answer = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] > arr[i + 1]) {
+      answer.push(arr[i]);
+    } else if (arr.length === 1) {
+      answer.push(-1);
+    }
+  }
+  return answer;
+}
+//****** */
