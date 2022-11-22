@@ -1,9 +1,9 @@
-console.log("반갑습니다");
-
-const aaa: number = 2;
-
 import { DataSource } from "typeorm";
-import { Board } from "./Board.postgres";
+import { CreateProduct } from "./CreateProduct.postgres";
+import { DeleteProduct } from "./DeleteProduct.postgres";
+import { FetchProduct } from "./FetchProduct.postgres";
+import { FetchProducts } from "./FetchProducts.postgres";
+import { UpdateProduct } from "./UpdateProduct.postgres";
 
 const AppDataSource = new DataSource({
   type: "postgres",
@@ -14,7 +14,13 @@ const AppDataSource = new DataSource({
   database: "postgres",
   synchronize: true,
   logging: true,
-  entities: [Board],
+  entities: [
+    CreateProduct,
+    DeleteProduct,
+    FetchProduct,
+    FetchProducts,
+    UpdateProduct,
+  ],
 });
 AppDataSource.initialize()
   .then(() => {
