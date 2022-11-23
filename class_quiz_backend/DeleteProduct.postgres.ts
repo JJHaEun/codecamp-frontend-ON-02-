@@ -8,7 +8,8 @@ import {
 @Entity()
 export class DeleteProduct extends BaseEntity {
   @PrimaryGeneratedColumn("increment")
-  productId!: string;
+  number!: number;
+
   @DeleteDateColumn()
   deletedAt!: Date;
 }

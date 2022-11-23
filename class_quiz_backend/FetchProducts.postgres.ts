@@ -2,11 +2,8 @@ import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class FetchProducts extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid")
-  _id!: string;
-
-  //   @Column({ type: "int" })
-  //   page!: number;
+  @PrimaryGeneratedColumn("increment")
+  number!: number;
 
   @Column({ type: "text" })
   seller!: string;

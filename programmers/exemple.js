@@ -1091,7 +1091,7 @@ function solution(x) {
   return x % answer === 0;
 }
 
-//내적** 내풀이(틀림)a와 b의 같은 인덱스끼리 곱해 전부합한것
+//내적** 내풀이(틀림)a와 b의 같은 인덱스끼리 곱해 전부합한것(내적:안에서 곱해서 쌓아올린다는 의미)
 function solution(a, b) {
   let answer = 0;
   for (let i = 0; i < a.length; i++) {
@@ -1101,8 +1101,26 @@ function solution(a, b) {
   }
   return answer;
 }
+//
+function solution(a, b) {
+  // 길이가 같은 두 배열 ==> 이 부분을 참고하여 다시 풀어봄. 테스트 통과함.
+  let answer = 0;
+  for (let i = 0; i < a.length; i++) {
+    answer += a[i] * b[i];
+  }
+  return answer;
+}
 //******* */
+//메서드 이용 배열에서 각 데이터를 가져와 연산된결과를 리턴 ==> reduce사용
 
+function solution(a, b) {
+  // 두 길이가 같은 배열
+  const answer = a.reduce((cu, el, i) => {
+    //el로 i로 a의 요소,인덱스 가져옴.b에대한 요소는?
+    return cu + el * b[i]; //cu 즉 누적된값을 더해주기
+  }, 0);
+  return answer;
+}
 // 제일작은 수  제거하기. 내풀이(틀림)
 function solution(arr) {
   const answer = [];
@@ -1116,3 +1134,85 @@ function solution(arr) {
   return answer;
 }
 //****** */
+function solution(arr) {
+  const answer = [];
+  let min = arr[0]; // 배열의 초기값을 min에 담기
+  for (let i = 1; i < arr.length; i++) {
+    //하나하나 요소마다 비교해 min 보다 작을때 min에 담아주기
+    if (min > arr[i]) {
+      min = arr[i];
+    }
+  }
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] !== min) {
+      answer.push(arr[i]);
+    }
+  }
+  return answer.length === 0 ? [-1] : answer;
+  // 빈 배열이라면 -1 담긴배열을 리턴
+}
+//메서드 이용
+function solution(arr) {
+  // 제일 작은 수 찾기
+  // Math.min( 찾으려는 , 인자값을, 쉼표로 , 구분)
+  // ==> 배열 자체에서는 찾아오지 못함. 스프레드 연산자 사용!
+  // Math.min(...[2,6,10])
+  const min = Math.min(...arr);
+
+  // 제일 작은 수를 제외하고 배열에 추가.
+  // filer => 리턴 값에 따른 데이터만 배열에 넣어 리턴시킴
+  const answer = arr.filter((num) => {
+    return num !== min;
+  });
+  return answer.length === 0 ? [-1] : answer;
+}
+
+//sort 이용으로 오름차순으로 정렬 후 가장앞에있는 수만 뽑아오면 가장작은수만 뽑힘.
+
+// 행렬의 덧셈 ==> 내풀이....막힘
+function solution(arr1, arr2) {
+  const answer = [];
+  const result1 = [];
+  const result2 = [];
+  for (let i = 0; i < arr1.length; i++) {
+    result1.push(...arr1[i]);
+    result2.push(...arr2[i]);
+  }
+  for (let j = 0; j < result1.length; j++) {
+    answer.push(result1[j] + result2[j]);
+  }
+  console.log(answer);
+}
+
+/// *****
+function solution(arr1, arr2) {
+  const answer = [[]];
+  // 첫 번째 반복문 arr1배열의 전체 배열을 가져옴
+  for (let i = 0; i < arr1.length; i++) {
+    //arr1의 배열에서 가져온 배열들의 안쪽 데이터를 조회
+    for (let j = 0; j < arr1[i].length; j++) {
+      //i와 j 인덱스 값으로 각각의 위치에 해당하는 데이터들을 합함
+      const sum = arr1[i][j] + arr2[i][j];
+      // i에 해당하는 인덱스에 접근시 배열 없다면 빈 배열 생성하기
+      if (answer[i] === undefined) {
+        answer[i] = [];
+      }
+      //i와 j인덱스 값으로 해당위치에 데이터 삽입
+      answer[i][j] = sum;
+    }
+  }
+  return answer;
+}
+
+/// ****** 메서드 이용법
+// 리턴값이 배열. map?
+function solution(arr1, arr2) {
+  const answer = arr1.map((num1, i) => {
+    // 자동으로 배열 만들어짐
+    return num1.map((num2, j) => {
+      // 만들어진 배열안에 배열이 또 만들어져서 이중배열 이차원배열 생성.
+      return num2 + arr2[i][j];
+    });
+  });
+  return answer;
+}

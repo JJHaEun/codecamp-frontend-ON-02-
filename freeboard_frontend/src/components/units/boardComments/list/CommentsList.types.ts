@@ -8,11 +8,11 @@ export interface ICommentWritListUIProps {
   OnclickDeleteComment: (event: MouseEvent<HTMLElement>) => void;
 
   onChangeDeletePassword: (event: ChangeEvent<HTMLInputElement>) => void;
-  // onClickEditFinish: () => void;
+  onClickEditFinish: () => void;
   onClickcheckPermissionDeleteModal: (
     event: MouseEvent<HTMLButtonElement>
   ) => void;
-  // onClickEdit: (event: MouseEvent<HTMLButtonElement>) => void;
-  // currentIndex: number;
+  onClickEdit: () => void;
+  isEdit: boolean;
   onLoadMore: () => void;
 }

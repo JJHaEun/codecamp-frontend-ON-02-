@@ -8,8 +8,8 @@ import {
 
 @Entity()
 export class CreateProduct extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid")
-  _id!: string;
+  @PrimaryGeneratedColumn("increment")
+  number!: number;
 
   @Column({ type: "text" })
   seller!: string;

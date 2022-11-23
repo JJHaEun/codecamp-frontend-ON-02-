@@ -27,34 +27,42 @@ export default function CommentWritListUI(props: ICommentWritListUIProps) {
             hasMore={true}
             useWindow={false}
           >
-            {props.data?.fetchBoardComments.map((el, index) => (
-              <S.All key={el._id} id={el.writer}>
-                <S.Img src="/messenger.png"></S.Img>
+            {!props.isEdit &&
+              (props.data?.fetchBoardComments.map((el) => (
+                <S.All key={el._id} id={el.writer}>
+                  <S.Img src="/messenger.png"></S.Img>
 
-                <div>
-                  <Rate allowHalf disabled value={el?.rating} />
-                  <S.Writer>{el?.writer}</S.Writer>
-                  <S.Contents>{el?.contents}</S.Contents>
-                  <S.Date>{getDate(el?.createdAt)}</S.Date>
-                  <S.ButtonGroup>
-                    <div>
-                      <S.Button>수정</S.Button>
-                    </div>
-                    <div>
-                      <S.Button2
-                        id={el._id}
-                        onClick={props.onClickcheckPermissionDeleteModal}
-                      >
-                        <S.ButtonImg
+                  <div>
+                    <Rate allowHalf disabled value={el?.rating} />
+                    <S.Writer>{el?.writer}</S.Writer>
+                    <S.Contents>{el?.contents}</S.Contents>
+                    <S.Date>{getDate(el?.createdAt)}</S.Date>
+                    <S.ButtonGroup>
+                      <div>
+                        <S.Button onClick={props.onClickEdit}>수정</S.Button>
+                      </div>
+                      <div>
+                        <S.Button2
                           id={el._id}
-                          src="/delete-button.png"
-                        ></S.ButtonImg>
-                      </S.Button2>
-                    </div>
-                  </S.ButtonGroup>
-                </div>
-              </S.All>
-            )) ?? <div></div>}
+                          onClick={props.onClickcheckPermissionDeleteModal}
+                        >
+                          <S.ButtonImg
+                            id={el._id}
+                            src="/delete-button.png"
+                          ></S.ButtonImg>
+                        </S.Button2>
+                      </div>
+                    </S.ButtonGroup>
+                  </div>
+                </S.All>
+              )) ?? <div></div>)}
+            {props.isEdit && ( // true면 수정하기 input창 열리게
+              <div>
+                수정할 내용:
+                <input type="text" />
+                <button onClick={props.onClickEditFinish}> 수정완료</button>
+              </div>
+            )}
           </InfiniteScroll>
         </S.Scroll>
       </S.CommentList>
