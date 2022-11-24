@@ -1,8 +1,8 @@
-import { getDate } from "../../../commons/utils/utils";
 import { ICommentWritListUIProps } from "./CommentsList.types";
 import * as S from "./CommentsList.styles";
-import { Rate, Modal } from "antd";
+import { Modal } from "antd";
 import InfiniteScroll from "react-infinite-scroller";
+import BoardCommentListItems from "./CommentsListItems.presenter";
 
 export default function CommentWritListUI(props: ICommentWritListUIProps) {
   return (
@@ -27,42 +27,52 @@ export default function CommentWritListUI(props: ICommentWritListUIProps) {
             hasMore={true}
             useWindow={false}
           >
-            {!props.isEdit &&
-              (props.data?.fetchBoardComments.map((el) => (
-                <S.All key={el._id} id={el.writer}>
-                  <S.Img src="/messenger.png"></S.Img>
+            {props.data?.fetchBoardComments.map((el) => (
+              //   <S.All key={el._id} id={el.writer}>
+              //     <S.Img src="/messenger.png"></S.Img>
 
-                  <div>
-                    <Rate allowHalf disabled value={el?.rating} />
-                    <S.Writer>{el?.writer}</S.Writer>
-                    <S.Contents>{el?.contents}</S.Contents>
-                    <S.Date>{getDate(el?.createdAt)}</S.Date>
-                    <S.ButtonGroup>
-                      <div>
-                        <S.Button onClick={props.onClickEdit}>수정</S.Button>
-                      </div>
-                      <div>
-                        <S.Button2
-                          id={el._id}
-                          onClick={props.onClickcheckPermissionDeleteModal}
-                        >
-                          <S.ButtonImg
-                            id={el._id}
-                            src="/delete-button.png"
-                          ></S.ButtonImg>
-                        </S.Button2>
-                      </div>
-                    </S.ButtonGroup>
-                  </div>
-                </S.All>
-              )) ?? <div></div>)}
-            {props.isEdit && ( // true면 수정하기 input창 열리게
-              <div>
-                수정할 내용:
-                <input type="text" />
-                <button onClick={props.onClickEditFinish}> 수정완료</button>
-              </div>
-            )}
+              //     <div>
+              //       <Rate allowHalf disabled value={el?.rating} />
+              //       <S.Writer>{el?.writer}</S.Writer>
+              //       <S.Contents>{el?.contents}</S.Contents>
+              //       <S.Date>{getDate(el?.createdAt)}</S.Date>
+              //       <S.ButtonGroup>
+              //         <div>
+              //           <S.Button onClick={props.onClickEdit}>수정</S.Button>
+              //         </div>
+              //         <div>
+              //           <S.Button2
+              //             id={el._id}
+              //             onClick={props.onClickcheckPermissionDeleteModal}
+              //           >
+              //             <S.ButtonImg
+              //               id={el._id}
+              //               src="/delete-button.png"
+              //             ></S.ButtonImg>
+              //           </S.Button2>
+              //         </div>
+              //       </S.ButtonGroup>
+              //     </div>
+              //   </S.All>
+              // )) ?? <div></div>}
+              <BoardCommentListItems
+                key={el._id}
+                el={el}
+                onClickEditFinish={props.onClickEditFinish}
+                isEdit={props.isEdit}
+                data={props.data}
+                isOpenDelete={props.isOpenDelete}
+                handleCancel={props.handleCancel}
+                OnclickDeleteComment={props.OnclickDeleteComment}
+                onClickcheckPermissionDeleteModal={
+                  props.onClickcheckPermissionDeleteModal
+                }
+                onChangeDeletePassword={props.onChangeDeletePassword}
+                onClickEdit={props.onClickEdit}
+                onLoadMore={props.onLoadMore}
+                onClickEditFinish={props.onClickEditFinish}
+              />
+            ))}
           </InfiniteScroll>
         </S.Scroll>
       </S.CommentList>

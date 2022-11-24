@@ -8,6 +8,7 @@ import {
   IMutationUpdateBoardCommentArgs,
   IQuery,
   IQueryFetchBoardCommentsArgs,
+  IUpdateBoardCommentInput,
 } from "../../../../commons/types/generated/types";
 import { success } from "../../board/alert/Alert";
 import CommentWritListUI from "./CommentsList.presenter";
@@ -20,7 +21,12 @@ import {
 export default function CommentWritList() {
   const router = useRouter();
   // const [currentIndex, setCurrentIndex] = useState(0);
-  const [isEdit, setIsEdit] = useState(false);
+
+  const [updateBoardComment] = useMutation<
+    Pick<IMutation, "updateBoardComment">,
+    IMutationUpdateBoardCommentArgs
+  >(UPDATE_BOARD_COMMENT);
+
   const { data, fetchMore } = useQuery<
     Pick<IQuery, "fetchBoardComments">,
     IQueryFetchBoardCommentsArgs
@@ -29,18 +35,19 @@ export default function CommentWritList() {
       boardId: String(router.query._id),
     },
   });
+
   console.log(data?.fetchBoardComments);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [boardCommentId, setBoardCommentId] = useState("");
   const [password, setPassword] = useState("");
+  const [contents, setContents] = useState("");
+  const [value, setValue] = useState(1);
   // const [inputs, setInputs] = useState({
   //   // inputs라는 객체 만들어 각각을 넣음
   //   boardCommentId: "",
   //   password: "",
 
   // });
-  const [contents, setContents] = useState("");
-  const [value, setValue] = useState(1);
 
   // const onClickEdit = () => {
   //   setIsEdit((prev) => !prev);
@@ -49,11 +56,6 @@ export default function CommentWritList() {
     Pick<IMutation, "deleteBoardComment">,
     IMutationDeleteBoardCommentArgs
   >(DELETE_BOARD_COMMENT);
-
-  const [updateBoardComment] = useMutation<
-    Pick<IMutation, "updateBoardComment">,
-    IMutationUpdateBoardCommentArgs
-  >(UPDATE_BOARD_COMMENT);
 
   const OnclickDeleteComment = async (event: MouseEvent<HTMLElement>) => {
     if (!(event.target instanceof HTMLElement)) return;
@@ -74,6 +76,7 @@ export default function CommentWritList() {
       });
       setIsOpenDelete((prev) => !prev);
       // 삭제완료 창  띄면 좋을것.
+      success();
     } catch (error) {
       if (error instanceof Error) alert(error.message);
     }
@@ -98,29 +101,32 @@ export default function CommentWritList() {
 
   const onClickEditFinish = async () => {
     if (!contents) {
-      if (typeof router.query._id !== "string") return;
-      if (confirm("수정하시겠습니까?")) {
-        alert("수정완료");
-        void router.push(`/boards/${router.query._id}`);
-      } else {
-        alert("변경사항이 없습니다");
-      }
+      alert("수정사항 없음");
+      return;
     }
-  };
-  const onClickEdit = async (event: MouseEvent<HTMLElement>) => {
-    if (!(event.target instanceof HTMLElement)) return;
-    setIsEdit((prev) => !prev);
+    if (!password) {
+      alert("비밀번호가 맞지 않습니다");
+      return;
+    }
     try {
+      const updateBoardCommentInput: IUpdateBoardCommentInput = {};
+      if (contents) updateBoardCommentInput.contents = contents;
+      if (value !== props.el?.rating) updateBoardCommentInput.rating = value;
+      if (typeof props.el?._id !== "string") return;
       await updateBoardComment({
         variables: {
-          boardCommentId: String(router.query._id),
+          boardCommentId: props.el?._id, // 이부분 고쳐야 할 거 같은데 어떻게?..event.currentTarget.id 써봄
           password,
-          updateBoardCommentInput: {
-            contents,
-            rating: value,
-          },
+          updateBoardCommentInput,
         },
+        refetchQueries: [
+          {
+            query: FETCH_BOARD_COMMENT,
+            variables: { boardId: router.query._id },
+          },
+        ],
       });
+      props.setIsEdit?.(false);
       success();
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message });

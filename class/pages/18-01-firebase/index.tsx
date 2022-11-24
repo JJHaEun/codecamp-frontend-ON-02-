@@ -4,7 +4,7 @@ import {
   getDocs,
   getFirestore,
 } from "firebase/firestore/lite";
-import { firebaseApp } from "../_app";
+import { firebaseApp } from "../../src/commons/libraries/firebase";
 
 export default function FirebasePage() {
   const onClickSubmit = async () => {
@@ -19,7 +19,7 @@ export default function FirebasePage() {
   const onClickFetch = async () => {
     const board = collection(getFirestore(firebaseApp), "board");
     const result = await getDocs(board);
-    const datas = result.docs.map((el) => el.data()); // 배열형태로 result안에 doc가 들어오고 묶여있기에 그것들을 하나하나 뽑아줘야함
+    const datas = result.docs.map((el) => el.data()); // 배열형태로 result안에 docs가 들어오고 묶여있기에 그것들을 하나하나 뽑아줘야함
     console.log(datas);
   };
   return (

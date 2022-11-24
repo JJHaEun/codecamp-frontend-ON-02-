@@ -6,24 +6,28 @@ export default function CommentsWriteUI(props: ICommentsWriteUIProps) {
     <>
       <St.Max>
         <St.Under>
-          <St.Com>
-            <St.CommentImg src="/comments.png" />
+          {!props.isEdit && (
+            <St.Com>
+              <St.CommentImg src="/comments.png" />
 
-            <St.CommentTitle>댓글달기</St.CommentTitle>
-          </St.Com>
+              <St.CommentTitle>댓글달기</St.CommentTitle>
+            </St.Com>
+          )}
           <div>
             <St.InputGroup>
               <St.InPut
                 id="writer"
                 type="text"
                 placeholder="작성자"
-                onChange={props.onChangeInput}
+                onChange={props.onChangeWriter}
+                value={props.writer || props.el?.writer || ""}
               />
               <St.InPut
                 id="password"
                 type="text"
                 placeholder="비밀번호"
-                onChange={props.onChangeInput}
+                onChange={props.onChangePassWord}
+                value={props.password}
               />
             </St.InputGroup>
             <St.Star allowHalf onChange={props.onChangeStar} />
@@ -31,12 +35,25 @@ export default function CommentsWriteUI(props: ICommentsWriteUIProps) {
               <St.TextArea
                 placeholder="여기에서 댓글을 작성하세요"
                 onChange={props.onChangeComment}
+                value={
+                  props.isEdit
+                    ? props.contents || props.el?.contents
+                    : props.contents
+                }
               ></St.TextArea>
             </div>
           </div>
         </St.Under>
         <St.Bt>
-          <St.Button3 onClick={props.onClickCommentSubmit}>등록하기</St.Button3>
+          <St.Button3
+            onClick={
+              props.isEdit
+                ? props.onClickEditFinish
+                : props.onClickCommentSubmit
+            }
+          >
+            {props.isEdit ? "수정" : "등록"}하기
+          </St.Button3>
         </St.Bt>
       </St.Max>
     </>
