@@ -1,16 +1,19 @@
 import { Modal, Rate } from "antd";
 import { useRouter } from "next/router";
-import { MouseEvent, useState } from "react";
+import { ChangeEvent, MouseEvent, useState } from "react";
 import { getDate } from "../../../commons/utils/utils";
 import * as S from "./CommentsList.styles";
 import { IBoardCommentListItemsProps } from "./CommentsList.types";
-import { UPDATE_BOARD_COMMENT } from "./CommentsList.queries";
+import {
+  DELETE_BOARD_COMMENT,
+  FETCH_BOARD_COMMENT,
+} from "./CommentsList.queries";
 import { success } from "../../board/alert/Alert";
 import CommentsWrite from "../write/Comments.container";
 import { useMutation } from "@apollo/client";
 import {
   IMutation,
-  IMutationUpdateBoardCommentArgs,
+  IMutationDeleteBoardCommentArgs,
 } from "../../../../commons/types/generated/types";
 
 export default function BoardCommentListItemsUI(
@@ -18,29 +21,74 @@ export default function BoardCommentListItemsUI(
 ) {
   const router = useRouter();
   const [isEdit, setIsEdit] = useState(false);
-
+  const [isOpenDelete, setIsOpenDelete] = useState(false);
+  const [boardCommentId, setBoardCommentId] = useState("");
+  const [password, setPassword] = useState("");
   const onClickEdit = async () => {
     // 수정버튼을 누르면 댓글을 찾을 수 없습니다라고뜸
     setIsEdit((prev) => !prev);
   };
-  //     try {
-  //       await updateBoardComment({
-  //         variables: {
-  //           boardCommentId: props.el?._id
-  //           password,
-  //           updateBoardCommentInput: {
-  //             contents,
-  //             rating: value,
-  //           },
-  //         },
-  //       });
-  //       success();
-  //     } catch (error) {
-  //       if (error instanceof Error) Modal.error({ content: error.message });
-  //     }
-  //   };
+  const [deleteBoardComment] = useMutation<
+    Pick<IMutation, "deleteBoardComment">,
+    IMutationDeleteBoardCommentArgs
+  >(DELETE_BOARD_COMMENT);
+
+  const OnclickDeleteComment = async (event: MouseEvent<HTMLElement>) => {
+    if (!(event.target instanceof HTMLElement)) return;
+    try {
+      await deleteBoardComment({
+        variables: {
+          //  ...inputs
+          boardCommentId,
+          password,
+        },
+
+        refetchQueries: [
+          {
+            query: FETCH_BOARD_COMMENT,
+            variables: { boardId: router.query._id },
+          },
+        ],
+      });
+      setIsOpenDelete((prev) => !prev);
+      // 삭제완료 창  띄면 좋을것.
+      success();
+    } catch (error) {
+      if (error instanceof Error) alert(error.message);
+    }
+  };
+
+  const onClickcheckPermissionDeleteModal = (
+    event: MouseEvent<HTMLButtonElement>
+  ) => {
+    setBoardCommentId(event.currentTarget.id);
+    setIsOpenDelete((prev) => !prev);
+  };
+
+  const onChangeDeletePassword = (event: ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+  };
+
+  const handleCancel = () => {
+    if (typeof router.query._id !== "string") return;
+    setIsOpenDelete((prev) => !prev);
+    void router.push(`/boards/${router.query._id}`);
+  };
+
   return (
     <>
+      {isOpenDelete && (
+        <Modal
+          title="삭제"
+          visible={true}
+          onOk={OnclickDeleteComment}
+          onCancel={handleCancel}
+        >
+          <div>비밀번호를 입력후,ok버튼을 누르시면 삭제됩니다</div>
+          <div> 비밀번호 입력</div>
+          <input type="password" onChange={onChangeDeletePassword} />
+        </Modal>
+      )}
       {!isEdit && (
         <S.All key={props.el._id} id={props.el.writer}>
           <S.Img src="/messenger.png"></S.Img>
@@ -57,7 +105,7 @@ export default function BoardCommentListItemsUI(
               <div>
                 <S.Button2
                   id={props.el._id}
-                  onClick={props.onClickcheckPermissionDeleteModal}
+                  onClick={onClickcheckPermissionDeleteModal}
                 >
                   <S.ButtonImg
                     id={props.el._id}

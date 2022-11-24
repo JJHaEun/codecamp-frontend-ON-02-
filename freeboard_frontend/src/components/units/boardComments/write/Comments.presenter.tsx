@@ -30,7 +30,11 @@ export default function CommentsWriteUI(props: ICommentsWriteUIProps) {
                 value={props.password}
               />
             </St.InputGroup>
-            <St.Star allowHalf onChange={props.onChangeStar} />
+            <St.Star
+              allowHalf
+              onChange={props.onChangeStar}
+              value={props.value || 0}
+            />
             <div>
               <St.TextArea
                 placeholder="여기에서 댓글을 작성하세요"

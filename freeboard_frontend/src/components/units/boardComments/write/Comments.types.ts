@@ -1,9 +1,10 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { IBoardComment } from "../../../../commons/types/generated/types";
 
 export interface ICommentsWriteProps {
   isEdit: boolean;
-
-  el: any;
+  setIsEdit?: Dispatch<SetStateAction<boolean>>;
+  el: IBoardComment;
 }
 
 export interface ICommentsWriteUIProps {
@@ -16,8 +17,15 @@ export interface ICommentsWriteUIProps {
   isEdit: boolean;
   writer: string;
   password: string;
-  el: any;
+  value: number;
+  el: IBoardComment;
   contents: string;
   // onClickEdit: () => void;
+  setValue: Dispatch<SetStateAction<number>>;
   onClickEditFinish: () => void;
+}
+
+export interface IUpdateBoardCommentInput {
+  contents?: string;
+  rating?: number;
 }
