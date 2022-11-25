@@ -7,11 +7,11 @@ export default function LayOutBannerUI() {
   const settings = {
     dots: false,
     infinite: true,
-    speed: 600,
+    speed: 800,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 4000,
+    autoplaySpeed: 5000,
   };
   return (
     <S.Banner>
