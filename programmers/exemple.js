@@ -1216,3 +1216,103 @@ function solution(arr1, arr2) {
   });
   return answer;
 }
+
+//2016년
+const month = {
+  1: 31,
+  2: 29,
+  3: 31,
+  4: 30,
+  5: 31,
+  6: 30,
+  7: 31,
+  8: 31,
+  9: 30,
+  10: 31,
+  11: 30,
+  12: 31,
+};
+const week = ["FRI", "SAT", "SUN", "MON", "TUE", "WED", "THU"];
+//윤년이니까 2월은 29일까지 있음.
+function solution(a, b) {
+  // 내가 생각했던 풀이.각 a의b가 몇까지 인지 구함... 그다음은...
+  //1월 1일은 금요일.=>+0일 ==> 1/1
+  //+1 ==> 1월 2일 토요일.
+  //+2 ==> 1월 3일 일요일
+  //+3 ==> 1월 4일 월요일.
+  //... + 7 ==>1월 8일 금요일
+  //7일 기점으로 몇일을 지나든 계속 돔.
+  //+9 ===> 1/10 일요일
+  // + 14 ===> 금요일 1/15일
+  // +22 ===> 7주일이3번+1일 so, 1/23  토요일
+
+  let answer = 0;
+  // 각 일수를 모두 더해와 그 일수를 요일개수만큼 나눠 해당요일을 구함.
+  //각 요일을 배열에 담고, 나머지를 사용해 인덱스로 받아올 수 있음
+
+  for (let i = 1; i < a; i++) {
+    // 이미 지나간 월을 기준으로구함 현제 예시에는 5월까지 나와아있음.
+    answer += month[i]; //객체의 i라는 키에 접근.그러면 일을 가져올 수 있음
+    //5월에서 b로 받아오는 일수까지 더하기
+  }
+  answer += b - 1; // 당일을뺀 날을 넣어주어야함.
+  console.log(answer % 7);
+  return week[answer % 7];
+}
+
+// 메서드 reduce사용(누적계산시 사용하는 메서드. 다만 배열에 적용가능)
+const month = {
+  1: 31,
+  2: 29,
+  3: 31,
+  4: 30,
+  5: 31,
+  6: 30,
+  7: 31,
+  8: 31,
+  9: 30,
+  10: 31,
+  11: 30,
+  12: 31,
+};
+const week = ["FRI", "SAT", "SUN", "MON", "TUE", "WED", "THU"];
+
+function solution(a, b) {
+  //reduce사용 배열 만들어야함.//a만큼의 길이를가지는 배열 만듬
+  const answer = new Array(a).fill(1).reduce((acc, cur, i) => {
+    //누적기와 현재값요소, 인덱스,초기값
+    const mn = cur + i; // 월을 계산
+    return (
+      acc +
+      (mn !== a
+        ? // 이전월의 일수
+          month[mn]
+        : //해당월의 일수
+          b - 1)
+    ); //같은월이면 흘러간 일수 까지만더하기. 적은월이면 일수들 다 더해주기.
+  }, 0);
+  return week[answer % 7];
+}
+
+// new Date()사용하기
+
+const week = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+
+function solution(a, b) {
+  // 현재 시간을 보여주는 문자열로 받아와지는 Date()라는 기능.
+  //new Date()는 새로운 date객체가 생성됨.
+  // 이것을  이용해 각각 현재시간의 일수, 월, 등을 리턴할수도 있음
+  //a = new Date()
+  //a.getDate() ==> 일
+  //a.getFullYear() ==> 년
+  //a.getMonth() + 1 ==> getMonth는 0부터 시작하니 월을 구하려면 항상 +1 필요
+  //a = new Date() 여기 소괄호 안에 년, 월, 일 등을 넣으면 넣어준 인자값으로 날짜를 받아올 수 있음.
+  //a.getDay() ==> 일주일 기준으로 며칠이 흘렀는지 보여줌.
+  //arr = ["일","월","화","수","목","금","토"]
+  //arr[a.getDay()] ==> arr의 인덱스로 요일 받아올 수 있음!
+  //new를 쓰지 않는 Date는 메소드 사용 불가. 타입이 string. 그냥 문자열 자체로만 실행.
+  //new 가 붙은 Date의 타입은 object.객체니까 메소드 사용가능. 그래서 메소그 getDate, getMonth 구할 수 있음
+  const answer = new Date(2016, a - 1, b).getDay(); //월은 항상 한달적게 받아오니 -1해주기. 왜냐. new Date의 인자로 받아 출력하면 월이 하나 크게 나오니 getMonth할때는 +1, new Date()의 인자로 Month를 넣을 시에는  -1하기
+  console.log(week[answer]);
+  return week[answer];
+}

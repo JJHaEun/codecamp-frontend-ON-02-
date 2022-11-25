@@ -100,9 +100,17 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
 
           <St.Div3>
             <div>사진첨부</div>
-            <St.PottoButton>+</St.PottoButton>
-            <St.PottoButton>+</St.PottoButton>
-            <St.PottoButton>+</St.PottoButton>
+            <St.InputNone
+              type="file"
+              onChange={props.onChangeFile}
+              ref={props.fileRef}
+              accept="image/jpeg,image/png,image/jpg"
+              multiple
+            />
+
+            <St.PottoButton onClick={props.onClickImg}>+</St.PottoButton>
+            {/* 버튼을 클릭하면 이미지 보이고 detail에서 확인가능...?연결을 어떻게 시켜야할까... */}
+            <img src={`https://storage.googleapis.com/${props.imageUrl}`} />
           </St.Div3>
           <St.Div3>
             <div>메인 설정</div>

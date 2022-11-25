@@ -8,7 +8,6 @@ import {
   IMutationUpdateBoardCommentArgs,
   IUpdateBoardCommentInput,
 } from "../../../../commons/types/generated/types";
-import { success } from "../../board/alert/Alert";
 import {
   FETCH_BOARD_COMMENT,
   UPDATE_BOARD_COMMENT,
@@ -58,6 +57,11 @@ export default function CommentsWrite(props: ICommentsWriteProps) {
   //   });
   // };
   const onClickCommentSubmit = async () => {
+    if (!writer || !contents || !password) {
+      Modal.warning({ content: "내용을 입력해주세요" });
+      return;
+    }
+
     try {
       await createBoardComment({
         variables: {
@@ -69,6 +73,7 @@ export default function CommentsWrite(props: ICommentsWriteProps) {
             rating: value,
           },
         },
+
         refetchQueries: [
           {
             query: FETCH_BOARD_COMMENT,
@@ -77,9 +82,7 @@ export default function CommentsWrite(props: ICommentsWriteProps) {
         ],
       });
     } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message);
-      }
+      if (error instanceof Error) Modal.error({ content: error.message });
     }
     setWriter("");
     setContents("");
@@ -89,12 +92,12 @@ export default function CommentsWrite(props: ICommentsWriteProps) {
 
   const onClickEditFinish = async () => {
     if (!contents && !value) {
-      alert("수정사항 없음");
+      Modal.info({ content: "변경사항이 없습니다" });
       if (typeof router.query._id !== "string") return;
       void router.push(`/boards/${router.query._id}`);
     }
     if (!password) {
-      alert("비밀번호를 확인해주세요");
+      Modal.warning({ content: "비밀번호를 확인해주세요" });
       return;
     }
     try {
@@ -116,7 +119,7 @@ export default function CommentsWrite(props: ICommentsWriteProps) {
         ],
       });
       props.setIsEdit?.(false);
-      success();
+      Modal.success({ content: "댓글이 성공적으로 수정되었습니다" });
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message });
     }

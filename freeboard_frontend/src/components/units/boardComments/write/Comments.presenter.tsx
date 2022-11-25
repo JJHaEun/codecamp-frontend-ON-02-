@@ -33,7 +33,7 @@ export default function CommentsWriteUI(props: ICommentsWriteUIProps) {
             <St.Star
               allowHalf
               onChange={props.onChangeStar}
-              value={props.value || 0}
+              value={props.value || props.el?.rating}
             />
             <div>
               <St.TextArea

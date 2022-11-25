@@ -8,7 +8,6 @@ import {
   DELETE_BOARD_COMMENT,
   FETCH_BOARD_COMMENT,
 } from "./CommentsList.queries";
-import { success } from "../../board/alert/Alert";
 import CommentsWrite from "../write/Comments.container";
 import { useMutation } from "@apollo/client";
 import {
@@ -24,10 +23,11 @@ export default function BoardCommentListItemsUI(
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [boardCommentId, setBoardCommentId] = useState("");
   const [password, setPassword] = useState("");
+
   const onClickEdit = async () => {
-    // 수정버튼을 누르면 댓글을 찾을 수 없습니다라고뜸
     setIsEdit((prev) => !prev);
   };
+
   const [deleteBoardComment] = useMutation<
     Pick<IMutation, "deleteBoardComment">,
     IMutationDeleteBoardCommentArgs
@@ -51,10 +51,10 @@ export default function BoardCommentListItemsUI(
         ],
       });
       setIsOpenDelete((prev) => !prev);
-      // 삭제완료 창  띄면 좋을것.
-      success();
+
+      Modal.success({ content: "삭제되었습니다" });
     } catch (error) {
-      if (error instanceof Error) alert(error.message);
+      if (error instanceof Error) Modal.error({ content: error.message });
     }
   };
 
@@ -83,6 +83,7 @@ export default function BoardCommentListItemsUI(
           visible={true}
           onOk={OnclickDeleteComment}
           onCancel={handleCancel}
+          cancelText="취소"
         >
           <div>비밀번호를 입력후,ok버튼을 누르시면 삭제됩니다</div>
           <div> 비밀번호 입력</div>

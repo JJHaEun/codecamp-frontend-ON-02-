@@ -9,7 +9,6 @@ import { FETCH_BOARD_COMMENT } from "./CommentsList.queries";
 
 export default function CommentWritList() {
   const router = useRouter();
-  // const [currentIndex, setCurrentIndex] = useState(0);
 
   const { data, fetchMore } = useQuery<
     Pick<IQuery, "fetchBoardComments">,
@@ -21,17 +20,6 @@ export default function CommentWritList() {
   });
 
   console.log(data?.fetchBoardComments);
-
-  // const [inputs, setInputs] = useState({
-  //   // inputs라는 객체 만들어 각각을 넣음
-  //   boardCommentId: "",
-  //   password: "",
-
-  // });
-
-  // const onClickEdit = () => {
-  //   setIsEdit((prev) => !prev);
-  // };
 
   const onLoadMore = async () => {
     if (!data) return;

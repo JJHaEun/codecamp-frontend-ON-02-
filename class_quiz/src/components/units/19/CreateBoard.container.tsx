@@ -37,7 +37,7 @@ export default function CreateBoardAndImgPage() {
       },
     });
     console.log(result);
-    alert("등록성공!");
+    Modal.success({ content: "게시물이 성공적으로 등록되었습니다" });
   };
   const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) => {
     setWriter(event.target.value);

@@ -12,8 +12,12 @@ import {
   IQuery,
   IQueryFetchBoardArgs,
 } from "../../../../commons/types/generated/types";
+import { Modal } from "antd";
+import { MouseEvent, useState } from "react";
 
 export default function BoardWriteFetch() {
+  const [isOpenDelete, setIsOpenDelete] = useState(false);
+
   const [likeBoard] = useMutation(LIKE_BOARD);
   const [dislikeBoard] = useMutation(DISLIKE_BOARD);
   const [deleteBoard] = useMutation(DELETE_BOARD);
@@ -27,28 +31,24 @@ export default function BoardWriteFetch() {
     }
   );
   const onClickLike = async () => {
-    try {
-      await likeBoard({
-        variables: {
-          boardId: router.query._id,
-        },
-        refetchQueries: [
-          { query: FETCH_BOARD, variables: { boardId: router.query._id } },
-        ],
-      });
-    } catch {}
+    await likeBoard({
+      variables: {
+        boardId: router.query._id,
+      },
+      refetchQueries: [
+        { query: FETCH_BOARD, variables: { boardId: router.query._id } },
+      ],
+    });
   };
   const onClickDisLike = async () => {
-    try {
-      await dislikeBoard({
-        variables: {
-          boardId: router.query._id,
-        },
-        refetchQueries: [
-          { query: FETCH_BOARD, variables: { boardId: router.query._id } },
-        ],
-      });
-    } catch {}
+    await dislikeBoard({
+      variables: {
+        boardId: router.query._id,
+      },
+      refetchQueries: [
+        { query: FETCH_BOARD, variables: { boardId: router.query._id } },
+      ],
+    });
   };
   const onClickList = () => {
     void router.push(`/boards`);
@@ -64,23 +64,37 @@ export default function BoardWriteFetch() {
           boardId: router.query._id,
         },
       });
-      alert("삭제가 완료되었습니다.");
+
+      Modal.success({ content: "삭제가 완료되었습니다" });
       void router.push(`/boards`);
     } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message);
-      }
+      if (error instanceof Error) Modal.error({ content: error.message });
     }
   };
+  const onClickcheckPermissionDeleteModal = (
+    event: MouseEvent<HTMLButtonElement>
+  ) => {
+    setIsOpenDelete((prev) => !prev);
+  };
 
+  const handleCancel = () => {
+    if (typeof router.query._id !== "string") return;
+    setIsOpenDelete((prev) => !prev);
+    void router.push(`/boards/${router.query._id}`);
+  };
   return (
-    <BoardWriteFetchUI
-      data={data}
-      onClickList={onClickList}
-      onClickUpdate={onClickUpdate}
-      onClickDelete={onClickDelete}
-      onClickLike={onClickLike}
-      onClickDisLike={onClickDisLike}
-    />
+    <>
+      <BoardWriteFetchUI
+        data={data}
+        onClickList={onClickList}
+        onClickUpdate={onClickUpdate}
+        onClickDelete={onClickDelete}
+        onClickLike={onClickLike}
+        onClickDisLike={onClickDisLike}
+        onClickcheckPermissionDeleteModal={onClickcheckPermissionDeleteModal}
+        handleCancel={handleCancel}
+        isOpenDelete={isOpenDelete}
+      />
+    </>
   );
 }

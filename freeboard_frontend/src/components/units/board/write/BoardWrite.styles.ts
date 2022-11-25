@@ -160,3 +160,6 @@ export const Empty1 = styled.div`
   font-size: 10px;
   margin-left: 15px;
 `;
+export const InputNone = styled.input`
+  display: none;
+`;

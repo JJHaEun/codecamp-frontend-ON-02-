@@ -1,35 +1,27 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import { success } from "../alert/Alert";
 import BoardWriteUI from "./BoardWrite.presenter";
-import { CREATE_BOARD, FETCH_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
+import {
+  CREATE_BOARD,
+  FETCH_BOARD,
+  UPDATE_BOARD,
+  UPLOAD_FILE,
+} from "./BoardWrite.queries";
 import {
   IMutation,
   IMutationCreateBoardArgs,
   IMutationUpdateBoardArgs,
+  IMutationUploadFileArgs,
   IQuery,
   IQueryFetchBoardArgs,
 } from "../../../../commons/types/generated/types";
 import { IBoardWriteProps, IUpdateBoardInput } from "./BoardWrite.types";
 import { Modal } from "antd";
 import { Address } from "react-daum-postcode";
+import { checkValidationFile } from "../../../../commons/libraries/vaildationFile";
 
 export default function BoardWrite(props: IBoardWriteProps) {
-  const router = useRouter();
-  // 빈페이지로보내기
-  // if(typeof router.query._id !== "string"){
-  //   router.push("/")
-  //   return<></>   //boardId부분을 sting 처리 할수도 있고, 아니면 string이 아닐때 빈패이지로 잠시 보내는 방법도 있음
-  // }
-  const { data } = useQuery<Pick<IQuery, "fetchBoard">, IQueryFetchBoardArgs>(
-    FETCH_BOARD,
-    {
-      variables: {
-        boardId: String(router.query._id), // sting처리
-      },
-    }
-  );
   const [bt, setBt] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [writer, setWriter] = useState("");
@@ -45,6 +37,23 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const [pwEmpty, setPwEmpty] = useState("");
   const [titleEmpty, setTitleEmpty] = useState("");
   const [contentsEmpty, setContentsEmpty] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const router = useRouter();
+  // 빈페이지로보내기
+  // if(typeof router.query._id !== "string"){
+  //   router.push("/")
+  //   return<></>   //boardId부분을 sting 처리 할수도 있고, 아니면 string이 아닐때 빈패이지로 잠시 보내는 방법도 있음
+  // }
+  const { data } = useQuery<Pick<IQuery, "fetchBoard">, IQueryFetchBoardArgs>(
+    FETCH_BOARD,
+    {
+      variables: {
+        boardId: String(router.query._id), // sting처리
+      },
+    }
+  );
 
   const [createBoard] = useMutation<
     Pick<IMutation, "createBoard">,
@@ -55,6 +64,11 @@ export default function BoardWrite(props: IBoardWriteProps) {
     Pick<IMutation, "updateBoard">,
     IMutationUpdateBoardArgs
   >(UPDATE_BOARD);
+
+  const [uploadFile] = useMutation<
+    Pick<IMutation, "uploadFile">,
+    IMutationUploadFileArgs
+  >(UPLOAD_FILE);
 
   const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) => {
     setWriter(event.target.value);
@@ -153,14 +167,30 @@ export default function BoardWrite(props: IBoardWriteProps) {
           },
         });
 
-        success();
+        Modal.success({ content: "게시물이 성공적으로 등록되었습니다" });
         void router.push(`/boards/${result.data?.createBoard._id ?? ""}`);
       }
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message });
     }
   };
+  const onChangeFile = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
 
+    const isVaild = checkValidationFile(file);
+    if (!isVaild) return;
+    try {
+      const result = await uploadFile({ variables: { file } });
+      console.log(result);
+      console.log(result.data?.uploadFile.url); // 얘가 이미지 주소
+      setImageUrl(result.data?.uploadFile.url ?? "");
+    } catch (error) {
+      if (error instanceof Error) Modal.error({ content: error.message }); // 만약 error가 Error의 자식이면 (거기포함되면) 에러모달창 띄워주기
+    }
+  };
+  const onClickImg = () => {
+    fileRef.current?.click();
+  };
   const onClickUpdate = async () => {
     if (
       !title &&
@@ -171,10 +201,11 @@ export default function BoardWrite(props: IBoardWriteProps) {
       !addressDetail
     ) {
       if (confirm("수정하시겠습니까?")) {
-        alert("변경사항이 없습니다");
+        Modal.info({ content: "변경사항이 없습니다" });
         return;
       } else {
-        void router.push(`/boards`);
+        if (typeof router.query._id !== "string") return;
+        void router.push(`/boards/${router.query._id}`);
         return;
       }
     }
@@ -200,11 +231,10 @@ export default function BoardWrite(props: IBoardWriteProps) {
         },
       });
 
-      // alert("게시물이 수정되었습니다");
-      success();
+      Modal.success({ content: "게시물이 수정되었습니다" });
       void router.push(`/boards/${result.data?.updateBoard._id}`);
     } catch (error) {
-      if (error instanceof Error) alert(error.message);
+      if (error instanceof Error) Modal.error({ content: error.message });
     }
   };
 
@@ -233,6 +263,10 @@ export default function BoardWrite(props: IBoardWriteProps) {
         address={address}
         addressDetail={addressDetail}
         youtubeUrl={youtubeUrl}
+        onChangeFile={onChangeFile}
+        onClickImg={onClickImg}
+        fileRef={fileRef}
+        imageUrl={imageUrl}
       />
     </>
   );

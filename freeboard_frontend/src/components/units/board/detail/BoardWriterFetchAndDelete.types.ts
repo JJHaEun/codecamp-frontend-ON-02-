@@ -1,3 +1,4 @@
+import { MouseEvent } from "react";
 import { IQuery } from "../../../../commons/types/generated/types";
 
 export interface IBoardWriteFetchUIProps {
@@ -7,4 +8,9 @@ export interface IBoardWriteFetchUIProps {
   onClickDelete: () => void;
   onClickLike: () => void;
   onClickDisLike: () => void;
+  onClickcheckPermissionDeleteModal: (
+    event: MouseEvent<HTMLButtonElement>
+  ) => void;
+  handleCancel: () => void;
+  isOpenDelete: boolean;
 }
