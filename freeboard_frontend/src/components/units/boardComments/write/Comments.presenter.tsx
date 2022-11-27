@@ -20,7 +20,7 @@ export default function CommentsWriteUI(props: ICommentsWriteUIProps) {
                 type="text"
                 placeholder="작성자"
                 onChange={props.onChangeWriter}
-                value={props.writer || props.el?.writer || ""}
+                value={props.writer || (props.el?.writer ?? "")}
               />
               <St.InPut
                 id="password"

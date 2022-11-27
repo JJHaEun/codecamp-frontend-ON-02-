@@ -65,8 +65,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
               readOnly
               value={
                 props.zipcode ||
-                props.data?.fetchBoard.boardAddress?.zipcode ||
-                ""
+                (props.data?.fetchBoard.boardAddress?.zipcode ?? "")
               }
             />
             <St.Bt1 onClick={props.onClickAddress}>우편번호 검색</St.Bt1>
@@ -94,7 +93,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
               type="text"
               onChange={props.onChangeYoutubeUrl}
               placeholder="링크를 복사해주세요."
-              defaultValue={props.data?.fetchBoard.youtubeUrl || ""}
+              defaultValue={props.data?.fetchBoard.youtubeUrl ?? ""}
             />
           </St.Div2>
 
@@ -109,6 +108,9 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
             />
 
             <St.PottoButton onClick={props.onClickImg}>+</St.PottoButton>
+            <St.PottoButton onClick={props.onClickImg}>+</St.PottoButton>
+            <St.PottoButton onClick={props.onClickImg}>+</St.PottoButton>
+
             {/* 버튼을 클릭하면 이미지 보이고 detail에서 확인가능...?연결을 어떻게 시켜야할까... */}
             <img src={`https://storage.googleapis.com/${props.imageUrl}`} />
           </St.Div3>

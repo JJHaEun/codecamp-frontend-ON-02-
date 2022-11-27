@@ -1,6 +1,6 @@
 import { Modal, Rate } from "antd";
 import { useRouter } from "next/router";
-import { ChangeEvent, MouseEvent, useState } from "react";
+import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from "react";
 import { getDate } from "../../../commons/utils/utils";
 import * as S from "./CommentsList.styles";
 import { IBoardCommentListItemsProps } from "./CommentsList.types";
@@ -23,6 +23,7 @@ export default function BoardCommentListItemsUI(
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [boardCommentId, setBoardCommentId] = useState("");
   const [password, setPassword] = useState("");
+  const passwordInputRef = useRef<HTMLInputElement>(null);
 
   const onClickEdit = async () => {
     setIsEdit((prev) => !prev);
@@ -74,7 +75,9 @@ export default function BoardCommentListItemsUI(
     setIsOpenDelete((prev) => !prev);
     void router.push(`/boards/${router.query._id}`);
   };
-
+  useEffect(() => {
+    passwordInputRef.current?.focus();
+  }, [onClickcheckPermissionDeleteModal]);
   return (
     <>
       {isOpenDelete && (
@@ -85,13 +88,17 @@ export default function BoardCommentListItemsUI(
           onCancel={handleCancel}
           cancelText="취소"
         >
-          <div>비밀번호를 입력후,ok버튼을 누르시면 삭제됩니다</div>
-          <div> 비밀번호 입력</div>
-          <input type="password" onChange={onChangeDeletePassword} />
+          <div>비밀번호를 입력후, ok버튼을 누르시면 삭제됩니다</div>
+          <input
+            type="password"
+            placeholder="비밀번호를 입력하세요"
+            onChange={onChangeDeletePassword}
+            ref={passwordInputRef}
+          />
         </Modal>
       )}
       {!isEdit && (
-        <S.All key={props.el._id} id={props.el.writer}>
+        <S.All key={props.el._id}>
           <S.Img src="/messenger.png"></S.Img>
 
           <div>
