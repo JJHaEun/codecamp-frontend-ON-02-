@@ -2,6 +2,8 @@ import * as St from "./BoardWrite.styles";
 import { IBoardWriteUIProps } from "./BoardWrite.types";
 import DaumPostcode from "react-daum-postcode";
 import { Modal } from "antd";
+import { v4 as uuidv4 } from "uuid";
+import Uploads01 from "../../../commons/uploads/01/UploadImg.container";
 
 export default function BoardWriteUI(props: IBoardWriteUIProps) {
   console.log(props.data?.fetchBoard?.boardAddress?.address);
@@ -99,20 +101,16 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
 
           <St.Div3>
             <div>사진첨부</div>
-            <St.InputNone
-              type="file"
-              onChange={props.onChangeFile}
-              ref={props.fileRef}
-              accept="image/jpeg,image/png,image/jpg"
-              multiple
-            />
-
-            <St.PottoButton onClick={props.onClickImg}>+</St.PottoButton>
-            <St.PottoButton onClick={props.onClickImg}>+</St.PottoButton>
-            <St.PottoButton onClick={props.onClickImg}>+</St.PottoButton>
-
-            {/* 버튼을 클릭하면 이미지 보이고 detail에서 확인가능...?연결을 어떻게 시켜야할까... */}
-            <img src={`https://storage.googleapis.com/${props.imageUrl}`} />
+            <St.Images>
+              {props.imageUrls.map((el, index) => (
+                <Uploads01
+                  key={uuidv4()}
+                  index={index}
+                  imageUrl={el}
+                  onChangeImgUrls={props.onChangeImgUrls}
+                />
+              ))}
+            </St.Images>
           </St.Div3>
           <St.Div3>
             <div>메인 설정</div>

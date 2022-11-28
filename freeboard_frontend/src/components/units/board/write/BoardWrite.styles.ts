@@ -13,7 +13,7 @@ export const MainDiv = styled.div`
   :before {
     content: "";
     position: absolute;
-    background-image: url("https://source.unsplash.com/featured/?date&vacation");
+    background-image: url("https://source.unsplash.com/featured/?vacation");
     opacity: 0.4;
     top: 0;
     left: 0;
@@ -162,4 +162,7 @@ export const Empty1 = styled.div`
 `;
 export const InputNone = styled.input`
   display: none;
+`;
+export const Images = styled.div`
+  display: flex;
 `;

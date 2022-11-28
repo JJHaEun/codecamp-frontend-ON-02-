@@ -13,7 +13,7 @@ import {
   IQueryFetchBoardArgs,
 } from "../../../../commons/types/generated/types";
 import { Modal } from "antd";
-import { MouseEvent, useState } from "react";
+import { useState } from "react";
 
 export default function BoardWriteFetch() {
   const [isOpenDelete, setIsOpenDelete] = useState(false);
@@ -71,9 +71,7 @@ export default function BoardWriteFetch() {
       if (error instanceof Error) Modal.error({ content: error.message });
     }
   };
-  const onClickcheckPermissionDeleteModal = (
-    event: MouseEvent<HTMLButtonElement>
-  ) => {
+  const onClickcheckPermissionDeleteModal = () => {
     setIsOpenDelete((prev) => !prev);
   };
 

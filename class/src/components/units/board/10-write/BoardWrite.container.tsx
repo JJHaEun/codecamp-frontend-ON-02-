@@ -6,7 +6,7 @@ import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
 import { IBoardWriteProps, IMyvariables } from "./BoardWrite.types";
 
 export default function BoardWrite(props: IBoardWriteProps) {
-  //자바스크립트 영역
+  // 자바스크립트 영역
   const router = useRouter();
   const [mycolor, setMycolor] = useState(false);
   const [writer, setWriter] = useState("");
@@ -17,12 +17,12 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const [updateBoard] = useMutation(UPDATE_BOARD);
 
   const onClickSubmit = async () => {
-    //const writer = "qqq"// // 이함수에 있으면 현제스코프 적용
+    // const writer = "qqq"// // 이함수에 있으면 현제스코프 적용
     const result = await 나의함수({
       variables: {
-        //variables가 $역할을 해주니 여기에는 $쓰지 않음.원래는 각각 $가 들어감.($writer...등)
-        writer: writer, //이름같아도 다른것이기에 문제되지 않음. 이 함수에 없으면 스코프체인으로 위에서 찾음
-        title, //키와 value같으면 키만입력가능
+        // variables가 $역할을 해주니 여기에는 $쓰지 않음.원래는 각각 $가 들어감.($writer...등)
+        writer: writer, // 이름같아도 다른것이기에 문제되지 않음. 이 함수에 없으면 스코프체인으로 위에서 찾음
+        title, // 키와 value같으면 키만입력가능
         contents,
       },
     });
@@ -39,11 +39,11 @@ export default function BoardWrite(props: IBoardWriteProps) {
     if (title) myvariables.title = title;
     if (contents) myvariables.contents = contents;
 
-    //1.수정하기 뮤테이션 날리기
+    // 1.수정하기 뮤테이션 날리기
     const result = await updateBoard({
       variables: myvariables,
     });
-    //2.상세페이지로 이동하기
+    // 2.상세페이지로 이동하기
     // router.push(`/08-05-boards/${result.data.updateBoard.number}`)
     console.log(result);
     alert(result.data.updateBoard.message);
@@ -53,7 +53,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) => {
     setWriter(event.target.value);
     if (event.target.value && title && contents) {
-      //마지막에 입력시 색이 변하게 props
+      // 마지막에 입력시 색이 변하게 props
       setMycolor(true);
     }
   };
@@ -70,7 +70,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
     }
   };
 
-  //html영역(return 아래부분)
+  // html영역(return 아래부분)
   return (
     <>
       <div>qwqqq</div>

@@ -1,4 +1,4 @@
-import { ChangeEvent, RefObject } from "react";
+import { ChangeEvent } from "react";
 import { IQuery } from "../../../../commons/types/generated/types";
 
 export interface IBoardWriteProps {
@@ -35,10 +35,8 @@ export interface IBoardWriteUIProps {
   address: string;
   addressDetail: string;
   youtubeUrl: string;
-  onChangeFile: (event: ChangeEvent<HTMLInputElement>) => void;
-  onClickImg: () => void;
-  fileRef: RefObject<HTMLInputElement>;
-  imageUrl: String;
+  onChangeImgUrls: (imageUrl: string, index: number) => void;
+  imageUrls: string[];
 }
 export interface IBtProps {
   changes: boolean;
@@ -48,6 +46,7 @@ export interface IUpdateBoardInput {
   contents?: string;
   title?: string;
   youtubeUrl?: string;
+  images?: string[];
   boardAddress?: {
     zipcode?: string;
     address?: string;

@@ -10,13 +10,14 @@ export const CREATE_BOARD = gql`
       likeCount
       dislikeCount
       youtubeUrl
-      images
+
       boardAddress {
         zipcode
         address
         addressDetail
       }
       createdAt
+      images
     }
   }
 `;
@@ -62,13 +63,6 @@ export const FETCH_BOARD = gql`
         address
         addressDetail
       }
-    }
-  }
-`;
-export const UPLOAD_FILE = gql`
-  mutation uploadFile($file: Upload!) {
-    uploadFile(file: $file) {
-      url
     }
   }
 `;

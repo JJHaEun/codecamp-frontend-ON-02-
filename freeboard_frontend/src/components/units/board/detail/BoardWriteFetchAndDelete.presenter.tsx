@@ -67,8 +67,16 @@ export default function BoardWriteFetchUI(props: IBoardWriteFetchUIProps) {
                 <St.Title>{props.data?.fetchBoard?.title}</St.Title>
 
                 <div>
-                  <img src="/imageBox.png" />
-                  {/* <img src={`https://storage.googleapis.com/${props.imageUrl}`} /> 여기 사진이 보여야함.. */}
+                  <St.ImageWrapper>
+                    {props.data?.fetchBoard.images
+                      ?.filter((el: string) => el)
+                      .map((el: string) => (
+                        <St.Image
+                          key={el}
+                          src={`https://storage.googleapis.com/${el}`}
+                        />
+                      ))}
+                  </St.ImageWrapper>
                   <St.Contents>{props.data?.fetchBoard?.contents}</St.Contents>
                 </div>
               </div>

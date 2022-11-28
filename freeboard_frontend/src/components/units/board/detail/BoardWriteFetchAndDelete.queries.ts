@@ -8,7 +8,6 @@ export const FETCH_BOARD = gql`
       contents
       likeCount
       dislikeCount
-
       createdAt
       images
       youtubeUrl

@@ -200,3 +200,13 @@ export const Max = styled.div`
   justify-content: center;
   align-items: center;
 `;
+export const ImageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Image = styled.img`
+  width: 996px;
+  height: 480px;
+  margin-bottom: 30px;
+`;

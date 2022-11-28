@@ -1,25 +1,18 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import BoardWriteUI from "./BoardWrite.presenter";
-import {
-  CREATE_BOARD,
-  FETCH_BOARD,
-  UPDATE_BOARD,
-  UPLOAD_FILE,
-} from "./BoardWrite.queries";
+import { CREATE_BOARD, FETCH_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
 import {
   IMutation,
   IMutationCreateBoardArgs,
   IMutationUpdateBoardArgs,
-  IMutationUploadFileArgs,
   IQuery,
   IQueryFetchBoardArgs,
 } from "../../../../commons/types/generated/types";
 import { IBoardWriteProps, IUpdateBoardInput } from "./BoardWrite.types";
 import { Modal } from "antd";
 import { Address } from "react-daum-postcode";
-import { checkValidationFile } from "../../../../commons/libraries/vaildationFile";
 
 export default function BoardWrite(props: IBoardWriteProps) {
   const [bt, setBt] = useState(false);
@@ -37,8 +30,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const [pwEmpty, setPwEmpty] = useState("");
   const [titleEmpty, setTitleEmpty] = useState("");
   const [contentsEmpty, setContentsEmpty] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const fileRef = useRef<HTMLInputElement>(null);
+  const [imageUrls, setImageUrls] = useState(["", "", ""]);
 
   const router = useRouter();
   // 빈페이지로보내기
@@ -64,11 +56,6 @@ export default function BoardWrite(props: IBoardWriteProps) {
     Pick<IMutation, "updateBoard">,
     IMutationUpdateBoardArgs
   >(UPDATE_BOARD);
-
-  const [uploadFile] = useMutation<
-    Pick<IMutation, "uploadFile">,
-    IMutationUploadFileArgs
-  >(UPLOAD_FILE);
 
   const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) => {
     setWriter(event.target.value);
@@ -135,21 +122,31 @@ export default function BoardWrite(props: IBoardWriteProps) {
     setZipcode(address.zonecode);
     setIsOpen((prev) => !prev);
   };
+  const onChangeImgUrls = (imgUrl: string, index: number) => {
+    const newImgUrl = [...imageUrls];
+    newImgUrl[index] = imgUrl;
+    setImageUrls(newImgUrl);
+  };
+  useEffect(() => {
+    if (data?.fetchBoard.images?.length) {
+      setImageUrls([...data?.fetchBoard.images]); // state 변경
+    }
+  }, [data]);
   const onClickSignIn = async () => {
-    try {
-      if (!writer) {
-        setWriterEmpty("작성자를 입력해 주세요");
-      }
-      if (!pw) {
-        setPwEmpty("비밀번호를 입력해 주세요");
-      }
-      if (!title) {
-        setTitleEmpty("제목을 입력해 주세요");
-      }
-      if (!contents) {
-        setContentsEmpty("내용을 입력해 주세요");
-      }
-      if (writer && pw && title && contents) {
+    if (!writer) {
+      setWriterEmpty("작성자를 입력해 주세요");
+    }
+    if (!pw) {
+      setPwEmpty("비밀번호를 입력해 주세요");
+    }
+    if (!title) {
+      setTitleEmpty("제목을 입력해 주세요");
+    }
+    if (!contents) {
+      setContentsEmpty("내용을 입력해 주세요");
+    }
+    if (writer && pw && title && contents) {
+      try {
         const result = await createBoard({
           variables: {
             createBoardInput: {
@@ -158,6 +155,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
               title,
               contents,
               youtubeUrl,
+              images: [...imageUrls],
               boardAddress: {
                 zipcode,
                 address,
@@ -169,36 +167,23 @@ export default function BoardWrite(props: IBoardWriteProps) {
 
         Modal.success({ content: "게시물이 성공적으로 등록되었습니다" });
         void router.push(`/boards/${result.data?.createBoard._id ?? ""}`);
+      } catch (error) {
+        if (error instanceof Error) Modal.error({ content: error.message });
       }
-    } catch (error) {
-      if (error instanceof Error) Modal.error({ content: error.message });
     }
-  };
-  const onChangeFile = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-
-    const isVaild = checkValidationFile(file);
-    if (!isVaild) return;
-    try {
-      const result = await uploadFile({ variables: { file } });
-      console.log(result);
-      console.log(result.data?.uploadFile.url); // 얘가 이미지 주소
-      setImageUrl(result.data?.uploadFile.url ?? "");
-    } catch (error) {
-      if (error instanceof Error) Modal.error({ content: error.message }); // 만약 error가 Error의 자식이면 (거기포함되면) 에러모달창 띄워주기
-    }
-  };
-  const onClickImg = () => {
-    fileRef.current?.click();
   };
   const onClickUpdate = async () => {
+    const currentFiles = JSON.stringify(imageUrls);
+    const defaultFiles = JSON.stringify(data?.fetchBoard.images);
+    const isChangeFiles = currentFiles !== defaultFiles;
     if (
       !title &&
       !contents &&
       !youtubeUrl &&
       !zipcode &&
       !address &&
-      !addressDetail
+      !addressDetail &&
+      !isChangeFiles
     ) {
       if (confirm("수정하시겠습니까?")) {
         Modal.info({ content: "변경사항이 없습니다" });
@@ -222,6 +207,8 @@ export default function BoardWrite(props: IBoardWriteProps) {
       if (addressDetail)
         updateBoardInput.boardAddress.addressDetail = addressDetail;
     }
+    if (isChangeFiles) updateBoardInput.images = imageUrls;
+
     try {
       const result = await updateBoard({
         variables: {
@@ -232,6 +219,10 @@ export default function BoardWrite(props: IBoardWriteProps) {
       });
 
       Modal.success({ content: "게시물이 수정되었습니다" });
+      if (typeof result.data?.updateBoard._id !== "string") {
+        alert("일시적인 오류가 있습니다. 다시 시도해 주세요.");
+        return;
+      }
       void router.push(`/boards/${result.data?.updateBoard._id}`);
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message });
@@ -263,10 +254,8 @@ export default function BoardWrite(props: IBoardWriteProps) {
         address={address}
         addressDetail={addressDetail}
         youtubeUrl={youtubeUrl}
-        onChangeFile={onChangeFile}
-        onClickImg={onClickImg}
-        fileRef={fileRef}
-        imageUrl={imageUrl}
+        onChangeImgUrls={onChangeImgUrls}
+        imageUrls={imageUrls}
       />
     </>
   );

@@ -2,9 +2,9 @@ import { BlueButton, RedInput } from "./BoardWrite.styles";
 import { IBoardWriteUIProps } from "./BoardWrite.types";
 
 export default function BoardWriteUI(props: IBoardWriteUIProps) {
-  //자바스크립트 영역
+  // 자바스크립트 영역
 
-  //html영역(return 아래)
+  // html영역(return 아래)
   return (
     <>
       작성자:
