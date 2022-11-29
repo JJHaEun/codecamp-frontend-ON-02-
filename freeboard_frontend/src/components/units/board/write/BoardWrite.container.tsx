@@ -123,13 +123,13 @@ export default function BoardWrite(props: IBoardWriteProps) {
     setIsOpen((prev) => !prev);
   };
   const onChangeImgUrls = (imgUrl: string, index: number) => {
-    const newImgUrl = [...imageUrls];
-    newImgUrl[index] = imgUrl;
-    setImageUrls(newImgUrl);
+    const newImgUrls = [...imageUrls];
+    newImgUrls[index] = imgUrl;
+    setImageUrls(newImgUrls);
   };
   useEffect(() => {
     if (data?.fetchBoard.images?.length) {
-      setImageUrls([...data?.fetchBoard.images]); // state 변경
+      setImageUrls([...data.fetchBoard.images]); // state 변경
     }
   }, [data]);
   const onClickSignIn = async () => {
@@ -172,6 +172,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
       }
     }
   };
+
   const onClickUpdate = async () => {
     const currentFiles = JSON.stringify(imageUrls);
     const defaultFiles = JSON.stringify(data?.fetchBoard.images);
@@ -185,14 +186,16 @@ export default function BoardWrite(props: IBoardWriteProps) {
       !addressDetail &&
       !isChangeFiles
     ) {
-      if (confirm("수정하시겠습니까?")) {
-        Modal.info({ content: "변경사항이 없습니다" });
-        return;
-      } else {
-        if (typeof router.query._id !== "string") return;
-        void router.push(`/boards/${router.query._id}`);
-        return;
-      }
+      // if (confirm("수정하시겠습니까?")) {
+      //   Modal.info({ content: "변경사항이 없습니다" });
+      //   return;
+      // } else {
+      //   if (typeof router.query._id !== "string") return;
+      //   void router.push(`/boards/${router.query._id}`);
+      //   return;
+      // }
+      alert("수정사항이 없습니다");
+      return;
     }
     const updateBoardInput: IUpdateBoardInput = {};
 
@@ -210,19 +213,24 @@ export default function BoardWrite(props: IBoardWriteProps) {
     if (isChangeFiles) updateBoardInput.images = imageUrls;
 
     try {
+      if (typeof router.query._id !== "string") return;
       const result = await updateBoard({
         variables: {
-          boardId: String(router.query._id),
+          boardId: router.query._id,
           password: pw,
           updateBoardInput,
         },
+        refetchQueries: [
+          {
+            query: FETCH_BOARD,
+            variables: { boardId: router.query._id },
+          },
+        ],
       });
 
       Modal.success({ content: "게시물이 수정되었습니다" });
-      if (typeof result.data?.updateBoard._id !== "string") {
-        alert("일시적인 오류가 있습니다. 다시 시도해 주세요.");
-        return;
-      }
+      if (typeof result.data?.updateBoard._id !== "string") return;
+
       void router.push(`/boards/${result.data?.updateBoard._id}`);
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message });

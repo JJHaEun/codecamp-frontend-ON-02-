@@ -16,12 +16,14 @@ import { Modal } from "antd";
 import { useState } from "react";
 
 export default function BoardWriteFetch() {
+  const router = useRouter();
+
   const [isOpenDelete, setIsOpenDelete] = useState(false);
 
   const [likeBoard] = useMutation(LIKE_BOARD);
   const [dislikeBoard] = useMutation(DISLIKE_BOARD);
   const [deleteBoard] = useMutation(DELETE_BOARD);
-  const router = useRouter();
+
   const { data } = useQuery<Pick<IQuery, "fetchBoard">, IQueryFetchBoardArgs>(
     FETCH_BOARD,
     {
@@ -30,6 +32,7 @@ export default function BoardWriteFetch() {
       },
     }
   );
+
   const onClickLike = async () => {
     await likeBoard({
       variables: {
@@ -80,6 +83,7 @@ export default function BoardWriteFetch() {
     setIsOpenDelete((prev) => !prev);
     void router.push(`/boards/${router.query._id}`);
   };
+
   return (
     <>
       <BoardWriteFetchUI

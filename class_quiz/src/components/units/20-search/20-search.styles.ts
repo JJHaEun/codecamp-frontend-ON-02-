@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { IPageNationOrProps } from "./20-search.types";
+import { IPageProps } from "./20-search.types";
 export const Box1 = styled.div`
   display: flex;
 
@@ -46,9 +46,8 @@ export const Column3 = styled.span`
 export const PageNumber = styled.span`
   font-size: 30px;
   font-weight: 700;
-  color: ${(props: IPageNationOrProps) => (props.isActive ? "blue" : "black")};
-  cursor: ${(props: IPageNationOrProps) =>
-    props.isActive ? "default" : "pointer"};
+  color: ${(props: IPageProps) => (props.isActive ? "blue" : "black")};
+  cursor: ${(props: IPageProps) => (props.isActive ? "default" : "pointer")};
   margin: 30px;
 `;
 

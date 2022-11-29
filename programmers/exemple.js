@@ -1355,3 +1355,93 @@ function solution(n, m) {
   //최소공배수 구하는 공식 : n과 m을 곱한값에 최대공약수를 나눠준 값
   return [b, (n * m) / b];
 }
+
+//완주하지 못한 선수 ==> 얘는 효율성 부분에서 좀 느림
+function solution(participant, completion) {
+  // 한명은 완주못함.
+  // 그 완주하지 못한 선수 이름을 리턴
+  // 참여자 이름 배열 participant
+  // 완주자 이름배열 completion
+  //두 배열을 합침,
+  // 참여자 명단에는 있지만 완주자 명단에는 없는자.
+  // 동명이인도 존재
+
+  // completion과 participant를 비교해 지워나가는 식으로
+  // 참가자가 완주명단에 있다면 지워나가는 방식으로
+
+  //1.splice: 배열에서 사용가능한 메서드
+  //2. 내가 제거하고싶은 배열의 데이터를 해당구간부터 제거할 수 있다.
+  //3. 데이터를 추가하는것도 가능
+  // arr = [ 1, 2, 3, 4]
+  //arr.splice(몇번째 인덱스부터  지울것인지,그 인덱스부터 몇개 를 지울것인지)==> 제거된 데이터 를 배열로 받아옴(return 값으로 받는다)
+  // 기존 데이터에 다시 할당하면 제거되게된 데이터를 받게된다.
+  // 지우고 싶지 않으면 두번째인자에 0을 넣으면됨.
+  // 세번째부분에는 추가하는 부분
+  //즉, arr.splicce(1,0,5) ==> 첫번째 인덱스부터 하나도 지워지지않고 첫번째 인덱스자리에 5가 들어오게되고 원래 첫번째 인덱스였던애는 그 뒤로자리옮김
+  // ===> [ 1, 5, 2, 3, 4]
+  // 원본값이 변경된다.
+  for (let i = 0; i < completion.length; i++) {
+    if (participant.includes(completion[i])) {
+      // 참가자명단중 완주한선수들의 이름의 인덱스값을 찾아옴
+      //indexOf는 배열의 인덱스 값을 찾아옴
+      // 해당선수의 인덱스 값부터라는 기준이 잡힘=>splice의 첫번째 요소
+      participant.splice(participant.indexOf(completion[i]), 1); // 두번째에는 한개만 지운다는 1이 들어옴
+      //indexOf에 속한 선수들만 participant에서 지워지고 completion에 속하지 않는 하나가 participant에서 남게됨
+    }
+  }
+  return participant[0]; // 이름을 리턴
+}
+// 적은 반복문으로도 결과값 얻어오기
+function solution(participant, completion) {
+  //참가자, 완주자 명단을 오름차순으로 정렬
+  participant.sort(); // 문자열을 오름차순 정렬시에는 (여기)비워도 됨
+  //숫자가 들어있는 배열은 오름차순 명시해야함(인자넣어야함)
+  completion.sort((a, b) => (a > b ? 1 : -1));
+  for (let i = 0; i < participant.length; i++) {
+    if (participant[i] !== completion[i]) {
+      return participant[i];
+    }
+  }
+}
+
+//변수에 넣는법
+function solution(participant, completion) {
+  // 적은 반복문으로도 결과값 얻어오기
+  //참가자, 완주자 명단을 오름차순으로 정렬
+  participant.sort(); // 문자열을 오름차순 정렬시에는 (여기)비워도 됨
+  //숫자가 들어있는 배열은 오름차순 명시해야함(인자넣어야함)
+  completion.sort((a, b) => (a > b ? 1 : -1));
+  let answer = "";
+  for (let i = 0; i < participant.length; i++) {
+    if (participant[i] !== completion[i]) {
+      answer = participant[i];
+      break; // 찾으면 반복문종료
+    }
+  }
+  return answer;
+}
+
+//filter메서드 사용법
+function solution(participant, completion) {
+  //데이터를 걸러서 해당되는 부분만 return 받아 배열에
+  participant.sort();
+  completion.sort();
+
+  const answer = participant.filter((name, i) => {
+    return name !== completion[i];
+  });
+  return answer[0];
+}
+
+//3번째 케이스 :participant=["mislav", "stanko", "mislav", "ana"]
+//completion=["stanko", "ana", "mislav"]
+function solution(participant, completion) {
+  //데이터를 걸러서 해당되는 부분만 return 받아 배열에
+  participant.sort(); // ["ana", "mislav", "mislav", "stanko"]
+  completion.sort(); // ["ana", "mislav", "stanko"]
+
+  const answer = participant.filter((name, i) => {
+    return name !== completion[i];
+  });
+  return answer[0]; // 알파벳 순으로 정렬했고  3번째 케이스에서 mislav와 stanko들어옴(stanko의 경우에는 짝이 안맞아 name에는 undifind가 나옴) 제일먼저 완주하지못한 사람만 리턴하면되니 0번째인덱스만 뽑아 리턴
+}

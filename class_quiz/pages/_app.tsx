@@ -7,16 +7,19 @@ import { Global } from "@emotion/react";
 import { globalStyles } from "../src/commons/styles/globalStyles";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { RecoilRoot } from "recoil";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ApolloSetting>
-      <>
-        <Global styles={globalStyles} />
+    <RecoilRoot>
+      <ApolloSetting>
+        <>
+          <Global styles={globalStyles} />
 
-        <Component {...pageProps} />
-      </>
-    </ApolloSetting>
+          <Component {...pageProps} />
+        </>
+      </ApolloSetting>
+    </RecoilRoot>
   );
 }
 

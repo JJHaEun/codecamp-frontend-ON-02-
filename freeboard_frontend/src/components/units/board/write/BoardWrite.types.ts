@@ -28,14 +28,12 @@ export interface IBoardWriteUIProps {
   bt: boolean;
   isEdit: boolean;
   data?: Pick<IQuery, "fetchBoard">;
-
-  // data: any;
   isOpen: boolean;
   zipcode: string;
   address: string;
   addressDetail: string;
   youtubeUrl: string;
-  onChangeImgUrls: (imageUrl: string, index: number) => void;
+  onChangeImgUrls: (imageUrls: string, index: number) => void;
   imageUrls: string[];
 }
 export interface IBtProps {
@@ -46,10 +44,10 @@ export interface IUpdateBoardInput {
   contents?: string;
   title?: string;
   youtubeUrl?: string;
-  images?: string[];
   boardAddress?: {
     zipcode?: string;
     address?: string;
     addressDetail?: string;
   };
+  images?: string[];
 }

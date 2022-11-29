@@ -19,9 +19,9 @@ export default function Uploads01(props: IUpload01Props) {
     try {
       const result = await uploadFile({ variables: { file } });
       console.log(result);
-      console.log(result.data?.uploadFile.url); // 얘가 이미지 주소
+      console.log(result.data.uploadFile.url); // 얘가 이미지 주소
       //   if (typeof result.data?.uploadFile.url !== "string") return;
-      props.onChangeImgUrls(result.data?.uploadFile.url, props.index);
+      props.onChangeImgUrls(result.data.uploadFile.url, props.index);
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message }); // 만약 error가 Error의 자식이면 (거기포함되면) 에러모달창 띄워주기
     }

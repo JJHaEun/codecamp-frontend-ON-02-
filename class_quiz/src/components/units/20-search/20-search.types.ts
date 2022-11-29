@@ -13,5 +13,7 @@ export interface IPageNationOrProps {
   startPage: number;
   lastPage: number;
   visitPage: number;
+}
+export interface IPageProps {
   isActive: boolean;
 }

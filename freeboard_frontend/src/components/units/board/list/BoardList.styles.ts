@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { ITextTokenProps } from "./BoardList.types";
 
 export const Max = styled.div`
   width: 1000px;
@@ -109,4 +110,10 @@ export const H1title = styled.h1`
   background: linear-gradient(to left, #6666cc, #33cccc);
   color: transparent;
   background-clip: text;
+`;
+export const TextToken = styled.span`
+  color: ${(props: ITextTokenProps) => (props.isMatch ? "red" : "black")};
+`;
+export const SearchBar = styled.div`
+  margin-left: 100px;
 `;

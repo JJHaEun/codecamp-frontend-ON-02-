@@ -17,7 +17,8 @@ export default function PageFetchBoards() {
   const [keyword, setKeyword] = useState("");
   const [visitPage, setVisitPage] = useState(1);
 
-  const { data: dataBoardCount } = useQuery(FETCH_BOARDS_COUNT);
+  const { data: dataBoardCount, refetch: refetchBoardsCount } =
+    useQuery(FETCH_BOARDS_COUNT);
 
   const { data, refetch } = useQuery<
     Pick<IQuery, "fetchBoards">,
@@ -48,6 +49,7 @@ export default function PageFetchBoards() {
   };
   const getDebounce = _.debounce((value) => {
     void refetch({ search: value, page: 1 });
+    void refetchBoardsCount({ search: value });
     setKeyword(value);
   }, 500);
 

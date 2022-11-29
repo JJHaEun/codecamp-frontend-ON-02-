@@ -5,7 +5,8 @@ import { Modal, Tooltip } from "antd";
 import ReactPlayer from "react-player/youtube";
 
 export default function BoardWriteFetchUI(props: IBoardWriteFetchUIProps) {
-  console.log(props.data?.fetchBoard?.boardAddress?.address);
+  // console.log(props.data?.fetchBoard?.boardAddress?.address);
+  console.log(props);
   return (
     <>
       {props.isOpenDelete && (
@@ -28,9 +29,9 @@ export default function BoardWriteFetchUI(props: IBoardWriteFetchUIProps) {
               <St.TopLeft>
                 <St.Image1 src="/profile.jpg"></St.Image1>
                 <div>
-                  <St.Writer>{props.data?.fetchBoard?.writer}</St.Writer>
+                  <St.Writer>{props.data?.fetchBoard.writer}</St.Writer>
                   <St.DateBox>
-                    Date: {getDate(props.data?.fetchBoard?.createdAt)}
+                    Date: {getDate(props.data?.fetchBoard.createdAt)}
                   </St.DateBox>
                 </div>
               </St.TopLeft>
@@ -64,7 +65,7 @@ export default function BoardWriteFetchUI(props: IBoardWriteFetchUIProps) {
             </St.Top>
             <St.MainMiddle>
               <div>
-                <St.Title>{props.data?.fetchBoard?.title}</St.Title>
+                <St.Title>{props.data?.fetchBoard.title}</St.Title>
 
                 <div>
                   <St.ImageWrapper>
@@ -77,7 +78,7 @@ export default function BoardWriteFetchUI(props: IBoardWriteFetchUIProps) {
                         />
                       ))}
                   </St.ImageWrapper>
-                  <St.Contents>{props.data?.fetchBoard?.contents}</St.Contents>
+                  <St.Contents>{props.data?.fetchBoard.contents}</St.Contents>
                 </div>
               </div>
             </St.MainMiddle>
