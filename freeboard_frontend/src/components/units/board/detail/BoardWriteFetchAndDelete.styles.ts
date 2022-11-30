@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 export const MainBoard = styled.div`
   width: 1200px;
-  height: 1562px;
+  height: auto;
   position: relative;
 
   :before {
@@ -206,7 +206,7 @@ export const ImageWrapper = styled.div`
 `;
 
 export const Image = styled.img`
-  width: 996px;
-  height: 480px;
+  width: 980px;
+  height: 450px;
   margin-bottom: 30px;
 `;

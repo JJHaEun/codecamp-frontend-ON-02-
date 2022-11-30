@@ -93,8 +93,7 @@ export default function CommentsWrite(props: ICommentsWriteProps) {
   const onClickEditFinish = async () => {
     if (!contents && !value) {
       Modal.info({ content: "변경사항이 없습니다" });
-      if (typeof router.query._id !== "string") return;
-      void router.push(`/boards/${router.query._id}`);
+      return;
     }
     if (!password) {
       Modal.warning({ content: "비밀번호를 확인해주세요" });

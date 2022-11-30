@@ -7,6 +7,7 @@ export default function Search01UI(props: ISearchUIProps) {
         type="text"
         placeholder="키워드를 입력하세요"
         onChange={props.onChangeSearch}
+        ref={props.searchRef}
       />
     </div>
   );

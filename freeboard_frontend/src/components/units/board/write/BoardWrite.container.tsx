@@ -186,16 +186,14 @@ export default function BoardWrite(props: IBoardWriteProps) {
       !addressDetail &&
       !isChangeFiles
     ) {
-      // if (confirm("수정하시겠습니까?")) {
-      //   Modal.info({ content: "변경사항이 없습니다" });
-      //   return;
-      // } else {
-      //   if (typeof router.query._id !== "string") return;
-      //   void router.push(`/boards/${router.query._id}`);
-      //   return;
-      // }
-      alert("수정사항이 없습니다");
-      return;
+      if (confirm("수정하시겠습니까?")) {
+        Modal.info({ content: "변경사항이 없습니다" });
+        return;
+      } else {
+        if (typeof router.query._id !== "string") return;
+        void router.push(`/boards/${router.query._id}`);
+        return;
+      }
     }
     const updateBoardInput: IUpdateBoardInput = {};
 
@@ -251,7 +249,6 @@ export default function BoardWrite(props: IBoardWriteProps) {
         titleEmpty={titleEmpty}
         contentsEmpty={contentsEmpty}
         bt={bt}
-        isEdit={props.isEdit}
         data={data}
         onChangeYoutubeUrl={onChangeYoutubeUrl}
         onChangeAddressDetail={onChangeAddressDetail}

@@ -14,6 +14,7 @@ import {
 } from "../../../../commons/types/generated/types";
 import { Modal } from "antd";
 import { useState } from "react";
+import { FETCH_BOARDS } from "../list/BoardList.queries";
 
 export default function BoardWriteFetch() {
   const router = useRouter();
@@ -66,6 +67,9 @@ export default function BoardWriteFetch() {
         variables: {
           boardId: router.query._id,
         },
+        refetchQueries: [
+          { query: FETCH_BOARDS, variables: { boardId: router.query._id } },
+        ],
       });
 
       Modal.success({ content: "삭제가 완료되었습니다" });

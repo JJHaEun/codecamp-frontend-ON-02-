@@ -1,5 +1,13 @@
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { isEditState } from "../../../../src/commons/libraries/store";
 import BoardWrite from "../../../../src/components/units/board/write/BoardWrite.container";
 
 export default function EditPage() {
-  return <BoardWrite isEdit={true} />;
+  const [isEdit, setIsEdit] = useRecoilState(isEditState);
+
+  useEffect(() => {
+    setIsEdit(true);
+  }, []);
+  return <BoardWrite />;
 }

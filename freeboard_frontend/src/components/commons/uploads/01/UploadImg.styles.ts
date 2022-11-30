@@ -3,15 +3,14 @@ import styled from "@emotion/styled";
 export const UploadImage = styled.img`
   width: 78px;
   height: 78px;
-  margin-right: 24px;
+  margin-right: 15px;
   cursor: pointer;
 `;
 export const Buttons = styled.button`
-  width: 78px;
-  height: 78px;
+  width: 80px;
+  height: 80px;
   background-color: #bdbdbd;
-  margin-right: 24px;
-  outline: none;
+  margin-right: 15px;
   border: none;
   cursor: pointer;
 `;

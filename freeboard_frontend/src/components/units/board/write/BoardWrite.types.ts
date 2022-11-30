@@ -2,13 +2,11 @@ import { ChangeEvent } from "react";
 import { IQuery } from "../../../../commons/types/generated/types";
 
 export interface IBoardWriteProps {
-  isEdit: boolean;
   data?: Pick<IQuery, "fetchBoard">;
   writerEmpty?: string;
   pwEmpty?: string;
   titleEmpty?: string;
   contentsEmpty?: string;
-  bt: boolean;
 }
 export interface IBoardWriteUIProps {
   onClickSignIn: () => void;
@@ -26,8 +24,8 @@ export interface IBoardWriteUIProps {
   titleEmpty?: string;
   contentsEmpty?: string;
   bt: boolean;
-  isEdit: boolean;
   data?: Pick<IQuery, "fetchBoard">;
+
   isOpen: boolean;
   zipcode: string;
   address: string;

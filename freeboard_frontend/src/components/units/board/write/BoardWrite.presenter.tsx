@@ -4,9 +4,12 @@ import DaumPostcode from "react-daum-postcode";
 import { Modal } from "antd";
 import { v4 as uuidv4 } from "uuid";
 import Uploads01 from "../../../commons/uploads/01/UploadImg.container";
+import { useRecoilState } from "recoil";
+import { isEditState } from "../../../../commons/libraries/store";
 
 export default function BoardWriteUI(props: IBoardWriteUIProps) {
-  console.log(props.data?.fetchBoard?.boardAddress?.address);
+  const [isEdit, setIsEdit] = useRecoilState(isEditState);
+
   return (
     <>
       {props.isOpen && (
@@ -16,7 +19,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
       )}
       <St.WriterMain>
         <St.MainDiv>
-          <St.H1>게시물 {props.isEdit ? "수정" : "등록"}</St.H1>
+          <St.H1>게시물 {isEdit ? "수정" : "등록"}</St.H1>
           <St.Div>
             <div>
               <St.NamePw>작성자</St.NamePw>
@@ -121,10 +124,10 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
           </St.Div3>
           <St.Div4>
             <St.Bt
-              changes={props.isEdit ? true : props.bt}
-              onClick={props.isEdit ? props.onClickUpdate : props.onClickSignIn}
+              changes={isEdit ? true : props.bt}
+              onClick={isEdit ? props.onClickUpdate : props.onClickSignIn}
             >
-              {props.isEdit ? "수정" : "등록"}하기
+              {isEdit ? "수정" : "등록"}하기
             </St.Bt>
           </St.Div4>
         </St.MainDiv>
