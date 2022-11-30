@@ -1445,3 +1445,49 @@ function solution(participant, completion) {
   });
   return answer[0]; // 알파벳 순으로 정렬했고  3번째 케이스에서 mislav와 stanko들어옴(stanko의 경우에는 짝이 안맞아 name에는 undifind가 나옴) 제일먼저 완주하지못한 사람만 리턴하면되니 0번째인덱스만 뽑아 리턴
 }
+
+//
+const answerTable = [
+  // 얘의 length는 3
+  //  1번수포자 방식
+  [1, 2, 3, 4, 5], // 5개의 패턴
+  //2번 "
+  [2, 1, 2, 3, 2, 4, 2, 5], //8개의 패턴
+  //3번 "
+  [3, 3, 1, 1, 2, 2, 4, 4, 5, 5], // 10개의 패턴
+];
+
+function solution(answers) {
+  //정답이 들어있는 배열이 제공됨.
+  // 가장 많은 문제를 맞춘사람을 리턴
+  //다 같으면 오름차순정렬
+
+  // 수포자들이 정답을 찍는 패턴
+  //answers와 비교
+
+  // 몇번의 문제가 나오든, 해당수포자가 찍는 패턴수에따라 나눠주면 해당문제에 몇번을 찍을 지 알 수 있음
+
+  //수포자들의 점수를 저장하는배열
+  const score = [0, 0, 0]; //얘도 answerTable과 length같음.따라서 같은 인덱스로 접근가능
+  for (let i = 0; i < answers.length; i++) {
+    //학생들이 찍는 방식과 정답을 대조
+    for (let j = 0; j < answerTable.length; j++) {
+      // 지금의 문제를 나타내는 i에 각각의 학생들의 패턴을 담고있는 length를 나눠줌
+      //각각학생들이 가져오는 패턴의 값과 문제패턴의 값이 동일할때 학생의 점수를 저장하는 배열인 score[j] 에 즉 배열의 인덱스값에 ++해주기
+      //i % answerTable[j].length =(나머지구하는것)=> 0 % 3 = 0, 1 % 3=1 , 2 % 3 = 2
+      if (answerTable[j][i % answerTable[j].length] === answers[i]) {
+        score[j]++; // 몇번학생이 몇문제를 맞췃는지 합산해 보여줌.
+      }
+    }
+  }
+  //제일 많이 맞춘 문제의 수를 찾아옴
+  const answer = [];
+  const biggest = Math.max(...score);
+  for (let i = 0; i < score.length; i++) {
+    // 오름차순한 효과 얻음
+    if (biggest === score[i]) {
+      answer.push(i + 1); // 몇번학생인지 나타냄
+    }
+  }
+  return answer;
+}
