@@ -1340,7 +1340,7 @@ function solution(n, m) {
   }
   return [max, min];
 }
-//유클리드 호재법 사용
+//유클리드 호재법 사용****
 function solution(n, m) {
   // 유클리드호재법(최대공약수 구하는 알고리즘)
   let a = m; // 큰 수
@@ -1446,7 +1446,7 @@ function solution(participant, completion) {
   return answer[0]; // 알파벳 순으로 정렬했고  3번째 케이스에서 mislav와 stanko들어옴(stanko의 경우에는 짝이 안맞아 name에는 undifind가 나옴) 제일먼저 완주하지못한 사람만 리턴하면되니 0번째인덱스만 뽑아 리턴
 }
 
-//
+// **********
 const answerTable = [
   // 얘의 length는 3
   //  1번수포자 방식
@@ -1489,5 +1489,42 @@ function solution(answers) {
       answer.push(i + 1); // 몇번학생인지 나타냄
     }
   }
+  return answer;
+}
+//메서드 이용-- 다시 한번봐야함. 왜인지 통과가 안됨
+const answerTable = [
+  // 얘의 length는 3
+  //  1번수포자 방식
+  [1, 2, 3, 4, 5], // 5개의 패턴
+  //2번 "
+  [2, 1, 2, 3, 2, 4, 2, 5], //8개의 패턴
+  //3번 "
+  [3, 3, 1, 1, 2, 2, 4, 4, 5, 5], // 10개의 패턴
+];
+
+function solution(answers) {
+  // 학생들이 맞춘 문제수를 구함
+  const soreList = answerTable.map((el, j) => {
+    //배열안에 학생들의 정보가 담긴 객체형태로 만들기
+    //그 전에 학생들 점수 합산
+    const score = answers.reduce((acc, cur, i) => {
+      //el[i % el.length] === cur ==> el[i % el.length] 가 현재정답고 동일한가. 정답이 맞으면 1을 더해줌
+      return acc + (el[i % el.length] === cur ? 1 : 0);
+    }, 0);
+    return { student: i + 1, score }; //score : score //키와 value동일해 하나만 사용(맞춘개수를 의미)
+  });
+  // 최대로 맞춘 문제의 수를 가져옴
+  const biggest = Math.max(
+    ...scoreList.map((el) => {
+      //객체 데이터를 받아오게됨.score부분만 뽑아서 배열로 만들어줌(map은 배열로 만들어 리턴해줌)
+      return el.score; // 결과값 : [ 5, 0, 0]
+    })
+  );
+  //가장 많이 맞춘 사람만 거름
+  const answer = scoreList
+    .filter((el) => {
+      return biggest === el.score;
+    })
+    .map((el) => el.student);
   return answer;
 }

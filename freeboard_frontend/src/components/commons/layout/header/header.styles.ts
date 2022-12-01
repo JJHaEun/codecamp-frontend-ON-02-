@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
 `;
 export const Top = styled.div`
   display: flex;
-  gap: 80px;
+  gap: 50px;
   margin-left: 30px;
 `;
 export const Title = styled.h1`
@@ -47,6 +47,18 @@ export const Login = styled.div`
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   font-weight: 600;
   font-style: italic;
+  cursor: pointer;
+  :hover {
+    color: aliceblue;
+  }
+  :active {
+    position: relative;
+    left: 1px;
+    top: 1px;
+  }
+`;
+export const CreateUsers = styled.span`
+  font-weight: 600;
   cursor: pointer;
   :hover {
     color: aliceblue;

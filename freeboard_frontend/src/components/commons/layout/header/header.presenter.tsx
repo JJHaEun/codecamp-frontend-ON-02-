@@ -10,6 +10,10 @@ export default function LayOutHeaderUI(props: IPropsLayOutHeaderUI) {
         <div onClick={props.onClickBoards}>
           <S.Home />
         </div>
+        <S.CreateUsers onClick={props.onClickCreateUsers}>
+          회원가입
+        </S.CreateUsers>
+
         <LoginSuccess />
       </S.Top>
       <S.TitleBox>

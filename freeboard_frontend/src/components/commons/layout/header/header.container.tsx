@@ -11,11 +11,14 @@ export default function LayOutHeader() {
   const onClickBoards = () => {
     void router.push(`/`);
   };
-
+  const onClickCreateUsers = () => {
+    void router.push(`/createUser`);
+  };
   return (
     <LayOutHeaderUI
       onClickHeaderLogin={onClickHeaderLogin}
       onClickBoards={onClickBoards}
+      onClickCreateUsers={onClickCreateUsers}
     />
   );
 }
