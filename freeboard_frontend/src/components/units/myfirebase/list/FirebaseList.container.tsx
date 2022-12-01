@@ -24,6 +24,7 @@ export default function MyFireBaseList() {
   const onClickMoveNewBoard = () => {
     void router.push(`/myfirebase/new`);
   };
+
   return (
     <MyFireBaseListUI
       boardData={boardData}

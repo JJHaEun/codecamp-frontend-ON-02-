@@ -18,7 +18,8 @@ export default function LayOutHeaderUI(props: IPropsLayOutHeaderUI) {
       </S.Top>
       <S.TitleBox>
         <S.Title>The Power To Do</S.Title>
-      </S.TitleBox>
+      </S.TitleBox>{" "}
+      <div onClick={props.onClickBasket}>장바구니</div>
     </S.Wrapper>
   );
 }

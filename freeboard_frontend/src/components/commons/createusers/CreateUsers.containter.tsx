@@ -6,10 +6,11 @@ import {
   IMutation,
   IMutationCreateUserArgs,
 } from "../../../commons/types/generated/types";
+import { withAuthYes } from "../hocs/withAuth";
 import CreateUsersUI from "./CreateUsers.presenter";
 import { CREATE_USER } from "./CreateUsers.queries";
 
-export default function CreateUsers() {
+function CreateUsers() {
   const [emailSubmit, setEmailSubmit] = useState("");
   const [nameSubmit, setNamesubmit] = useState("");
   const [passwordSubmit, setPasswordSubmit] = useState("");
@@ -54,3 +55,4 @@ export default function CreateUsers() {
     />
   );
 }
+export default withAuthYes(CreateUsers);

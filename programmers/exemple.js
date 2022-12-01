@@ -1528,3 +1528,63 @@ function solution(answers) {
     .map((el) => el.student);
   return answer;
 }
+
+// 폰켓몬
+
+function solution(nums) {
+  // 네마리의 폰켓몬
+  // 같은종류는 같은번호임
+  // 가장 많은 종류의 폰켓몬 선택.
+  //반복문을 사용하여 겹치지 않는경우를 카운트
+
+  //   for(let i = 0;i < nums.length ; i ++){
+  //       if(nums[i] !== nums[i+1]){
+  //           count++
+  //       }
+  //   }
+  //   return count// 첫번째 경우에서 막힘
+
+  //nums길이는 항상 짝수
+  // N/2마리까지 가능==> 배열의 길이를 2로 나눔
+  // 최대한 뽑을 수 있는 폰켓몬 ==> 에서 다른 종류만
+  const answer = [];
+  // 폰켓몬에서 서로다른 종류만 뽑기
+  for (let i = 0; i < nums.length; i++) {
+    // answer에 nums[i] 가 없을때만 넣어줌
+    if (
+      answer.includes(nums[i]) === false && // 중복된것 제외
+      // answer의 길이가 최대치와 동일하지 않을때까지즉, 최대치 까지만 푸쉬
+      nums.length / 2 !== answer.length
+    ) {
+      answer.push(nums[i]);
+    }
+  }
+
+  return answer.length; // 가질 수 있는 최댓값을 리턴
+}
+
+// 자동으로 중복값제거하는 메서드 사용하기
+function solution(nums) {
+  // 자동으로 중복 데이터 제거하는 문법. new Set 사용. 유니크한 값만 넣음
+  const answer = new Set([]); // 배열이 아니기에 length사용 못함. 대신 size 사용
+  // 데이터를 넣으려고할때 nums의 절반(최댓값)넘어가는 지를 체크
+  for (let i = 0; i < nums.length; i++) {
+    if (nums.length / 2 !== answer.size) {
+      answer.add(nums[i]);
+    }
+  }
+  return answer.size;
+}
+
+// for문 사용 없는 코드
+function solution(nums) {
+  // 자동으로 중복 데이터 제거하는 문법. new Set 사용. 유니크한 값만 넣음
+  //for문 사용하지 않고 new Set만 사용
+  const answer = new Set(nums).size; // 빈배열 대신 실제 배열을 넣어주면 중복되는 것은 제거된 배열이 됨.
+  const limit = nums.length / 2; // 최대한 넣을 수 있는 폰켓몬 종류
+  if (limit >= answer) {
+    return answer; // 중복되지 않는 배열의 크기(길이)를 리턴해줌
+  }
+
+  return limit;
+}

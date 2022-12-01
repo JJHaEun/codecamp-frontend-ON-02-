@@ -3,11 +3,11 @@ import { Modal } from "antd";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import { useRecoilState } from "recoil";
-import { accessTokenState } from "../../../../commons/libraries/store";
+import { accessTokenState } from "../../../commons/libraries/store";
 import {
   IMutation,
   IMutationLoginUserArgs,
-} from "../../../../commons/types/generated/types";
+} from "../../../commons/types/generated/types";
 import LogInPageUI from "./Login.presenter";
 import { LOGIN_USER } from "./Login.queries";
 
@@ -37,14 +37,12 @@ export default function LogIn() {
       });
       const accessToken = result.data?.loginUser.accessToken; // 얘를 글로벌스테이트에 담음 얘는
       if (!accessToken) {
-        Modal.error({ content: "비밀번호를 확인해주세요" });
+        Modal.error({ content: "로그인을 먼저 해주세요" });
         return;
       }
       setAccessToken(accessToken);
-      // 로컬스토리지에 저장
-      localStorage.setItem("accessToken", accessToken); // 임시 사용. (나중에 지울예정)
-
-      void router.push(`/`);
+      localStorage.setItem("accessToken", accessToken);
+      void router.push(`/23/hoc/main`);
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message });
     }
