@@ -1,0 +1,72 @@
+import { gql } from "@apollo/client";
+
+export const CREATE_USED_ITEM = gql`
+  mutation createUseditem($createUseditemInput: CreateUseditemInput!) {
+    createUseditem(createUseditemInput: $createUseditemInput) {
+      _id
+      name
+      contents
+      price
+      remarks
+      tag
+      images
+      pickedCount
+      seller
+      createdAt
+      useditemAddress {
+        _id
+        zipcode
+        address
+        addressDetail
+      }
+    }
+  }
+`;
+export const UPDATE_USED_ITEM = gql`
+  mutation updateUseditem(
+    $updateUseditemInput: UpdateUseditemInput!
+    $useditemId: ID!
+  ) {
+    updateUseditem(
+      updateUseditemInput: $updateUseditemInput
+      useditemId: $useditemId
+    ) {
+      _id
+      name
+      remarks
+      contents
+      price
+      tags
+      images
+      pickedCount
+      seller
+      createdAt
+      useditemAddress {
+        _id
+        zipcode
+        address
+        addressDetail
+      }
+    }
+  }
+`;
+
+export const FETCH_USED_ITEM = gql`
+  query fetchUseditem($useditemId: ID!) {
+    fetchUseditem(useditemId: $useditemId) {
+      _id
+      name
+      remarks
+      contents
+      pickedCount
+      useditemAddress {
+        _id
+        zipcode
+        address
+        addressDetail
+      }
+      seller
+      createdAt
+    }
+  }
+`;
