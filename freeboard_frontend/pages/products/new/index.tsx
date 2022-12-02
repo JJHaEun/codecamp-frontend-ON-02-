@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { isEditState } from "../../../src/commons/libraries/store";
-import BoardWrite from "../../../src/components/units/board/write/BoardWrite.container";
+import ProductWite from "../../../src/components/units/productBoard/write/ProductWrite.container";
 
 export default function freeboardWrite() {
   const [isEdit, setIsEdit] = useRecoilState(isEditState);
@@ -9,5 +9,5 @@ export default function freeboardWrite() {
   useEffect(() => {
     setIsEdit(false);
   }, []);
-  return <BoardWrite />;
+  return <ProductWite />;
 }

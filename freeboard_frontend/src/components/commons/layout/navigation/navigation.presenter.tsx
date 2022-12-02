@@ -7,6 +7,7 @@ const MenuBar = [
   { id: "/mypage", name: "마이페이지" },
   { id: "/openapi", name: "쉬어가기" },
   { id: "/myfirebase", name: "출석체크" },
+  { id: "/products", name: "상품게시판" },
 ];
 export default function LayOutNavigationUI(props: IPropsLayOutNavigationUI) {
   return (

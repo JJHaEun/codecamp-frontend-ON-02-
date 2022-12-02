@@ -1588,3 +1588,51 @@ function solution(nums) {
 
   return limit;
 }
+
+// 피보나치 수
+function solution(n) {
+  // 지금 n은 2이상임.
+  // F(0)은 0이고 F(1)은 1,
+  // 나머지는 F(n) = F(n-1) + F(n-2)
+  //2이상의 n이 입력 ==> n번째 피보나치수를 1234567로 나눈 나머지를 리턴
+  // 0 1 2 3 5 8 13 ...
+  //n의 최솟값은 2
+  let prev = 0; // 피보나치 0번째 숫자 뜻함
+  let next = 1; // // 첫번째 피보나치 의미함
+  let sum = 1; // F(0) + F(1)
+  //최솟값 2부터 시작해 해당 피보나치 숫자들 배열로 넣기
+  const answer = [];
+  for (let i = 2; i <= n; i++) {
+    // 해당 피보나치 숫자들을 앞에서부터 구해나감
+    sum = (prev + next) % 1234567; // 이전의 값에서 합산시 나눠주기
+    prev = next; //n-1을 다시 할당
+    next = sum; // 이전피보나치 수의 값
+    answer.push(sum);
+  }
+
+  return answer[n - 2]; // 인덱스값에 접근하기 위해 n에 2를 뺌
+}
+
+//reduce사용
+function solution(n) {
+  // 지금 n은 2이상임.
+  // F(0)은 0이고 F(1)은 1,
+  // 나머지는 F(n) = F(n-1) + F(n-2)
+  //2이상의 n이 입력 ==> n번째 피보나치수를 1234567로 나눈 나머지를 리턴
+  // 0 1 2 3 5 8 13 ...
+  //n의 최솟값은 2
+  let prev = 0; // 피보나치 0번째 숫자 뜻함
+  let next = 1; // // 첫번째 피보나치 의미함
+  let sum = 1; // F(0) + F(1)
+  // reduce사용 ==> 배열 필요
+  const answer = new Array(n - 1)
+    .fill(1) // 인덱스값만큼 접근. n - 1한값
+    .reduce((acc) => {
+      // 현재 누적값
+      sum = (prev + acc) % 1234567;
+      prev = acc; // n - 1
+      next = sum; // 이전 피보나치의 수
+      return sum;
+    }, sum);
+  return answer;
+}
