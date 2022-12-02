@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { Modal } from "antd";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Address } from "react-daum-postcode";
 import {
   IMutation,
@@ -16,32 +16,30 @@ import {
   FETCH_USED_ITEM,
   UPDATE_USED_ITEM,
 } from "./ProductWrite.queries";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ProductWriteUI from "./ProductWrite.presenter";
-import { IFormData } from "./ProductWrite.types";
 import { useRecoilState } from "recoil";
 import { isOpenState } from "../../../../commons/libraries/store";
+import { IFormData } from "./ProductWrite.types";
 
-const schema = yup.object({
+export const schema = yup.object({
   name: yup.string().required("상품을 입력하세요"),
-  remarks: yup.string(),
+  remarks: yup.string().required("상품요약정보를 입력하세요"),
   contents: yup.string().required("상품상세내역을 적어주세요"),
   price: yup
     .number()
-    .required()
-    .positive()
+    .positive("가격을 숫자로 입력해주세요")
     .integer()
     .required("상품 가격을 입력해주세요"),
   addressDetail: yup.string(),
+  tags: yup.array(),
 });
 
 export default function ProductWite() {
-  const { register, handleSubmit, formState } = useForm<IFormData>({
-    resolver: yupResolver(schema),
-    mode: "onSubmit",
-  });
+  // const { formState } = useForm<IFormData>({
+  //   resolver: yupResolver(schema),
+  //   mode: "onChange",
+  // });
   const router = useRouter();
   // const [bt, setBt] = useState(false);
   //   const [isOpen, setIsOpen] = useState(false);
@@ -51,8 +49,9 @@ export default function ProductWite() {
   const [price] = useState(0);
   const [zipcode, setZipcode] = useState("");
   const [address, setAddress] = useState("");
-  const [addressDetail] = useState("");
+  const [addressDetail, setAddressDetail] = useState("");
   const [isOpen, setIsOpen] = useRecoilState(isOpenState);
+  const [tags, setTags] = useState(["", "", "", "", ""]);
 
   const [imageUrls, setImageUrls] = useState(["", "", ""]);
 
@@ -88,30 +87,40 @@ export default function ProductWite() {
   //   setContents(event.target.value);
   // };
 
-  // const onChangeAddressDetail = (event: ChangeEvent<HTMLInputElement>) => {
-  //   setAddressDetail(event.target.value);
-  // };
-
-  const onClickAddress = () => {
-    setIsOpen((prev) => !prev);
+  const onChangeAddressDetail = (event: ChangeEvent<HTMLInputElement>) => {
+    setAddressDetail(event.target.value);
   };
 
+  const onClickAddress = () => {
+    setIsOpen(true);
+  };
+  const cancelModal = () => {
+    setIsOpen(false);
+  };
   const onCompleteAddress = (address: Address) => {
     setAddress(address.address);
     setZipcode(address.zonecode);
-    setIsOpen((prev) => !prev);
+    setIsOpen(false);
   };
   const onChangeImgUrls = (imgUrl: string, index: number) => {
     const newImgUrls = [...imageUrls];
     newImgUrls[index] = imgUrl;
     setImageUrls(newImgUrls);
   };
+  const onChangeTags = (tag: string, index: number) => {
+    const newTags = [...tags];
+    newTags[index] = tag;
+    setTags(newTags);
+  };
   useEffect(() => {
     if (data?.fetchUseditem.images?.length) {
       setImageUrls([...data.fetchUseditem.images]); // state 변경
     }
+    if (data?.fetchUseditem.tags?.length) {
+      setTags([...data.fetchUseditem.tags]);
+    }
   }, [data]);
-  const onClickSignIn = async () => {
+  const onClickSignIn = async (data: IFormData) => {
     try {
       const result = await createUseditem({
         variables: {
@@ -120,7 +129,7 @@ export default function ProductWite() {
             remarks,
             contents,
             price,
-            tags: [],
+            tags: [...tags],
             images: [...imageUrls],
             useditemAddress: {
               zipcode,
@@ -130,18 +139,27 @@ export default function ProductWite() {
           },
         },
       });
-
+      console.log(
+        data?.name,
+        data?.remarks,
+        data?.contents,
+        data?.price,
+        data?.useditemAddress?.address
+      );
       Modal.success({ content: "게시물이 성공적으로 등록되었습니다" });
-      void router.push(`/boards/${result.data?.createUseditem._id ?? ""}`);
+      void router.push(`/products/${result.data?.createUseditem._id ?? ""}`);
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message });
     }
   };
 
-  const onClickUpdate = async () => {
+  const onClickUpdate = async (data: IFormData) => {
     const currentFiles = JSON.stringify(imageUrls);
-    const defaultFiles = JSON.stringify(data?.fetchUseditem.images);
+    const defaultFiles = JSON.stringify(data?.images);
     const isChangeFiles = currentFiles !== defaultFiles;
+    const currentTags = JSON.stringify(tags);
+    const defaultTags = JSON.stringify(data?.tags);
+    const isChangeTags = currentTags !== defaultTags;
     if (
       !name &&
       !remarks &&
@@ -149,7 +167,8 @@ export default function ProductWite() {
       !zipcode &&
       !address &&
       !addressDetail &&
-      !isChangeFiles
+      !isChangeFiles &&
+      !isChangeTags
     ) {
       if (confirm("수정하시겠습니까?")) {
         Modal.info({ content: "변경사항이 없습니다" });
@@ -206,21 +225,16 @@ export default function ProductWite() {
       onClickAddress={onClickAddress}
       onCompleteAddress={onCompleteAddress}
       imageUrls={imageUrls}
+      tags={tags}
+      onChangeTags={onChangeTags}
       onChangeImgUrls={onChangeImgUrls}
-      formState={formState}
-      handleSubmit={handleSubmit}
       onClickUpdate={onClickUpdate}
       onClickSignIn={onClickSignIn}
-      // onChangeAddressDetail={onChangeAddressDetail}
+      cancelModal={cancelModal}
+      onChangeAddressDetail={onChangeAddressDetail}
       // onChangeContents={onChangeContents}
       // onChangeRemarks={onChangeRemarks}
       // onChangePrice={onChangePrice}
-      // onChangeWriter={onChangeWriter}
-      register={register("name")}
-      {...register("remarks")}
-      {...register("contents")}
-      {...register("price")}
-      {...register("tag")}
       data={data}
     />
     //   <BoardWriteUI

@@ -8,10 +8,10 @@ export const CREATE_USED_ITEM = gql`
       contents
       price
       remarks
-      tag
+      tags
       images
       pickedCount
-      seller
+      # seller
       createdAt
       useditemAddress {
         _id
@@ -39,7 +39,7 @@ export const UPDATE_USED_ITEM = gql`
       tags
       images
       pickedCount
-      seller
+      # seller
       createdAt
       useditemAddress {
         _id
@@ -59,13 +59,16 @@ export const FETCH_USED_ITEM = gql`
       remarks
       contents
       pickedCount
+      tags
+      images
+      # seller
       useditemAddress {
         _id
         zipcode
         address
         addressDetail
       }
-      seller
+      # seller
       createdAt
     }
   }
