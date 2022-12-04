@@ -1,8 +1,12 @@
 // import { ChangeEvent } from "react";
 import { ChangeEvent } from "react";
 import { Address } from "react-daum-postcode";
-import // UseFormHandleSubmit,
-"react-hook-form";
+
+// import {
+//   FormState,
+//   UseFormHandleSubmit,
+//   UseFormRegister,
+// } from "react-hook-form";
 import { IQuery } from "../../../../commons/types/generated/types";
 
 export interface IUpdateUseditemInput {
@@ -10,28 +14,28 @@ export interface IUpdateUseditemInput {
   contents: string;
   remarks: string;
   price: number;
-  tags?: string[];
-  useditemAddress?: {
-    zipcode?: string;
-    address?: string;
-    addressDetail?: string;
+  tags: string[];
+  useditemAddress: {
+    zipcode: number;
+    address: string;
+    addressDetail: string;
   };
   images?: string[];
 }
 
-export interface IFormData {
-  name: string;
-  remarks: string;
-  price: number;
-  tags: string;
-  contents: string;
-  useditemAddress: {
-    zipcode: string;
-    address: string;
-    addressDetail: string;
-  };
-  images: string[];
-}
+// export interface IFormData {
+//   name: string;
+//   remarks: string;
+//   price: number;
+//   tags: string;
+//   contents: string;
+//   useditemAddress: {
+//     zipcode: number;
+//     address: string;
+//     addressDetail: string;
+//   };
+//   images: string[];
+// }
 
 export interface IProductWriteUIProps {
   zipcode: string;
@@ -44,14 +48,25 @@ export interface IProductWriteUIProps {
   onChangeTags: (tags: string, index: number) => void;
   onChangeImgUrls: (imageUrls: string, index: number) => void;
   // formState: FormState<IFormData>;
-  onClickSignIn: (data: IFormData) => void;
+  onClickSignIn: () => void;
   // handleSubmit: UseFormHandleSubmit<IFormData>;
-  onClickUpdate: (data: IFormData) => void;
+  onClickUpdate: () => void;
   cancelModal: () => void;
   onChangeAddressDetail: (event: ChangeEvent<HTMLInputElement>) => void;
-  // onChangeContents: (event: ChangeEvent<HTMLTextAreaElement>) => void;
-  // onChangeRemarks: (event: ChangeEvent<HTMLInputElement>) => void;
-  // onChangePrice: (event: ChangeEvent<HTMLInputElement>) => void;
-  // onChangeWriter: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChangeContents: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  onChangeRemarks: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChangePrice: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChangeName: (event: ChangeEvent<HTMLInputElement>) => void;
   data: Pick<IQuery, "fetchUseditem"> | undefined;
+  bt: boolean;
+  nameEmpty: string;
+  priceEmpty: string;
+  remarksEmpty: string;
+  contentsEmpty: string;
+  // register: UseFormRegister<IFormData>;
+  // handleSubmit: UseFormHandleSubmit<IFormData>;
+  // formState: FormState<IFormData>;
+}
+export interface IButtonProps {
+  isActive: boolean;
 }

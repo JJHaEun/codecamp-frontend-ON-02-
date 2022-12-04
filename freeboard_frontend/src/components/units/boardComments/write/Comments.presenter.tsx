@@ -1,3 +1,5 @@
+import { useRecoilState } from "recoil";
+import { isEditState } from "../../../../commons/libraries/store";
 import * as St from "./Comments.styles";
 import { ICommentsWriteUIProps } from "./Comments.types";
 
@@ -21,6 +23,7 @@ export default function CommentsWriteUI(props: ICommentsWriteUIProps) {
                 placeholder="작성자"
                 onChange={props.onChangeWriter}
                 value={props.writer || (props.el?.writer ?? "")}
+                readOnly={!!props.el?.writer}
               />
               <St.InPut
                 id="password"
@@ -39,11 +42,7 @@ export default function CommentsWriteUI(props: ICommentsWriteUIProps) {
               <St.TextArea
                 placeholder="여기에서 댓글을 작성하세요"
                 onChange={props.onChangeComment}
-                value={
-                  props.isEdit
-                    ? props.contents || props.el?.contents
-                    : props.contents
-                }
+                value={props.contents || (props.el?.contents ?? "")}
               ></St.TextArea>
             </div>
           </div>

@@ -2,6 +2,8 @@ import { useMutation } from "@apollo/client";
 import { Modal } from "antd";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
+// import { useRecoilState } from "recoil";
+// import { isEditState } from "../../../../commons/libraries/store";
 import {
   IMutation,
   IMutationCreateBoardCommentArgs,
@@ -22,6 +24,7 @@ export default function CommentsWrite(props: ICommentsWriteProps) {
   const [password, setPassword] = useState("");
   const [contents, setContents] = useState("");
   const [value, setValue] = useState(0);
+  const [isEdit, setIsEdit] = useState(false);
 
   const [updateBoardComment] = useMutation<
     Pick<IMutation, "updateBoardComment">,
@@ -57,7 +60,7 @@ export default function CommentsWrite(props: ICommentsWriteProps) {
   //   });
   // };
   const onClickCommentSubmit = async () => {
-    if (!writer || !contents || !password) {
+    if (!writer && !contents && !password) {
       Modal.warning({ content: "내용을 입력해주세요" });
       return;
     }

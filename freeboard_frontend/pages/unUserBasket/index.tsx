@@ -18,14 +18,13 @@ export const FETCH_USED_ITEMS = gql`
     }
   }
 `;
-
 export default function UnUserBasketPage() {
   const { data } = useQuery(FETCH_USED_ITEMS);
 
-  const saveBasket = (basket: any) => () => {
+  const onClickBasket = (basket: any) => () => {
     const baskets = JSON.parse(localStorage.getItem("baskets") ?? "[]");
 
-    const basketTemp = baskets.filter((el) => el._id === basket._id);
+    const basketTemp = baskets.filter((el: any) => el._id === basket._id);
     if (basketTemp.length === 1) {
       Modal.info({ content: "이미 장바구니에 담긴 상품입니다." });
       return;
@@ -41,11 +40,11 @@ export default function UnUserBasketPage() {
   // }, []);
   return (
     <div>
-      {data?.fetchUseditems.map((el) => (
+      {data?.fetchUseditems.map((el: any) => (
         <div key={el._id}>
           <div>{el.name}</div>
           <div>{el.price}</div>
-          <button onClick={saveBasket(el)}>장바구니담기</button>
+          <button onClick={onClickBasket(el)}>장바구니담기</button>
         </div>
       ))}
     </div>

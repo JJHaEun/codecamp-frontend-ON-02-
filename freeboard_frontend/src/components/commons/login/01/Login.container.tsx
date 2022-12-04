@@ -1,7 +1,9 @@
 import { useMutation } from "@apollo/client";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Modal } from "antd";
 import { useRouter } from "next/router";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 import { accessTokenState } from "../../../../commons/libraries/store";
 import {
@@ -10,8 +12,29 @@ import {
 } from "../../../../commons/types/generated/types";
 import LogInPageUI from "./Login.presenter";
 import { LOGIN_USER } from "./Login.queries";
+import * as yup from "yup";
+import { ILogInFormData } from "./Login.types";
+
+export const schema = yup.object({
+  email: yup
+    .string()
+    .email("이메일형식에 맞지 않습니다")
+    .required("이메일을 입력해주세요"),
+  password: yup
+    .string()
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+      "비밀번호는 영문, 숫자, 특수문자를 포함한 8자리 이내입니다"
+    )
+    .required("비밀번호를 입력해주세요"),
+});
 
 export default function LogIn() {
+  const { register, handleSubmit, formState } = useForm<ILogInFormData>({
+    resolver: yupResolver(schema),
+    mode: "onChange",
+  });
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
@@ -21,13 +44,13 @@ export default function LogIn() {
     Pick<IMutation, "loginUser">,
     IMutationLoginUserArgs
   >(LOGIN_USER);
-  const onChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
-  };
-  const onChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
-  const onClickLogIn = async () => {
+  // const onChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
+  //   setEmail(event.target.value);
+  // };
+  // const onChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
+  //   setPassword(event.target.value);
+  // };
+  const onClickLogIn = async (data: ILogInFormData) => {
     try {
       const result = await loginUser({
         variables: {
@@ -51,8 +74,11 @@ export default function LogIn() {
   };
   return (
     <LogInPageUI
-      onChangeEmail={onChangeEmail}
-      onChangePassword={onChangePassword}
+      // onChangeEmail={onChangeEmail}
+      // onChangePassword={onChangePassword}
+      register={register}
+      handleSubmit={handleSubmit}
+      formState={formState}
       onClickLogIn={onClickLogIn}
     />
   );

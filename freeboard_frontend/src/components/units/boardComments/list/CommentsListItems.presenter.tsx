@@ -19,16 +19,16 @@ export default function BoardCommentListItemsUI(
   props: IBoardCommentListItemsProps
 ) {
   const router = useRouter();
-  const [isEdit, setIsEdit] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [boardCommentId, setBoardCommentId] = useState("");
   const [password, setPassword] = useState("");
   const passwordInputRef = useRef<HTMLInputElement>(null);
+  const [isEdit, setIsEdit] = useState(false);
 
-  const onClickEdit = async () => {
-    setIsEdit((prev) => !prev);
+  const onClickEdit = () => {
+    setIsEdit(true);
   };
-
+  // useEffect(() => {}, [onClickEdit]);
   const [deleteBoardComment] = useMutation<
     Pick<IMutation, "deleteBoardComment">,
     IMutationDeleteBoardCommentArgs
@@ -126,7 +126,7 @@ export default function BoardCommentListItemsUI(
         </S.All>
       )}
       {isEdit && (
-        <CommentsWrite isEdit={true} setIsEdit={setIsEdit} el={props.el} />
+        <CommentsWrite el={props.el} isEdit={true} setIsEdit={setIsEdit} />
       )}
     </>
   );

@@ -15,11 +15,11 @@ const FETCH_BOARD = gql`
   }
 `;
 export default function staticRoutedPage() {
-  //result (받는)타입, variables타입
+  // result (받는)타입, variables타입
   const { data } = useQuery<Pick<IQuery, "fetchBoard">, IQueryFetchBoardArgs>(
     FETCH_BOARD,
     {
-      //실행할때
+      // 실행할때
       variables: {
         number: 238,
       },

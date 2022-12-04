@@ -16,6 +16,7 @@ const schema = yup.object({
   writer: yup.string().required("작성자를 입력해주세요"),
   title: yup.string().required("제목을 입력해주세요"),
   contents: yup.string().required("내용을 입력해주세요"),
+
   // email:yup    // 회원가입에 적용
   // .string()
   // .email("이메일 형식에 적합하지 않습니다")

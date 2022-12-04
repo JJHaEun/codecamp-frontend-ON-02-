@@ -25,11 +25,11 @@ export default function GraphqlMutationPage() {
     IMutationCreateBoardArgs
   >(CREATE_BOARD);
   const onClickSubmit = async () => {
-    //const writer = "qqq"// // 이함수에 있으면 현제스코프 적용
+    // const writer = "qqq"// // 이함수에 있으면 현제스코프 적용
     const result = await 나의함수({
       variables: {
-        //variables가 $역할을 해주니 여기에는 $쓰지 않음.원래는 각각 $가 들어감.($writer...등)
-        writer: writer, //이름같아도 다른것이기에 문재되지 않음. 이 함수에 없으면 스코프체인으로 위에서 찾음
+        // variables가 $역할을 해주니 여기에는 $쓰지 않음.원래는 각각 $가 들어감.($writer...등)
+        writer: writer, // 이름같아도 다른것이기에 문재되지 않음. 이 함수에 없으면 스코프체인으로 위에서 찾음
         title: title,
         contents,
       },
