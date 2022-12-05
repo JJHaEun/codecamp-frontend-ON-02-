@@ -1,0 +1,51 @@
+function useState(aaa){// 매개변수에 인자가 들어옴. 매개변수가 초기값이 됨
+    const myState = aaa // aaa를 사용하여 state의 초기값 설정
+    const mySetState = (bbb) =>{ 
+        console.log(`${myState}  에서 ${bbb} 로 state를 변경하겠습니다`)
+        //1. bbb로 state변경(myState변경하기)
+       console.log(`변경된 ${bbb}를 사용해서 컴포넌트를 리렌더링 하겠습니다`) //2. 해당컴포넌트를 리랜더링 시키기!!!!(클래스 컴포넌트에서 render함수가 실행되는것이 setState에도 있음.)
+
+    }
+    return[myState,mySetState]
+}
+
+const [qqq , setQqq] = useState(10)//초기값을 넣음(인자)
+setQqq(20)
+10  에서 20 로 state를 변경하겠습니다
+변경된 20를 사용해서 컴포넌트를 리렌더링 하겠습니다
+undefined
+
+function useState(aaa){// 매개변수에 인자가 들어옴. 매개변수가 초기값이 됨
+    const myState = aaa // aaa를 사용하여 state의 초기값 설정
+    const mySetState = (bbb) =>{ 
+        console.log(`${myState}  에서 ${bbb} 로 state를 변경하겠습니다`)
+        //1. bbb로 state변경(myState변경하기)
+       console.log(`변경된 ${bbb}를 사용해서 컴포넌트를 리렌더링 하겠습니다`) //2. 해당컴포넌트를 리랜더링 시키기!!!!(클래스 컴포넌트에서 render함수가 실행되는것이 setState에도 있음.)
+
+    }
+    return[myState,mySetState]
+}
+
+
+undefined
+
+const [count,setCount] = useState(10)
+undefined
+
+count
+10
+setCount(20)
+10  에서 20 로 state를 변경하겠습니다
+변경된 20를 사용해서 컴포넌트를 리렌더링 하겠습니다
+undefined
+
+const qqq = useState("철수")
+undefined
+
+qqq[0]
+'철수'
+
+qqq[1]("훈이")
+철수  에서 훈이 로 state를 변경하겠습니다
+변경된 훈이를 사용해서 컴포넌트를 리렌더링 하겠습니다
+undefined

@@ -8,11 +8,11 @@ import {
   IMutation,
   IMutationCreateUserArgs,
 } from "../../../commons/types/generated/types";
-import { withAuthYes } from "../hocs/withAuth";
 import CreateUsersUI from "./CreateUsers.presenter";
 import { CREATE_USER } from "./CreateUsers.queries";
 import * as yup from "yup";
 import { IFormDatas } from "../buttons/createUserbutton/button.types";
+import { useAuthPass } from "../hooks/useAuth.pass";
 
 export const schema = yup.object({
   email: yup
@@ -30,7 +30,8 @@ export const schema = yup.object({
     .required("필수 형식입니다"),
 });
 
-function CreateUsers() {
+export default function CreateUsers() {
+  useAuthPass();
   const { register, handleSubmit, formState } = useForm<IFormDatas>({
     resolver: yupResolver(schema),
     mode: "onChange",
@@ -83,4 +84,3 @@ function CreateUsers() {
     />
   );
 }
-export default withAuthYes(CreateUsers);

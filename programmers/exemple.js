@@ -1636,3 +1636,116 @@ function solution(n) {
     }, sum);
   return answer;
 }
+
+// 숫자 문자열과 영단어
+const numbers = [
+  "zero",
+  "one",
+  "two",
+  "three",
+  "four",
+  "five",
+  "six",
+  "seven",
+  "eight",
+  "nine",
+];
+
+function solution(s) {
+  // 각 숫자에 대응하는 영단어를 배열에 넣어봄.
+  // 문자열s는 숫자와 문자가 합쳐져 있음.
+  //s 가 의미하는것을 ==> 원래의 숫자.
+  // 첫글자를 비교..
+  //s 에서 숫자를 전부땜..?
+  // let answer = s.split("")
+  // console.log(answer)
+  // s는 0이나 zero로 시작되지 않음
+
+  // 풀이
+  // 영어단어가 맞다면 해당숫자에 맞게 다시 s에 저장..
+  for (let i = 0; i < numbers.length; i++) {
+    // 영단어들을 s라는 문자열에서 찾아 그에맞는 데이터로 변경해주기
+    // replace사용! 문자열에서 사용가능한 메서드.
+    // 첫인자의 단어를 두번째 인자로 들어오는 단어로 변경하기.
+    //원본변경시키지 않기에 변경된값을 담아주고 싶을때는 재할당 필요
+    // 단,문자열 하나만 찾아 그 문자열 하나만 바꿔줌.
+    // replaceAll => 문자열 전체에서 해당문자열 전부를 다른문자열로 치환해줌
+    // 최신 문법이기에 프로그래머스에서 지원안함..
+    //replace를 replaceAll처럼 만들기 while문 사용
+    while (s.includes(numbers[i])) {
+      // numbers의 i인덱스 값이 계속 있다면 계속 반복해 사용
+      s = s.replace(numbers[i], i);
+    }
+  }
+  return Number(s); // 숫자로 리턴
+}
+
+//split과 join사용
+const numbers = [
+  "zero",
+  "one",
+  "two",
+  "three",
+  "four",
+  "five",
+  "six",
+  "seven",
+  "eight",
+  "nine",
+];
+
+function solution(s) {
+  numbers.forEach((el, i) => {
+    s = s.split(el).join(i);
+    //console.log(s.split(el).join(i))// 숫자문자기준으로 쪼개 나누어진 문자들 사이의 쉼표부분에 인덱스번호를 넣어 합침
+  });
+  return Number(s);
+}
+
+// 정규표현식 사용
+
+function solution(s) {
+  // 정규표현식 사용.
+  // 문자열을 짧은 코드로 검증가능.
+  // 표현식 사용법: 슬래시(/) 열고, 슬래시(/) 닫고
+  //슬래시 안에 검증할 문자열 넣어줌.
+  // 표현식 뒤에 g는 문자열 전체에서 검색하는것
+  s = s.replace(/zero/g, 0);
+  s = s.replace(/one/g, 1);
+  s = s.replace(/two/g, 2);
+  s = s.replace(/three/g, 3);
+  s = s.replace(/four/g, 4);
+  s = s.replace(/five/g, 5);
+  s = s.replace(/six/g, 6);
+  s = s.replace(/seven/g, 7);
+  s = s.replace(/eight/g, 8);
+  s = s.replace(/nine/g, 9);
+
+  return Number(s);
+}
+
+// 위의 정규표현식 방법을 반복문으로 사용
+
+const numbers = [
+  "zero",
+  "one",
+  "two",
+  "three",
+  "four",
+  "five",
+  "six",
+  "seven",
+  "eight",
+  "nine",
+];
+function solution(s) {
+  for (let i = 0; i < numbers.length; i++) {
+    // 정규표현식은 변수처럼 사용못함. 즉, 인덱스 넣을 수 없음. /numbers[i]/로 넣으면 하나의 문자열로 나옴
+    //RegExp 이용하면 정규식문법에 변수할당할 수 있음(리젝스 라고함)
+    const reg = new RegExp(numbers[i], "g"); // 첫번째 인자로는 어떤 단어를 검증할것인지.
+    //두번째 인자로는 어떤 옵션값을 사용할것인지(현재 글로벌로 넣음--> 전체의미)
+    //reg에는 정규표현식 문법이 들어감, 두번째 인자로는 그것을 바꿀값.
+    s = s.replace(reg, i);
+  }
+  return Number(s);
+}

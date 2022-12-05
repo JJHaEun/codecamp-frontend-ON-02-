@@ -12,3 +12,12 @@ export const isOpenState = atom({
   key: "isOpenState",
   default: false,
 });
+export const visitedPageState = atom({
+  key: "visitedPageState",
+  default: "",
+});
+
+export const isOpenDeleteState = atom({
+  key: "isOpenDeleteState",
+  default: false,
+});

@@ -1,7 +1,7 @@
-import { withAuth } from "../../src/components/commons/hocs/withAuth";
+import { useAuth } from "../../src/components/commons/hooks/useAuth";
 import OpenApiList from "../../src/components/units/openapi/list/OpenApiList.container";
 
-function OpenAPI() {
+export default function OpenAPI() {
+  useAuth();
   return <OpenApiList />;
 }
-export default withAuth(OpenAPI);

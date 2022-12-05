@@ -9,8 +9,12 @@ import {
   IQueryFetchBoardsCountArgs,
 } from "../../../../commons/types/generated/types";
 import { MouseEvent, useState } from "react";
+// import { useMoveToPage } from "../../../commons/hooks/useMoToPage";
 
 export default function BoardList() {
+  // const { onClickMoveToPage } = useMoveToPage();
+  // const { keyword, onChangeKeyword } = useSearch();
+
   const [keyword, setKeyword] = useState("");
   const router = useRouter();
   const { data, refetch } = useQuery<

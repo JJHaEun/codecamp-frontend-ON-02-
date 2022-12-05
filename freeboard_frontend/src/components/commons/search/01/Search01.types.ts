@@ -3,6 +3,7 @@ import { ChangeEvent, RefObject } from "react";
 import {
   IQuery,
   IQueryFetchBoardsArgs,
+  IQueryFetchBoardsCountArgs,
 } from "../../../../commons/types/generated/types";
 
 export interface ISearchProps {
@@ -10,7 +11,9 @@ export interface ISearchProps {
   refetch: (
     variables?: Partial<IQueryFetchBoardsArgs> | undefined
   ) => Promise<ApolloQueryResult<Pick<IQuery, "fetchBoards">>>;
-  refetchBoardsCount: any;
+  refetchBoardsCount: (
+    variables?: Partial<IQueryFetchBoardsCountArgs> | undefined
+  ) => Promise<ApolloQueryResult<Pick<IQuery, "fetchBoardsCount">>>;
 }
 
 export interface ISearchUIProps {

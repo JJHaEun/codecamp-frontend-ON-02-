@@ -35,9 +35,9 @@ export default function LogIn() {
     mode: "onChange",
   });
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+  const [email] = useState("");
+  const [password] = useState("");
+  const Token = useRecoilState(accessTokenState);
   const router = useRouter();
 
   const [loginUser] = useMutation<
@@ -63,7 +63,7 @@ export default function LogIn() {
         Modal.error({ content: "비밀번호를 확인해주세요" });
         return;
       }
-      setAccessToken(accessToken);
+      Token[1](accessToken);
       // 로컬스토리지에 저장
       localStorage.setItem("accessToken", accessToken); // 임시 사용. (나중에 지울예정)
 

@@ -531,3 +531,121 @@ function solution(box, n) {
   let answer = a * b * c;
   return answer;
 }
+
+//5주차 알고리즘 테스트 레퍼코드
+// mysplice
+function mySplice(array, start, deleteCount, ...items) {
+  // deleteCount가 생략됐을 경우 start 인덱스부터 모든 요소를 제거
+  if (deleteCount === undefined) deleteCount = array.length - start;
+
+  return {
+    removed: [
+      ...array.slice(start, deleteCount >= 0 ? start + deleteCount : start),
+    ],
+    array: [
+      ...array.slice(0, start),
+      ...items,
+      ...array.slice(deleteCount >= 0 ? start + deleteCount : start),
+    ],
+  };
+}
+
+// 괄호 짝짓기(matchParentheses)
+
+function matchParentheses(str) {
+  // 여기에서 작업하세요
+  const parentheses = ["(", "{", "[", ")", "}", "]"];
+
+  while (str) {
+    // 소괄호, 중괄호, 대괄호가 있는지 확인
+    for (let i = 0; i < 3; i++) {
+      // 있다면 짝이 맞는지 확인하고 맞다면 제거
+      if (str.includes(parentheses[i]) && str.includes(parentheses[i + 3])) {
+        str = str.replace(parentheses[i], "");
+        str = str.replace(parentheses[i + 3], "");
+      } else {
+        // 아직 문자열이 남았는데 짝이 없다면 false 리턴
+        return false;
+      }
+    }
+    // 모두 짝지어졌다면 true 리턴
+    return true;
+  }
+}
+// 두번째 방법
+function matchParentheses(str) {
+  // 여기에서 작업하세요
+  const parentheses = ["(", "{", "[", ")", "}", "]"];
+  function pop(str) {
+    if (!str) return true;
+    for (let i = 0; i < 3; i++) {
+      if (str.includes(parentheses[i]) && str.includes(parentheses[i + 3])) {
+        str = str.replace(parentheses[i], "");
+        str = str.replace(parentheses[i + 3], "");
+      } else {
+        return false;
+      }
+    }
+    return pop(str);
+  }
+  return pop(str);
+}
+
+// 쿠키 레밸업
+
+function levelUp(cookies, N) {
+  // 여기에서 작업해 주세요
+  cookies = cookies.sort((a, b) => a - b); // 레벨 순 정렬
+
+  let answer = 0;
+  while (cookies[0] >= N) {
+    // 쿠키 만든 횟수 증가
+    answer++;
+    // 재료만 빼오기
+    const temp = cookies.splice(0, 2);
+    // 쿠키 만들고 배열에 추가
+    cookies.unshift(temp[0] * 2 + temp[1]);
+    // 더 이상 조합할 쿠키가 없고 원하는 레벨 이하라면 -1 리턴
+    if (cookies.length === 1 && cookies[0] < N) return -1;
+    // 레벨 순으로 다시 정렬
+    cookies = cookies.sort((a, b) => a - b);
+  }
+
+  // 모든 쿠키의 레벨이 N 이상이면 횟수 리턴
+  return answer;
+}
+// 다른방법
+function levelUp(cookies, N) {
+  // 여기에서 작업해 주세요
+  cookies = cookies.sort((a, b) => a - b);
+
+  let answer = 0;
+  function makeCookie(cookie1, cookie2) {
+    if (cookie1 >= N) return answer;
+
+    answer++;
+    const newCookie = cookie1 * 2 + cookie2;
+    cookies = [newCookie, ...cookies.slice(2)];
+    if (cookies.length === 1 && cookies[0] < N) return -1;
+    cookies = cookies.sort((a, b) => a - b);
+
+    return makeCookie(cookies[0], cookies[1]);
+  }
+
+  return makeCookie(cookies[0], cookies[1]);
+}
+
+// 특별한날
+
+function dayBefore(month, day) {
+  if (month === 2 && day === 19) return "Special";
+  return new Date(`${month}-${day}`) < new Date("2-19") ? "Before" : "After";
+}
+
+//다른 풀이
+function dayBefore(month, day) {
+  const MyMonth = String(month);
+  const MyDay = String(day);
+  if (Number(MyMonth + MyDay) === 219) return "Special";
+  return Number(MyMonth + MyDay) > 219 ? "After" : "Before";
+}

@@ -1,13 +1,14 @@
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { isEditState } from "../../../src/commons/libraries/store";
+import { useAuth } from "../../../src/components/commons/hooks/useAuth";
 import ProductWite from "../../../src/components/units/productBoard/write/ProductWrite.container";
 
 export default function freeboardWrite() {
-  const [isEdit, setIsEdit] = useRecoilState(isEditState);
-
+  const result = useRecoilState(isEditState);
+  useAuth();
   useEffect(() => {
-    setIsEdit(false);
+    result[1](false);
   }, []);
   return <ProductWite />;
 }

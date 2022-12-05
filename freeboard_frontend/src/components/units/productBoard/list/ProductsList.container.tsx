@@ -1,13 +1,20 @@
 import { useQuery } from "@apollo/client";
+import { useRouter } from "next/router";
+import { MouseEvent, useState } from "react";
 import {
   IQuery,
   IQueryFetchUseditemsArgs,
 } from "../../../../commons/types/generated/types";
+import { useMoveToPage } from "../../../commons/hooks/useMoToPage";
 import ProductListUI from "./ProductsList.presenter";
 import { FETCH_USED_ITEMS } from "./ProductsList.queries";
 
 export default function ProductList() {
-  const { data, fetchMore } = useQuery<
+  const router = useRouter();
+  const result = useState("");
+  const { onClickMoveToPage } = useMoveToPage();
+
+  const { data, fetchMore, refetch } = useQuery<
     Pick<IQuery, "fetchUseditems">,
     IQueryFetchUseditemsArgs
   >(FETCH_USED_ITEMS);
@@ -32,6 +39,25 @@ export default function ProductList() {
       },
     });
   };
+  const onClickCreateProduct = () => {
+    void router.push(`/market/new`);
+  };
+  const onClickProductDetail = (event: MouseEvent<HTMLDivElement>) => {
+    void router.push(`/market/${event.currentTarget.id}`);
+  };
+  const onChangeKeyword = (value: string) => {
+    result[1](value);
+  };
 
-  return <ProductListUI data={data} onLoadMore={onLoadMore} />;
+  return (
+    <ProductListUI
+      data={data}
+      onLoadMore={onLoadMore}
+      onClickCreateProduct={onClickCreateProduct}
+      onClickProductDetail={onClickProductDetail}
+      onChangeKeyword={onChangeKeyword}
+      refetch={refetch}
+      onClickMoveToPage={onClickMoveToPage}
+    />
+  );
 }
