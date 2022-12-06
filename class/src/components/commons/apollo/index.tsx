@@ -48,6 +48,7 @@ export default function ApolloSetting(props: IApolloSettingProps) {
     link: ApolloLink.from([uploadLink]),
     // cache: new InMemoryCache(), // 나중에 수업//
     cache: GLOBAL_STATE, // 페이지 전환되어도 (앱컴포넌트 리랜더됨)캐시유지
+    connectToDevTools: true,
   });
   // prettier-ignore
   return (

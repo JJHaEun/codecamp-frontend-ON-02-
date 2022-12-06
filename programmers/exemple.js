@@ -1749,3 +1749,129 @@ function solution(s) {
   }
   return Number(s);
 }
+
+// 시저암호
+
+// 알파벳을 한번에 담아 풀기
+
+const alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+function solution(s, n) {
+  // 문자열을 밀어서다른 알파벳으로 바꾸기.
+  // n만큼 밀경우 만약 n이 3이고 s가 AB이면 A는 D, B는 E가 됨.
+  // 소문자와 공백도 있음.
+
+  // 인덱스값으로 접근한다면 n-1한값이맞음...
+  //알파벳 z를 한칸 밀면 처음 알파벳으로 들어감.
+
+  // 대문자는 대문자, 소문자는 소문자, 공백은 공백
+  //s길이는 8000이하
+
+  // 모든 알파벳을 하나의 문자열에서 가져온다음. 그 문자열에서 몇칸 밀어준만큼을 뽑아올것.
+  let answer = "";
+  for (let i = 0; i < s.length; i++) {
+    console.log(s[i]);
+    //공백에대한 예외처리
+    if (s[i] === " ") {
+      // 공백과 같다면
+      answer += s[i]; // 공백을 넣어줌
+    } else {
+      let index = alphabet.indexOf(s[i]); // 현재 s의 i인덱스가 알파벳이라는 상수의 몇번째 위치에있는지 찾아옴
+      //26번째 인덱스부터 마지막까지가 대문자.
+      // 소문자의 경우는 0번째부터 25인덱스까지
+      const word =
+        index > 25
+          ? // 대문자
+            alphabet.substring(26) //26번째부터 끝까지자름
+          : alphabet.substring(0, 26); // 두번째 인자 앞에까지 잘라오겠다.
+      // 소문자
+      // 대문자 인덱스 값을 word를 이용해 뽑아오기
+      index = word.indexOf(s[i]) + n; // n만큼 밀어준 인덱스
+      //z의 경우에는 undefined 나옴
+      if (word[index] === undefined) {
+        // 26번째 넘었다면 알파벳 총 개수만큼 다시빼서 0으로 다시 돌아가게
+        index -= 26;
+      }
+      answer += word[index];
+    }
+  }
+  return answer;
+}
+
+//소문자와 대문자 분리되어있는 상황으로 풀기
+const lower = "abcdefghijklmnopqrstuvwxyz"; // 소문자만 저장
+const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // 대문자만 저장
+function solution(s, n) {
+  // 문자열을 밀어서다른 알파벳으로 바꾸기.
+  // n만큼 밀경우 만약 n이 3이고 s가 AB이면 A는 D, B는 E가 됨.
+  // 소문자와 공백도 있음.
+
+  // 인덱스값으로 접근한다면 n-1한값이맞음...
+  //알파벳 z를 한칸 밀면 처음 알파벳으로 들어감.
+
+  // 대문자는 대문자, 소문자는 소문자, 공백은 공백
+  //s길이는 8000이하
+
+  // 모든 알파벳을 하나의 문자열에서 가져온다음. 그 문자열에서 몇칸 밀어준만큼을 뽑아올것.
+  let answer = "";
+  for (let i = 0; i < s.length; i++) {
+    //공백에대한 예외처리
+    if (s[i] === " ") {
+      // 공백과 같다면
+      answer += s[i]; // 공백을 넣어줌
+    } else {
+      const word = lower.includes(s[i]) ? lower : upper; // lower라는 상수에서 s의 [i] 가 있다면 소문자. 그러면 word에 저장. 아니라면 upper로 저장
+      let idx = word.indexOf(s[i]) + n;
+      if (word[idx] === undefined) {
+        idx -= 26;
+      }
+      answer += word[idx];
+    }
+  }
+
+  return answer;
+}
+
+//reduce사용
+const lower = "abcdefghijklmnopqrstuvwxyz"; // 소문자만 저장
+const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // 대문자만 저장
+function solution(s, n) {
+  //reduce 사용. 얘는 배열에서 사용가능하니 배열로 만들기
+  const answer = s.split("").reduce((acc, cur) => {
+    const word = lower.includes(cur) ? lower : upper;
+    let idx = word.indexOf(cur) + n; // n만큼 밀기
+    if (idx >= 26) {
+      // idx가 26자 이상이라면. 즉 word의 범위 밖이라면
+      idx -= 26;
+    }
+    return acc + (cur === " " ? " " : word[idx]); // 공백이라면 공백으로 아니라면 밀어준것만큼 idx값으로 뽑아오기
+  }, ""); // acc 초기값을 빈문자열로
+
+  return answer;
+}
+
+//아스키코드 사용(문자코드)
+//아스키코드
+// charCodeAt : 문자의 유니코드 데이터를(번호를)리턴해주는 메서드
+// String.fromCharcode : 유니코드를(유니코드 번호를) 문자로 리턴
+function solution(s, n) {
+  let answer = "";
+  for (let i = 0; i < s.length; i++) {
+    // console.log(s[i],s[i].charCodeAt())
+    // 대문자의 번호: 65 ~90
+    // 소문자의 경우 : 97 ~ 122
+    // 코드상에서 대문자나 소문자 범위를 벗어나면 다시 처음의 알파벳으로 돌림.
+    if (s[i] === " ") {
+      answer += " ";
+    } else {
+      let idx = s[i].charCodeAt() + n; // 유니코드 번호로 변환
+      // console.log(s[i],String.fromCharCode(idx))
+      if (idx > 122 || (idx > 90 && idx - n < 97)) {
+        // 소문자 z의 번호 122를 넘어간다거나, 또는
+        //idx값이 90을 넘어가면서
+        // 기존의 idx값이 소문자인경우(밀어주기 이전의 데이터가 97보다 작을때)
+      }
+      answer += String.fromCharCode(idx); // idx를 다시 문자열로 변환
+    }
+  }
+  return answer;
+}
