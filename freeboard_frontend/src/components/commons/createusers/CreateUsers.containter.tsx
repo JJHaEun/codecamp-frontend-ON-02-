@@ -2,7 +2,6 @@ import { useMutation } from "@apollo/client";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Modal } from "antd";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   IMutation,
@@ -37,9 +36,9 @@ export default function CreateUsers() {
     mode: "onChange",
   });
 
-  const [emailSubmit, setEmailSubmit] = useState("");
-  const [nameSubmit, setNamesubmit] = useState("");
-  const [passwordSubmit, setPasswordSubmit] = useState("");
+  // const [emailSubmit, setEmailSubmit] = useState("");
+  // const [nameSubmit, setNamesubmit] = useState("");
+  // const [passwordSubmit, setPasswordSubmit] = useState("");
   const router = useRouter();
   const [createUser] = useMutation<
     Pick<IMutation, "createUser">,
@@ -60,9 +59,9 @@ export default function CreateUsers() {
       await createUser({
         variables: {
           createUserInput: {
-            email: emailSubmit,
-            name: nameSubmit,
-            password: passwordSubmit,
+            email: data.email,
+            name: data.name,
+            password: data.password,
           },
         },
       });

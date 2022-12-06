@@ -2,7 +2,6 @@ import { useMutation } from "@apollo/client";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Modal } from "antd";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 import { accessTokenState } from "../../../../commons/libraries/store";
@@ -35,8 +34,8 @@ export default function LogIn() {
     mode: "onChange",
   });
 
-  const [email] = useState("");
-  const [password] = useState("");
+  // const [email] = useState("");
+  // const [password] = useState("");
   const Token = useRecoilState(accessTokenState);
   const router = useRouter();
 
@@ -54,8 +53,8 @@ export default function LogIn() {
     try {
       const result = await loginUser({
         variables: {
-          email,
-          password,
+          email: data.email,
+          password: data.password,
         },
       });
       const accessToken = result.data?.loginUser.accessToken; // 얘를 글로벌스테이트에 담음 얘는

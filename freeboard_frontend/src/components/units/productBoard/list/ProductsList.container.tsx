@@ -31,10 +31,11 @@ export default function ProductList() {
           };
         }
         return {
-          fetchUseditems: [
+          // prettier-ignore
+          fetchUseditems: ([
             ...prev.fetchUseditems,
             ...fetchMoreResult.fetchUseditems,
-          ],
+          ]),
         };
       },
     });

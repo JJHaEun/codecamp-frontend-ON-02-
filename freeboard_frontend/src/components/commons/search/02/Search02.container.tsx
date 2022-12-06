@@ -11,7 +11,7 @@ export default function Search02(props: ISearchProps) {
   }, []);
 
   const getDebounce = _.debounce((value: string) => {
-    void props.refetch({ search: value, page: 1 });
+    void props.refetch({ search: value });
 
     props.onChangeKeyword(value);
   }, 500);
