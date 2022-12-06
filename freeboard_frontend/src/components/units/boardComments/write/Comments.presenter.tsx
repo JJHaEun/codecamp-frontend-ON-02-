@@ -1,5 +1,3 @@
-import { useRecoilState } from "recoil";
-import { isEditState } from "../../../../commons/libraries/store";
 import * as St from "./Comments.styles";
 import { ICommentsWriteUIProps } from "./Comments.types";
 

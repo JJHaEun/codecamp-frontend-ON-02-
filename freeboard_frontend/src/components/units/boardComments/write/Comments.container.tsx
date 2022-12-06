@@ -24,7 +24,6 @@ export default function CommentsWrite(props: ICommentsWriteProps) {
   const [password, setPassword] = useState("");
   const [contents, setContents] = useState("");
   const [value, setValue] = useState(0);
-  const [isEdit, setIsEdit] = useState(false);
 
   const [updateBoardComment] = useMutation<
     Pick<IMutation, "updateBoardComment">,

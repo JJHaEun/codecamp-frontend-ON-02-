@@ -6,7 +6,20 @@ export default function freeboardWriteRouted() {
   return (
     <>
       <BoardWriteFetch />
-      <CommentsWrite />
+      <CommentsWrite
+        isEdit={false}
+        el={{
+          __typename: undefined,
+          _id: "",
+          contents: "",
+          createdAt: undefined,
+          deletedAt: undefined,
+          rating: 0,
+          updatedAt: undefined,
+          user: undefined,
+          writer: undefined,
+        }}
+      />
       <CommentWritList />
     </>
   );
