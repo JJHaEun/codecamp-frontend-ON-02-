@@ -1,4 +1,4 @@
-import ProductDetail from "../../../src/components/units/productBoard/detail/PruductDetail.container";
+import ProductDetail from "../../../src/components/units/productBoard/detail/ProductDetail.container";
 
 export default function freeboardWriteRouted() {
   return (

@@ -16,6 +16,14 @@ export const FETCH_USED_ITEMS = gql`
         email
       }
       createdAt
+      useditemAddress {
+        _id
+        zipcode
+        address
+        addressDetail
+        lat
+        lng
+      }
     }
   }
 `;

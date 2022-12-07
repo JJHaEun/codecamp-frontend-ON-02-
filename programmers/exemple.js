@@ -1875,3 +1875,73 @@ function solution(s, n) {
   }
   return answer;
 }
+
+// 실패율구하기. 카카오 문제...
+function solution(N, stages) {
+  stages.sort((a, b) => a - b); // 오름차순정렬
+
+  const failArr = []; //스테이지에 해당하는 유저수나 실패율을 저장하는배열.
+  for (let i = 1; i <= N; i++) {
+    failArr.push({
+      stage: i, //스테이지 번호
+      users: 0, // 클리어하지못한 유저수
+      fail: 0, //실패율 초기값
+    });
+  }
+  let allUsers = stages.length; //총 유저의 수를 저장
+  for (let i = 0; i < stages.length; i++) {
+    if (failArr[stages[i] - 1] !== undefined) {
+      //객체가 있는 스테이지만 가져옴
+      // 각각의 스테이지에 머물러있는 유저정보
+      failArr[stages[i] - 1].users++;
+      // console.log(stages[i],failArr[stages[i]-1])// 1스테이지부터 시작하니 인덱스 값으로 접근하기위해 -1
+      //유저s의정보를 담다가 현재스테이지 번호와 다음 스테이지의 번호가 다를경우를 봄// 즉 현재 스테이지의 정보가끝났을때
+      if (stages[i] !== stages[i + 1]) {
+        const fail = failArr[stages[i] - 1].users / allUsers; // 해당스테이지의 유저들로 나눔 -- 실패율구함
+        allUsers -= failArr[stages[i] - 1].users; // 클리어하지못한 유저수를빼서 다음스테이지에 도전하는 유저가 담기게됨
+        console.log(failArr[stages[i] - 1], allUsers, fail);
+
+        failArr[stages[i] - 1].fail = fail; // 해당객체에 실패율도 저장
+      }
+    }
+  }
+  const answer = failArr
+    .sort((a, b) => {
+      return b.fail - a.fail; // 내림차순
+    })
+    .map((el) => {
+      return el.stage;
+    });
+  return answer;
+}
+
+//
+function solution(N, stages) {
+  stages.sort((a, b) => a - b); // 오름차순정렬
+
+  // map사용
+  // 리턴값길이와 N의 수가 동일하기에 map도 반복문돌린 수 만큼 배열로 받아옴.따라서N을 이용.
+  let allUsers = stages.length; //총 유저수
+  const answer = new Array(N)
+    .fill(1)
+    .map((num, i) => {
+      const stage = num + i;
+      //현재스테이부분만 자르기
+      //indexOf()가장 앞에있는데이터를 가져옴
+      //lastIndexOf()뒤에서부터뽑아옴
+      //arr.slice(indexOf(),lastIndexOf()) 이런식으로 적어주되 두번째인자는 그 수를 제외하고니까 반드시 1을 더해줌.그렇게되면 원하는 배열까지 잘라올 수 있음
+      const arr = stages.slice(
+        stages.indexOf(stage),
+        stages.lastIndexOf(stage) + 1
+      );
+      const fail = arr.length / allUsers;
+      allUsers -= arr.length;
+      return { stage, fail };
+    })
+    .sort((a, b) => {
+      return b.fail - a.fail;
+    }) // 내림차순정렬
+    .map((el) => el.stage); // stage만 뽑아 배열에 담아 최종적으로answer 에 담기
+
+  return answer;
+}

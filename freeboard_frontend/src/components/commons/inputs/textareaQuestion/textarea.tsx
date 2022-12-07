@@ -1,5 +1,5 @@
 import { ITextareaProps } from "./textarea.types";
 
-export default function TextareaQuestion(props: ITextareaProps) {
+export default function TextareaPage(props: ITextareaProps) {
   return <textarea {...props.register} />;
 }

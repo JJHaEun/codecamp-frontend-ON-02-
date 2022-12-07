@@ -73,6 +73,7 @@ export default function ProductWite() {
       useditemId: String(router.query._id),
     },
   });
+  console.log(isOpen);
 
   const [createUseditem] = useMutation<
     Pick<IMutation, "createUseditem">,
@@ -193,6 +194,15 @@ export default function ProductWite() {
                 addressDetail,
               },
             },
+          },
+          update(cache, { data }) {
+            cache.modify({
+              fields: {
+                fetchUsedItems: (prev) => {
+                  return [data?.createUseditem, ...prev];
+                },
+              },
+            });
           },
         });
         console.log(

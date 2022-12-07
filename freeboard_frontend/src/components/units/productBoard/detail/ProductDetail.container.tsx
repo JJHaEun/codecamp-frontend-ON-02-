@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { Modal } from "antd";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
-import { FETCH_USED_ITEMS } from "../../../../../pages/unUserBasket";
+// import { FETCH_USED_ITEMS } from "../../../../../pages/unUserBasket";
 import { isOpenDeleteState } from "../../../../commons/libraries/store";
 import {
   IQuery,
@@ -52,12 +52,19 @@ export default function ProductDetail() {
         variables: {
           useditemId: router.query._id,
         },
-        refetchQueries: [
-          {
-            query: FETCH_USED_ITEMS,
-            variables: { useditemId: router.query._id },
-          },
-        ],
+        update(cache, { data }) {
+          cache.modify({
+            fields: {
+              fetchUsedItems: (prev) => {
+                const deleteUseditemId = data.deleteUseditem;
+                const filteredPrev = prev.filter(
+                  (el: any) => el._id !== deleteUseditemId
+                );
+                return [...filteredPrev];
+              },
+            },
+          });
+        },
       });
 
       Modal.success({ content: "삭제가 완료되었습니다" });
