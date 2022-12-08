@@ -6,6 +6,7 @@ export default function CommentsQuestionUI() {
       <form>
         <div>문의드립니다</div>
         <TextareaQuestion />
+        <button></button>
       </form>
     </>
   );

@@ -20,6 +20,7 @@ import {
 import ProductWriteUI from "./ProductWrite.presenter";
 import { useRecoilState } from "recoil";
 import { isOpenState } from "../../../../commons/libraries/store";
+import dynamic from "next/dynamic";
 // import { IFormData } from "./ProductWrite.types";
 // import { yupResolver } from "@hookform/resolvers/yup";
 // import { useForm } from "react-hook-form";
@@ -36,7 +37,9 @@ import { isOpenState } from "../../../../commons/libraries/store";
 //   addressDetail: yup.string(),
 //   tags: yup.array(),
 // });
-
+const ReactQuill = dynamic(async () => await import("react-quill"), {
+  ssr: false,
+});
 export default function ProductWite() {
   // const ref =useRef()
   // const { register, formState, handleSubmit } = useForm<IFormData>({
@@ -118,12 +121,12 @@ export default function ProductWite() {
       setBt(false);
     }
   };
-  const onChangeContents = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setContents(event.target.value);
-    if (event.target.value !== "") {
+  const onChangeContents = (value: string) => {
+    setContents(value === "<p><br/></p>" ? "" : value);
+    if (value !== "<p><br/></p>") {
       setContentsEmpty("");
     }
-    if (name && price && remarks && event.target.value) {
+    if (name && price && remarks && value) {
       setBt(true);
     } else {
       setBt(false);
@@ -311,6 +314,7 @@ export default function ProductWite() {
       // register={register}
       // handleSubmit={handleSubmit}
       // formState={formState}
+      ReactQuill={ReactQuill}
     />
     //   <BoardWriteUI
     //     onClickSignIn={onClickSignIn}

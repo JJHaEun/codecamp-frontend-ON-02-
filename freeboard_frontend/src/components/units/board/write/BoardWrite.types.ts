@@ -1,4 +1,5 @@
 import { ChangeEvent } from "react";
+// import ReactQuill from "react-quill";
 import { IQuery } from "../../../../commons/types/generated/types";
 
 export interface IBoardWriteProps {
@@ -33,6 +34,7 @@ export interface IBoardWriteUIProps {
   youtubeUrl: string;
   onChangeImgUrls: (imageUrls: string, index: number) => void;
   imageUrls: string[];
+  // ReactQuill: ComponentType<ReactQuill.ReactQuillProps>;
 }
 export interface IBtProps {
   changes: boolean;

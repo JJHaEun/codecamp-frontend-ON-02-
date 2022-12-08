@@ -9,6 +9,7 @@ import { isEditState } from "../../../../commons/libraries/store";
 
 export default function BoardWriteUI(props: IBoardWriteUIProps) {
   const [isEdit, setIsEdit] = useRecoilState(isEditState);
+  console.log(setIsEdit);
 
   return (
     <>

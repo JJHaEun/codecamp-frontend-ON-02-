@@ -1,6 +1,7 @@
 // import { ChangeEvent } from "react";
-import { ChangeEvent } from "react";
+import { ChangeEvent, ComponentType } from "react";
 import { Address } from "react-daum-postcode";
+import ReactQuill from "react-quill";
 
 // import {
 //   FormState,
@@ -16,7 +17,7 @@ export interface IUpdateUseditemInput {
   price: number;
   tags: string[];
   useditemAddress: {
-    zipcode: number;
+    zipcode: string;
     address: string;
     addressDetail: string;
   };
@@ -53,7 +54,7 @@ export interface IProductWriteUIProps {
   onClickUpdate: () => void;
   cancelModal: () => void;
   onChangeAddressDetail: (event: ChangeEvent<HTMLInputElement>) => void;
-  onChangeContents: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  onChangeContents: (value: string) => void;
   onChangeRemarks: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangePrice: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangeName: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -63,6 +64,7 @@ export interface IProductWriteUIProps {
   priceEmpty: string;
   remarksEmpty: string;
   contentsEmpty: string;
+  ReactQuill: ComponentType<ReactQuill.ReactQuillProps>;
   // register: UseFormRegister<IFormData>;
   // handleSubmit: UseFormHandleSubmit<IFormData>;
   // formState: FormState<IFormData>;

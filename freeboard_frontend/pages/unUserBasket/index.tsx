@@ -30,7 +30,8 @@ export default function UnUserBasketPage() {
       return;
     }
 
-    baskets.push(basket);
+    const { __typename, ...rest } = basket;
+    baskets.push(rest);
     localStorage.setItem("baskets", JSON.stringify(baskets));
   };
   // useEffect(() => {

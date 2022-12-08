@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil";
 import { isOpenDeleteState } from "../../../../commons/libraries/store";
 import { getDate } from "../../../commons/utils/utils";
 import { IProductDetailUIProps } from "./ProductDetail.types";
+import Dompurify from "dompurify";
 
 export default function ProductDetailUI(props: IProductDetailUIProps) {
   const router = useRouter();
@@ -42,7 +43,15 @@ export default function ProductDetailUI(props: IProductDetailUIProps) {
                 <img key={el} src={`https://storage.googleapis.com/${el}`} />
               ))}
           </div>
-          <div>{props.data?.fetchUseditem.contents}</div>
+          {typeof window !== "undefined" && (
+            <div
+              dangerouslySetInnerHTML={{
+                __html: Dompurify.sanitize(
+                  String(props.data?.fetchUseditem.contents)
+                ),
+              }}
+            ></div>
+          )}{" "}
           <button onClick={props.onClickPick}>pick!!</button>
         </div>{" "}
       </div>

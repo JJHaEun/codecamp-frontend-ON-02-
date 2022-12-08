@@ -50,6 +50,7 @@ export default function CreatePage() {
   const onChangeContents = (value: string) => {
     setValue("contents", value === "<p><br/></p>" ? "" : value);
     void trigger("contents");
+    console.log(value);
   };
   return (
     <CreatePageUI

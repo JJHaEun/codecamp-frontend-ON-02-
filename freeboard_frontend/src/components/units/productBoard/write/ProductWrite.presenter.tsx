@@ -10,6 +10,8 @@ import { IProductWriteUIProps } from "./ProductWrite.types";
 // import ProductButtonPage from "../../../commons/buttons/Productbutton/button";
 // import PostSearchButton from "../../../commons/buttons/postSearch/button";
 import * as S from "./ProductWrite.styles";
+import "react-quill/dist/quill.snow.css";
+
 export default function ProductWriteUI(props: IProductWriteUIProps) {
   const [isEdit, setIsEdit] = useRecoilState(isEditState);
   const [isOpen, setIsOpen] = useRecoilState(isOpenState);
@@ -50,12 +52,12 @@ export default function ProductWriteUI(props: IProductWriteUIProps) {
           </div>{" "}
           <div>
             <div>상품 설명</div>
-            <textarea
+            <props.ReactQuill
               // register={props.register("contents")}
               placeholder="내용을 작성해주세요."
               onChange={props.onChangeContents}
               defaultValue={props.data?.fetchUseditem.contents}
-            ></textarea>
+            ></props.ReactQuill>
             <div>{props.contentsEmpty}</div>
           </div>
           <div>

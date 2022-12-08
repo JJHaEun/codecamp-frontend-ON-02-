@@ -1945,3 +1945,72 @@ function solution(N, stages) {
 
   return answer;
 }
+//예산
+function solution(d, budget) {
+  //1번 예시의 경우 배열의 값을 전부 더해 예산으로 나눠 반올림? 처리하면 되지 않을까 생각.
+  // 2번의 예시의 경우 예산과 배열의 총 합이 갑아서 배열의 길이가 결과가됨.
+  // 답은 맞았으나 속도에서? 걸리는듯
+  let sum = 0;
+  for (let i = 0; i < d.length; i++) {
+    sum += d[i];
+    if (sum === budget) {
+      return d.length;
+    }
+  }
+  let result = Math.ceil(sum / budget) + 1;
+
+  return result;
+}
+
+//for문 사용..
+function solution(d, budget) {
+  // 부서들이 신청한 금액을 오름차순 정렬
+  d.sort((a, b) => a - b);
+  // console.log(d)
+  // 예산에서 빼보기.
+  // 적은 예산을 요청한 부서에게 먼저 주면 최대한 많은 부서에게 제공가능
+  //부서들이 신청한 금액들의 합이 budget 보다 작거나 같다면 그때까지 지원가능
+  let sum = 0;
+  let answer = 0; // 지원가능한 부서의 수
+  for (let i = 0; i < d.length; i++) {
+    sum += d[i];
+    if (sum <= budget) {
+      // 예산보다 배열정렬한 인덱스 합이 작거나 같다면...
+      answer++;
+    }
+  }
+  return answer;
+}
+
+//while 사용
+function solution(d, budget) {
+  // 부서들이 신청한 금액을 오름차순 정렬
+  d.sort((a, b) => a - b);
+
+  let answer = 0;
+  //while사용. 소괄호 안에 들어간 식이 true일때까지만 실행됨
+  while (budget - d[answer] >= 0) {
+    // 삭감했을때의 값이 0이상일때까지만 반복
+    budget -= d[answer]; // 총 예산에서 깎기
+    answer++; // 증감식
+  }
+
+  return answer;
+}
+
+//filter사용
+function solution(d, budget) {
+  const answer = d
+    .sort((a, b) => a - b) // 정렬
+    .filter((m) => {
+      //filter사용
+      //총 예산에서 신청한 지원금을 삭감
+      budget -= m;
+      if (budget >= 0) {
+        return m; // 예산이 있을때 지원할수있는 부서까지 가져옴. 배열형태로 받아옴
+      }
+      // console.log(m, budget); // 각 부서가 신청한 예산m
+    });
+
+  return answer.length;
+}

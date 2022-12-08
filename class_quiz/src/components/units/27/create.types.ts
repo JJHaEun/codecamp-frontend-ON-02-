@@ -1,5 +1,7 @@
 // import { ComponentType } from "react";
+import { ComponentType } from "react";
 import { UseFormHandleSubmit, UseFormRegister } from "react-hook-form";
+import ReactQuill from "react-quill";
 // import ReactQuill from "react-quill";
 
 export interface IFormDataType {
@@ -13,5 +15,5 @@ export interface ICreateUIProps {
   handleSubmit: UseFormHandleSubmit<IFormDataType>;
   onClickSubmit: (data: IFormDataType) => void;
   onChangeContents: (value: string) => void;
-  // ReactQuill: ComponentType<ReactQuill.ReactQuillProps>;
+  ReactQuill: ComponentType<ReactQuill.ReactQuillProps>;
 }
