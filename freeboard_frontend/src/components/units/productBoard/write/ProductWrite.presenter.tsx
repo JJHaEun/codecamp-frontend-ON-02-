@@ -52,12 +52,14 @@ export default function ProductWriteUI(props: IProductWriteUIProps) {
           </div>{" "}
           <div>
             <div>상품 설명</div>
-            <props.ReactQuill
+            <S.ReactQuillTextarea
               // register={props.register("contents")}
+              modules={props.modules}
+              formats={props.formats}
               placeholder="내용을 작성해주세요."
               onChange={props.onChangeContents}
               defaultValue={props.data?.fetchUseditem.contents}
-            ></props.ReactQuill>
+            ></S.ReactQuillTextarea>
             <div>{props.contentsEmpty}</div>
           </div>
           <div>

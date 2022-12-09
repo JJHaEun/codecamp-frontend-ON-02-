@@ -2014,3 +2014,75 @@ function solution(d, budget) {
 
   return answer.length;
 }
+
+// 크레인 인형뽁기
+
+function solution(board, moves) {
+  // 사라진 인형의 개수 2개씩 사라짐
+  //board에는 배열안에 5개의 배열. 인형이 어떤 위치에있는지 나타냄.
+  let answer = 0;
+  const basket = []; //인형들이 담기는 배열
+  // 크레인이 이동하는 위치값을 구하는 반복문
+  for (let i = 0; i < moves.length; i++) {
+    //2. 크레인이 이동해서 뽑아올 수 있는 인형의 위치값을 구하는 반복문
+    for (let l = 0; l < board.length; l++) {
+      const doll = board[l][moves[i] - 1]; // 현재 배열안에 크래인이 위치해야함  . 인덱스 값으로 접근하기 위해 -1 moves[i] ==> 1
+      //  moves[i]-1 ==> 0
+
+      if (doll !== 0) {
+        // 크레인이 이동하는 위치에 인형이 있다면
+        board[l][moves[i] - 1] = 0; // 뽑은 인형의 위치를 빈칸으로 만들어준다.
+
+        // 바구니에 인형을 넣을때 바구니 맨 위의 인형과 동일하다면 제거해주기
+        if (basket[basket.length - 1] === doll) {
+          answer += 2;
+          //pop사용해 가장 마지막 데이터 제거, 들어가려했던 인형도 들어가지못하게 break
+          basket.pop();
+          //splice사용으로 가장 마지막 데이터 제거, 들어가려했던 인형도 들어가지못하게 break
+          //  basket.splice(basket.length - 1, 1)
+          break;
+        }
+
+        basket.push(doll); // 바구니에 인형을 담는다
+        // 한번 인형을 뽑았다면 해당위치 크래인을 멈추기
+        break;
+      }
+    }
+  }
+  return answer;
+}
+
+// 메서드 사용 리턴값없이 for문대체 반복문 forEach사용
+
+function solution(board, moves) {
+  // 사라진 인형의 개수 2개씩 사라짐
+  //board에는 배열안에 5개의 배열. 인형이 어떤 위치에있는지 나타냄.
+  let answer = 0;
+  const basket = []; //인형들이 담기는 배열
+
+  moves.forEach((move) => {
+    let pick = false; // 반복문을 더이상 실행시키지 않게 사용하는 변수pick. false 일때만 forEach실행
+    board.forEach((location) => {
+      // console.log(move,location)
+      const doll = location[move - 1]; // 인형의 정보
+      if (pick === false) {
+        //false 일때만 실행
+        if (doll !== 0) {
+          location[move - 1] = 0;
+          pick = true; // 인형뽑았으니 이 로직은 중단
+
+          if (basket[basket.length - 1] === doll) {
+            //마지막 들어온 인형과 현재 인형이 같을때 제거하기
+            answer += 2;
+            basket.pop();
+          } else {
+            basket.push(doll);
+          }
+
+          // forEach는 for문과는 다르게 break나 return 값없음
+        }
+      }
+    });
+  });
+  return answer;
+}

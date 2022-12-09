@@ -3,6 +3,7 @@ import * as St from "./BoardWriteFetchAndDelete.styles";
 import { IBoardWriteFetchUIProps } from "./BoardWriterFetchAndDelete.types";
 import { Modal, Tooltip } from "antd";
 import ReactPlayer from "react-player/youtube";
+import Dompurify from "dompurify";
 
 export default function BoardWriteFetchUI(props: IBoardWriteFetchUIProps) {
   // console.log(props.data?.fetchBoard?.boardAddress?.address);
@@ -78,7 +79,15 @@ export default function BoardWriteFetchUI(props: IBoardWriteFetchUIProps) {
                         />
                       ))}
                   </St.ImageWrapper>
-                  <St.Contents>{props.data?.fetchBoard.contents}</St.Contents>
+                  {typeof window !== "undefined" && (
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: Dompurify.sanitize(
+                          String(props.data?.fetchBoard.contents)
+                        ),
+                      }}
+                    ></div>
+                  )}{" "}
                 </div>
               </div>
             </St.MainMiddle>

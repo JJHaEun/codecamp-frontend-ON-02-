@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import Uploads01 from "../../../commons/uploads/01/UploadImg.container";
 import { useRecoilState } from "recoil";
 import { isEditState } from "../../../../commons/libraries/store";
+import "react-quill/dist/quill.snow.css";
 
 export default function BoardWriteUI(props: IBoardWriteUIProps) {
   const [isEdit, setIsEdit] = useRecoilState(isEditState);
@@ -57,11 +58,11 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
           <St.Div2>
             <div>내용</div>
             <St.Empty>{props.contentsEmpty}</St.Empty>
-            <St.Text
+            <St.ReactQuillTextarea
               placeholder="내용을 작성해주세요."
               onChange={props.onChangeContents}
               defaultValue={props.data?.fetchBoard.contents}
-            ></St.Text>
+            ></St.ReactQuillTextarea>
           </St.Div2>
           <St.Div2>
             <St.Private>주소</St.Private>

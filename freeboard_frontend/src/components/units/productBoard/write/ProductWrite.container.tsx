@@ -40,6 +40,42 @@ import dynamic from "next/dynamic";
 const ReactQuill = dynamic(async () => await import("react-quill"), {
   ssr: false,
 });
+const modules = {
+  toolbar: [
+    [{ header: "1" }, { header: "2" }, { font: [] }],
+    [{ size: [] }],
+    ["bold", "italic", "underline", "strike", "blockquote"],
+    [
+      { list: "ordered" },
+      { list: "bullet" },
+      { indent: "-1" },
+      { indent: "+1" },
+    ],
+
+    ["clean"],
+  ],
+  clipboard: {
+    // toggle to add extra line breaks when pasting HTML:
+    matchVisual: false,
+  },
+};
+/*
+ * Quill editor formats
+ * See https://quilljs.com/docs/formats/
+ */
+const formats = [
+  "header",
+  "font",
+  "size",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "list",
+  "bullet",
+  "indent",
+];
 export default function ProductWite() {
   // const ref =useRef()
   // const { register, formState, handleSubmit } = useForm<IFormData>({
@@ -122,6 +158,7 @@ export default function ProductWite() {
     }
   };
   const onChangeContents = (value: string) => {
+    console.log(value);
     setContents(value === "<p><br/></p>" ? "" : value);
     if (value !== "<p><br/></p>") {
       setContentsEmpty("");
@@ -315,6 +352,8 @@ export default function ProductWite() {
       // handleSubmit={handleSubmit}
       // formState={formState}
       ReactQuill={ReactQuill}
+      modules={modules}
+      formats={formats}
     />
     //   <BoardWriteUI
     //     onClickSignIn={onClickSignIn}

@@ -13,7 +13,10 @@ import {
 import { IBoardWriteProps, IUpdateBoardInput } from "./BoardWrite.types";
 import { Modal } from "antd";
 import { Address } from "react-daum-postcode";
-
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(async () => await import("react-quill"), {
+  ssr: false,
+});
 export default function BoardWrite(props: IBoardWriteProps) {
   const [bt, setBt] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -93,13 +96,13 @@ export default function BoardWrite(props: IBoardWriteProps) {
       setBt(false);
     }
   };
-  const onChangeContents = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setContents(event.target.value);
+  const onChangeContents = (value: string) => {
+    setContents(value === "<p><br/></p>" ? "" : value);
 
-    if (event.target.value !== "") {
+    if (value !== "<p><br/></p>") {
       setContentsEmpty("");
     }
-    if (writer && pw && title && event.target.value) {
+    if (writer && pw && title && value) {
       setBt(true);
     } else {
       setBt(false);
@@ -261,6 +264,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
         youtubeUrl={youtubeUrl}
         onChangeImgUrls={onChangeImgUrls}
         imageUrls={imageUrls}
+        ReactQuill={ReactQuill}
       />
     </>
   );

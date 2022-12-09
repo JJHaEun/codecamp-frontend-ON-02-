@@ -65,6 +65,8 @@ export interface IProductWriteUIProps {
   remarksEmpty: string;
   contentsEmpty: string;
   ReactQuill: ComponentType<ReactQuill.ReactQuillProps>;
+  formats: any;
+  modules: any;
   // register: UseFormRegister<IFormData>;
   // handleSubmit: UseFormHandleSubmit<IFormData>;
   // formState: FormState<IFormData>;

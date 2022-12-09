@@ -1,6 +1,9 @@
 import styled from "@emotion/styled";
+import dynamic from "next/dynamic";
 import { IBtProps } from "./BoardWrite.types";
-
+const ReactQuill = dynamic(async () => await import("react-quill"), {
+  ssr: false,
+});
 export const WriterMain = styled.div`
   display: flex;
   justify-content: center;
@@ -75,14 +78,13 @@ export const Div2 = styled.div`
 export const Private = styled.div`
   margin-bottom: 5px;
 `;
-export const Text = styled.textarea`
+export const ReactQuillTextarea = styled(ReactQuill)`
   width: 996px;
   height: 480px;
-  resize: none;
-  border: 1px solid #bdbdbd;
-  border-radius: 8px;
   margin-top: 5px;
   padding: 5px;
+  border: 1px solid #bdbdbd;
+  border-radius: 8px;
 `;
 export const Input4 = styled.input`
   width: 77px;

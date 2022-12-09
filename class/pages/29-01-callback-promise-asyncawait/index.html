@@ -1,0 +1,129 @@
+<!-- 콜백 내부에서 사용할 API
+
+`http://numbersapi.com/random?min=1&max=200` // 랜덤한 숫자 받아오는 API
+
+`https://koreanjson.com/posts/${num}`  // 그 숫자의 해당 게시글을 받아오는 API
+
+`https://koreanjson.com/posts?userId=${userId}`  // 그 게시를을 작성한 모든게시글 보는 API-->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>콜백과 친구들</title>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script>
+            const myCallback = () => {
+                const aa = new XMLHttpRequest();
+                aa.open("get", `http://numbersapi.com/random?min=1&max=200`); // get방식의 메서드, 앤드포인트
+                aa.send(); // aa요청
+                aa.addEventListener("load", function (res) {
+                    console.log(res); // res의 target의 response라는 부분에 랜덤으로 받은 숫자가 들어온것이 확인됨. 숫자부분만 필요하기에 split(" ") 띄어쓰기 부분으로 스필릿.배열로 들어가니 0번빼가 숫자.
+                    const num = res.target.response.split(" ")[0]; // 랜덤하게 나오는 숫자
+                    const bb = new XMLHttpRequest();
+                    bb.open("get", `https://koreanjson.com/posts/${num}`);
+                    bb.send();
+                    bb.addEventListener("load", (res) => {
+                        console.log(res); // res의 target의 response라는 부분에 랜덤숫자에 해당하는 게시물 받아옴. 문자열이기에 객체로 바꾸기
+                        const userId = JSON.parse(res.target.response).UserId; //JSON.parse하여 객체로 만든 뒤 거기서 UserId를 뽑아오기
+                        const cc = new XMLHttpRequest();
+                        cc.open(
+                            "get",
+                            `https://koreanjson.com/posts?userId=${userId}`
+                        );
+                        cc.send();
+                        cc.addEventListener("load", (res) => {
+                            console.log(res); // 2단계에서 불러온 게시물의 유저의 전체게시물불러오기.res의 target의 response라는 부분에 배열에 객체들이 들어온형태
+                        });
+                    });
+                }); // 기다리기. 로드되면 즉 aa가 끝나면(숫자를 받아오면) 두번째인자인 콜백함수 실행시켜줘(콜백함수부분 화살표함수로 적어도됨)
+            };
+            // new Promise((resolve, reject) => {
+            //     // 여기서 API요청을 한다면??
+            //     // 성공시 resolve실행
+            //     try {
+            //         const result = "철수"; // 성공시 받아온 결과
+            //         resolve(result); //  resolve에 넣기
+            //     } catch (error) {
+            //         reject("실패했습니다"); // 실패시
+            //     }
+            // })
+            //     .then((res) => {
+            //         // 성공시 실행할 함수 then안에서 실행시키는 콜백함수 res(매개변수임))에는 resolve에 넣은것이 들어옴
+            //         console.log(res); // 철수
+            //     })
+            //     .catch((err) => {
+            //         console.log(err); // 실패했습니다 reject에 넣은것이 들어옴
+            //     });
+            // const myPromise = () => {
+            //     axios
+            //         .get(`http://numbersapi.com/random?min=1&max=200`)
+            //         .then((res) => {
+            //             const num = res.request.response.split(" ")[0];
+            //             axios
+            //                 .get(`https://koreanjson.com/posts/${num}`)
+            //                 .then(() => {
+            //                     const userId = JSON.parse(
+            //                         res.request.response
+            //                     ).UserId; //JSON.parse하여 객체로 만든 뒤 거기서 UserId를 뽑아오기
+
+            //                     axios
+            //                         .get(
+            //                             `https://koreanjson.com/posts?userId=${userId}`
+            //                         )
+            //                         .then((res) => {
+            //                             // res최종결과
+            //                         });
+            //                 });
+            //         });
+            // };
+            const myPromise = () => {
+                // 콜백지옥은 극복했으나 실행순서 예측힘듬
+                // 프로미스 체인
+                axios
+                    .get(`http://numbersapi.com/random?min=1&max=200`)
+                    .then((res) => {
+                        console.log(res);
+                        const num = res.request.response.split(" ")[0];
+                        return axios.get(`https://koreanjson.com/posts/${num}`);
+                    })
+                    .then((res) => {
+                        // res에는 return 값이 들어옴
+                        const userId = JSON.parse(res.request.response).UserId;
+                        return axios.get(
+                            `https://koreanjson.com/posts?userId=${userId}`
+                        );
+                    })
+                    .then((res) => {
+                        // res최종결과
+                        console.log(res);
+                    });
+            };
+
+            //axios, fetch 등 프로미스를 지원하는 기능들의 경우 즉 Promise를 리턴하는 애들에만 await동작함.(Promise를 지원하는 기능)
+            //axios, fetch를 기다리는 방법 2가지.
+            // 1. .then()활용
+            // 2. await 활용. 단, Promise를 리턴시에만 사용가능
+            const myAsyncAwait = async () => {
+                // 실행순서 100% 예측가능. 하나의 await가 끝나야 다음으로 넘어감
+                const result = await axios.get(
+                    `http://numbersapi.com/random?min=1&max=200`
+                );
+                console.log(result);
+                const num = result.request.response.split(" ")[0];
+                const result2 = await axios.get(
+                    `https://koreanjson.com/posts/${num}`
+                );
+                const userId = JSON.parse(result2.request.response).UserId;
+                const result3 = await axios.get(
+                    `https://koreanjson.com/posts?userId=${userId}`
+                );
+                console.log(result3.request.response);
+            };
+        </script>
+    </head>
+    <body>
+        <button onclick="myCallback()">Callback연습하기 !!!</button>
+        <button onclick="myPromise()">Promise 연습하기!!!</button>
+        <button onclick="myAsyncAwait()">Async/Await 연습하기!!!</button>
+    </body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>이벤트루프</title>
+    <script>
+      function onClickLoop() {
+        console.log("=======시작!!!!=======");
+
+        function aaa() {
+          console.log("aaa-시작"); //1
+          bbb(); //2
+          console.log("aaa-끝"); // 7 aaa 끝
+        }
+
+        async function bbb() {
+          console.log("bbb-시작"); //3
+          await ccc(); // 여기가 포인트 await 는 ccc와는 관련없음. 따라서 여기의 await는 무시 // 4
+          console.log("bbb-끝"); // 6 // await 를 만났으니 마이크로큐에들어감 // 10 두번째로 큐에 들어간애꺼내실행 bbb-끝
+        }
+
+        async function ccc() {
+          console.log("ccc-시작"); // 5
+          const friend = await "철수"; // 마이크로큐에 들어가고 ccc는 끝남.// 이게 먼저 큐에 들어가니 얘먼저 실행 9
+          console.log(friend);
+        }
+
+        aaa();
+
+        console.log("=======끝!!!!======="); // 8 끝. 콜스텍을 다 돌아 비워짐
+      }
+    </script>
+  </head>
+  <body>
+    <button onclick="onClickLoop()">시작하기</button>
+  </body>
+</html>
