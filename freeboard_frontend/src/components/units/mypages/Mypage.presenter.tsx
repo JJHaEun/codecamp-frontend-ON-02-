@@ -17,8 +17,8 @@ export default function MypageUI(props: IMypageUIProps) {
         ></script>
       </Head>
       <div>
-        <input />
-        보유포인트: {}
+        보유포인트:{" "}
+        <div>{props.data?.fetchUserLoggedIn.userPoint?.amount ?? 0}</div>
       </div>
       <input
         type="radio"

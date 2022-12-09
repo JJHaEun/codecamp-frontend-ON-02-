@@ -6,32 +6,49 @@ export const CREATE_POINT_TRANSACTION_OF_LOADING = gql`
       _id
       impUid
       amount
-      status
       useditem {
         _id
         name
-        price
-        images
         buyer {
           _id
           email
           name
         }
-        seller {
-          _id
-          email
-          name
-        }
-        user {
-          _id
-          email
-          name
-          userPoint {
-            _id
-            amount
-          }
-        }
       }
+      user {
+        _id
+        email
+        name
+      }
+      createdAt
+    }
+  }
+`;
+// export const FETCH_POINT_TRANSACTIONS_COUNT_OF_LOADING = gql`
+//   query fetchPointTransactionsCountOfLoading {
+//     fetchPointTransactionsCountOfLoading
+//   }
+// `;
+export const CREATE_POINT_TRANSACTION_OF_BUYING_AND_SELLING = gql`
+  mutation createPointTransactionOfBuyingAndSelling($useritemId: ID!) {
+    createPointTransactionOfBuyingAndSelling(useritemId: $useritemId) {
+      _id
+      name
+      remarks
+      contents
+      price
+      buyer {
+        _id
+        email
+        name
+      }
+      seller {
+        _id
+        email
+        name
+      }
+      soldAt
+      createdAt
     }
   }
 `;

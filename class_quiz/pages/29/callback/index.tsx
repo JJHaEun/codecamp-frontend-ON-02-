@@ -24,7 +24,8 @@ export default function CallbackFriends() {
         cc.open("get", `https://koreanjson.com/posts?userId=${userId}`);
         cc.send();
         cc.addEventListener("load", (res) => {
-          console.log(res); // 2단계에서 불러온 게시물의 유저의 전체게시물불러오기.res의 target의 response라는 부분에 배열에 객체들이 들어온형태
+          const finalCallback = JSON.parse(res.target.response); // 2단계에서 불러온 게시물의 유저의 전체게시물불러오기.res의 target의 response라는 부분에 배열에 객체들이 들어온형태
+          setState(finalCallback);
         });
       });
     });
@@ -42,7 +43,8 @@ export default function CallbackFriends() {
         return axios.get(`https://koreanjson.com/posts?userId=${userId}`);
       })
       .then((res) => {
-        console.log(res);
+        const finalPromise = JSON.parse(res.request.response);
+        setState(finalPromise);
       });
   };
 

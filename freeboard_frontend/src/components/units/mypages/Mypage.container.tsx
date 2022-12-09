@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from "@apollo/client";
+import { Modal } from "antd";
 import { ChangeEvent, useState } from "react";
 import {
   IMutation,
@@ -17,7 +18,6 @@ declare const window: typeof globalThis & {
 export default function MyPage() {
   useAuth();
   const [point, setPoint] = useState("");
-
   const [createPointTransactionOfLoading] = useMutation<
     Pick<IMutation, "createPointTransactionOfLoading">,
     IMutationCreatePointTransactionOfLoadingArgs
@@ -25,10 +25,11 @@ export default function MyPage() {
 
   const { data } =
     useQuery<Pick<IQuery, "fetchUserLoggedIn">>(FETCH_USER_LOGGED_IN);
+
   const onChangeRadio = (event: ChangeEvent<HTMLInputElement>) => {
     setPoint(event.target.value);
   };
-  console.log(point);
+  console.log(data?.fetchUserLoggedIn);
   const onClickCharge = () => {
     const IMP = window.IMP; // 생략 가능
     IMP.init("imp40037636"); // Example: imp00000000
@@ -50,17 +51,22 @@ export default function MyPage() {
       },
       async (rsp: any) => {
         // callback
+        console.log(rsp);
         if (rsp.success) {
           // 결제 성공 시 로직,
-          console.log(rsp);
+
           // 벡엔드에 결제관련 데이터 넘겨주기.즉 , 뮤테이션실행하기
           // createPointTransactionOfLoading
-          const result = await createPointTransactionOfLoading({
-            variables: {
-              impUid: rsp.imp_uid,
-            },
-          });
-          console.log(result);
+          try {
+            const result = await createPointTransactionOfLoading({
+              variables: {
+                impUid: rsp.imp_uid,
+              },
+            });
+            console.log(result);
+          } catch (error) {
+            Modal.error({ content: "다시요청해주세요" });
+          }
         } else {
           alert("결제에 실패했습니다.다시 시도해주세요");
         }

@@ -84,7 +84,16 @@ export const FETCH_USED_ITEM = gql`
         address
         addressDetail
       }
-      # seller
+      seller {
+        _id
+        email
+        name
+      }
+      buyer {
+        _id
+        email
+        name
+      }
       createdAt
     }
   }
