@@ -7,6 +7,7 @@ export interface IProductDetailUIProps {
   onClickDelete: () => void;
   onClickcheckPermissionDeleteModal: () => void;
   handleCancel: () => void;
-  data: Pick<IQuery, "fetchUseditem"> | undefined;
+  data?: Pick<IQuery, "fetchUseditem">;
   isOpenDelete: boolean;
+  onClickBuy: () => void;
 }

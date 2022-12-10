@@ -21,6 +21,7 @@ import ProductWriteUI from "./ProductWrite.presenter";
 import { useRecoilState } from "recoil";
 import { isOpenState } from "../../../../commons/libraries/store";
 import dynamic from "next/dynamic";
+import { useMoveToPage } from "../../../commons/hooks/useMoToPage";
 // import { IFormData } from "./ProductWrite.types";
 // import { yupResolver } from "@hookform/resolvers/yup";
 // import { useForm } from "react-hook-form";
@@ -103,6 +104,7 @@ export default function ProductWite() {
   const [contentsEmpty, setContentsEmpty] = useState("");
   const [priceEmpty, setPriceEmpty] = useState("");
   const [imageUrls, setImageUrls] = useState(["", "", ""]);
+  const { onClickMoveToPage } = useMoveToPage();
 
   const { data } = useQuery<
     Pick<IQuery, "fetchUseditem">,
@@ -354,6 +356,7 @@ export default function ProductWite() {
       ReactQuill={ReactQuill}
       modules={modules}
       formats={formats}
+      onClickMoveToPage={onClickMoveToPage}
     />
     //   <BoardWriteUI
     //     onClickSignIn={onClickSignIn}

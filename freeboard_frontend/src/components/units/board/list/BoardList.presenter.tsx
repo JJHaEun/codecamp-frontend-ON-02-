@@ -4,7 +4,6 @@ import { getDate } from "../../../commons/utils/utils";
 import * as S from "./BoardList.styles";
 import { IBoardListUIProps } from "./BoardList.types";
 import { v4 as uuidv4 } from "uuid";
-import { IBoard } from "../../../../commons/types/generated/types";
 export default function BoardListUI(props: IBoardListUIProps) {
   return (
     <S.All>

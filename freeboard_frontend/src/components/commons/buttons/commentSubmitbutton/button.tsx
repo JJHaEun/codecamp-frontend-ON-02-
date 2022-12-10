@@ -1,13 +1,12 @@
 import { IButtonPageProps } from "./button.types";
-import * as S from "./button.styles";
 
-export default function LoginUserButtonPage(props: IButtonPageProps) {
+export default function CommentButtonPage(props: IButtonPageProps) {
   return (
-    <S.LogInButton
+    <button
       type="button"
-      onClick={props.handleSubmit(props.onClickLogIn)}
+      onClick={props.handleSubmit(props.onClickCommentSubmit)}
     >
       {props.title}
-    </S.LogInButton>
+    </button>
   );
 }

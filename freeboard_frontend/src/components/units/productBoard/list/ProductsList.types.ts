@@ -7,7 +7,7 @@ import {
 } from "../../../../commons/types/generated/types";
 
 export interface IProductListUIProps {
-  data: Pick<IQuery, "fetchUseditems"> | undefined;
+  data?: Pick<IQuery, "fetchUseditems">;
   onLoadMore: () => void;
   onClickCreateProduct: () => void;
   onClickProductDetail: (event: MouseEvent<HTMLDivElement>) => void;
@@ -16,8 +16,13 @@ export interface IProductListUIProps {
     variables?: Partial<IQueryFetchUseditemsArgs> | undefined
   ) => Promise<ApolloQueryResult<Pick<IQuery, "fetchUseditems">>>;
   onClickMoveToPage: (path: string) => MouseEventHandler<HTMLButtonElement>;
+  keyword: string;
 }
 export interface IProductListMainUIProps {
   el: IUseditem;
   onClickProductDetail: (event: MouseEvent<HTMLDivElement>) => void;
+  keyword: string;
+}
+export interface ITextTokenProps {
+  isMatch: boolean;
 }

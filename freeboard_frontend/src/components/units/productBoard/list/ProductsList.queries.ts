@@ -24,6 +24,12 @@ export const FETCH_USED_ITEMS = gql`
         lat
         lng
       }
+      buyer {
+        _id
+        email
+        name
+        createdAt
+      }
     }
   }
 `;

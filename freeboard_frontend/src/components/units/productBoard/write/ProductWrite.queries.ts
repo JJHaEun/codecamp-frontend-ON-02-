@@ -25,6 +25,11 @@ export const CREATE_USED_ITEM = gql`
         lat
         lng
       }
+      buyer {
+        _id
+        email
+        name
+      }
     }
   }
 `;
@@ -59,6 +64,11 @@ export const UPDATE_USED_ITEM = gql`
         lat
         lng
       }
+      buyer {
+        _id
+        email
+        name
+      }
     }
   }
 `;
@@ -83,6 +93,8 @@ export const FETCH_USED_ITEM = gql`
         zipcode
         address
         addressDetail
+        lat
+        lng
       }
       seller {
         _id

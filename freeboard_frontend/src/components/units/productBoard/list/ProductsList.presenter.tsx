@@ -6,10 +6,8 @@ import * as S from "./ProductsList.styles";
 
 export default function ProductListUI(props: IProductListUIProps) {
   return (
-    <div>
-      {/* <div>{props}</div> */}
-
-      <h1>상품리스트</h1>
+    <S.Main>
+      <S.MainTitle>상품리스트</S.MainTitle>
       <div>
         <Search02
           refetch={props.refetch}
@@ -30,6 +28,7 @@ export default function ProductListUI(props: IProductListUIProps) {
                 key={el._id}
                 el={el}
                 onClickProductDetail={props.onClickProductDetail}
+                keyword={props.keyword}
               />
             ))}
           </InfiniteScroll>
@@ -38,6 +37,6 @@ export default function ProductListUI(props: IProductListUIProps) {
           등록하기
         </button>
       </div>
-    </div>
+    </S.Main>
   );
 }

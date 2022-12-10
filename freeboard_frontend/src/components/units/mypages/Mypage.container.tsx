@@ -39,12 +39,12 @@ export default function MyPage() {
         // param
         pg: "nice",
         pay_method: "card", // card,vbank 등 결제수단
-        // merchant_uid: "ORD20180131-0000011",// 상품아이디. 이부분을 주석처리하거나 작성하지 않으면 nobody로 만들어짐.자동으로 단, 중복될 시 결제안됨.
+        // merchant_uid: "ORD20180131-0000011",// 상품아이디. 이부분을 주석처리하면 nobody로 만들어짐.자동으로. 직접작성해도됨 단, 중복될 시 결제안됨.
         name: "포인트 충전",
         amount: point, // 가격
         buyer_email: data?.fetchUserLoggedIn.email,
         buyer_name: data?.fetchUserLoggedIn.name,
-        // buyer_tel: "010-4242-4242",
+        buyer_tel: "010-4242-4242",
         // buyer_addr: "서울특별시 강남구 신사동",
         // buyer_postcode: "01181",
         m_redirect_url: "http://localhost:3000/mypage", // 모바일의 경우에 결제후 돌아올 페이지 . 이유:모바일에서는결제시 결제페이지로 사이트가 이동되기에 다시 어딘가로 돌아와야함.
@@ -65,10 +65,10 @@ export default function MyPage() {
             });
             console.log(result);
           } catch (error) {
-            Modal.error({ content: "다시요청해주세요" });
+            Modal.error({ content: "알수 없는 에러입니다" });
           }
         } else {
-          alert("결제에 실패했습니다.다시 시도해주세요");
+          Modal.error({ content: "결제에 실패했습니다.다시 시도해주세요" });
         }
       }
     );

@@ -1,5 +1,5 @@
 // import { ChangeEvent } from "react";
-import { ChangeEvent, ComponentType } from "react";
+import { ChangeEvent, ComponentType, MouseEventHandler } from "react";
 import { Address } from "react-daum-postcode";
 import ReactQuill from "react-quill";
 
@@ -58,7 +58,7 @@ export interface IProductWriteUIProps {
   onChangeRemarks: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangePrice: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangeName: (event: ChangeEvent<HTMLInputElement>) => void;
-  data: Pick<IQuery, "fetchUseditem"> | undefined;
+  data?: Pick<IQuery, "fetchUseditem">;
   bt: boolean;
   nameEmpty: string;
   priceEmpty: string;
@@ -67,6 +67,8 @@ export interface IProductWriteUIProps {
   ReactQuill: ComponentType<ReactQuill.ReactQuillProps>;
   formats: any;
   modules: any;
+  onClickMoveToPage: (path: string) => MouseEventHandler<HTMLButtonElement>;
+
   // register: UseFormRegister<IFormData>;
   // handleSubmit: UseFormHandleSubmit<IFormData>;
   // formState: FormState<IFormData>;

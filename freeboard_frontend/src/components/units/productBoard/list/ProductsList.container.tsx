@@ -11,15 +11,15 @@ import { FETCH_USED_ITEMS } from "./ProductsList.queries";
 
 export default function ProductList() {
   const router = useRouter();
-  const result = useState("");
+  const [keyword, setKeyword] = useState("");
   const { onClickMoveToPage } = useMoveToPage();
-
   const { data, fetchMore, refetch } = useQuery<
     Pick<IQuery, "fetchUseditems">,
     IQueryFetchUseditemsArgs
   >(FETCH_USED_ITEMS);
 
   console.log(data?.fetchUseditems);
+
   const onLoadMore = async () => {
     if (!data) return;
     await fetchMore({
@@ -47,7 +47,7 @@ export default function ProductList() {
     void router.push(`/market/${event.currentTarget.id}`);
   };
   const onChangeKeyword = (value: string) => {
-    result[1](value);
+    setKeyword(value);
   };
 
   return (
@@ -59,6 +59,7 @@ export default function ProductList() {
       onChangeKeyword={onChangeKeyword}
       refetch={refetch}
       onClickMoveToPage={onClickMoveToPage}
+      keyword={keyword}
     />
   );
 }

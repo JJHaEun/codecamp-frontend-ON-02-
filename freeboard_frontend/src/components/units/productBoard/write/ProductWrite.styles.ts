@@ -17,3 +17,22 @@ export const ReactQuillTextarea = styled(ReactQuill)`
   border-radius: 8px;
   margin-bottom: 50px;
 `;
+export const Photo = styled.div`
+  display: flex;
+`;
+export const MainTitle = styled.h1`
+  font-size: 35px;
+`;
+export const Main = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+export const Buttons = styled.div`
+  display: flex;
+  gap: 50px;
+`;
+export const MoveList = styled.button`
+  background-color: #f0f8ff;
+`;

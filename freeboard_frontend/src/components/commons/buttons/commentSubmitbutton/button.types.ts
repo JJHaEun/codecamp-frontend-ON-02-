@@ -1,8 +1,8 @@
 import { UseFormHandleSubmit } from "react-hook-form";
-import { ILogInFormData } from "../../login/01/Login.types";
+import { IFormCommentData } from "../../../units/productBoardCommentsQuestion/write/ProductCommentsQuestion.types";
 
 export interface IButtonPageProps {
-  handleSubmit: UseFormHandleSubmit<ILogInFormData>;
-  onClickLogIn: (data: ILogInFormData) => void;
+  handleSubmit: UseFormHandleSubmit<IFormCommentData>;
+  onClickCommentSubmit: (data: IFormCommentData) => void;
   title: string;
 }
