@@ -51,7 +51,7 @@ export default function MyPage() {
       },
       async (rsp: any) => {
         // callback
-        console.log(rsp);
+        console.log(rsp.imp_uid);
         if (rsp.success) {
           // 결제 성공 시 로직,
 

@@ -7,10 +7,8 @@ import { isOpenDeleteState } from "../../../../commons/libraries/store";
 import {
   IQuery,
   IQueryFetchUseditemArgs,
-  IUser,
 } from "../../../../commons/types/generated/types";
 import { useMoveToPage } from "../../../commons/hooks/useMoToPage";
-import { FETCH_USER_LOGGED_IN } from "../../../commons/login-sucess/01/LoginSuccess.queries";
 import { FETCH_USED_ITEMS } from "../list/ProductsList.queries";
 import { FETCH_USED_ITEM } from "../write/ProductWrite.queries";
 import ProductDetailUI from "./ProductDetail.presenter";
@@ -32,33 +30,32 @@ export default function ProductDetail() {
   );
   const [isOpenDelete, setIsOpenDelete] = useRecoilState(isOpenDeleteState);
   const { data } = useQuery<
-    Pick<IQuery, "fetchUseditem" | "fetchUserLoggedIn">,
-    IQueryFetchUseditemArgs | IUser
-  >(
-    FETCH_USED_ITEM,
-    {
-      variables: {
-        useditemId: String(router.query._id),
-      },
-    } || FETCH_USER_LOGGED_IN
-  );
-  console.log(router.query._id);
+    Pick<IQuery, "fetchUseditem">,
+    IQueryFetchUseditemArgs
+  >(FETCH_USED_ITEM, {
+    variables: {
+      useditemId: String(router.query._id),
+    },
+  });
+  // console.log(data?.fetchUserLoggedIn?.email ?? "");
+  console.log(String(router.query._id));
   const onClickPick = async () => {
+    if (typeof router.query?._id !== "string") return;
+
     await toggleUseditemPick({
       variables: {
-        useditemId: router.query._id,
+        useditemId: router.query?._id,
       },
       refetchQueries: [
         {
           query: FETCH_USED_ITEM,
-          variables: {
-            useditemId: router.query._id,
-          },
+          variables: { useditemId: router.query?._id },
         },
       ],
     });
   };
   const onClickDelete = async () => {
+    if (typeof router.query._id !== "string") return;
     try {
       await deleteUseditem({
         variables: {
@@ -107,12 +104,12 @@ export default function ProductDetail() {
       {
         // param
         pg: "nice",
-        pay_method: data?.fetchUserLoggedIn?.userPoint?.amount,
+        pay_method: data?.fetchUseditem.buyer?.userPoint,
         // merchant_uid: "ORD20180131-0000011",
         name: data?.fetchUseditem.name,
         amount: data?.fetchUseditem.price,
-        buyer_email: data?.fetchUserLoggedIn?.email,
-        buyer_name: data?.fetchUserLoggedIn?.name,
+        buyer_email: data?.fetchUseditem.buyer?.email,
+        buyer_name: data?.fetchUseditem.buyer?.name,
         buyer_tel: "010-4242-4242",
         // buyer_addr: "서울특별시 강남구 신사동",
         // buyer_postcode: "01181",
@@ -120,6 +117,8 @@ export default function ProductDetail() {
       },
       async (rsp: any) => {
         // callback
+        if (typeof router.query._id !== "string") return;
+
         if (rsp.success) {
           // 결제 성공 시 로직,
           try {

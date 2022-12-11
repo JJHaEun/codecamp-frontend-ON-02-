@@ -11,16 +11,19 @@ export interface ICommentsAnswerUIProps {
   handleSubmit: UseFormHandleSubmit<IFormCommentData>;
   formState: FormState<IFormCommentData>;
   register: UseFormRegister<IFormCommentData>;
-  onClickCommentSubmit: (data: IFormCommentData) => void;
+  onClickAnswerSubmit: (data: IFormCommentData) => void;
   onClickEditFinish: (data: IFormCommentData) => void;
   isEdit: boolean;
   el: IUseditemQuestionAnswer;
+  isHaveAnswer: boolean;
+  setIsHaveAnswer?: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface ICommentsAnswerProps {
   el: IUseditemQuestionAnswer;
   isEdit: boolean;
   setIsEdit?: Dispatch<SetStateAction<boolean>>;
+  id?: string;
   //   onClickAnswer: () => void;
   isHaveAnswer: boolean;
   setIsHaveAnswer?: Dispatch<SetStateAction<boolean>>;

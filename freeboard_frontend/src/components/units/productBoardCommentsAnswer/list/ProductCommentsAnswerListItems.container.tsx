@@ -39,7 +39,7 @@ export default function CommentsAnswerListItems(
         refetchQueries: [
           {
             query: FETCH_USED_ITEM_QUESTIONS,
-            variables: { useditemQuestionId: router.query._id },
+            variables: { useditemId: router.query._id },
           },
         ],
       });

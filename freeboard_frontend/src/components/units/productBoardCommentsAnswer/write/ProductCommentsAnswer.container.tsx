@@ -17,6 +17,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { ICommentsAnswerProps } from "./ProductCommentsAnswer.types";
+import { FETCH_USED_ITEM_QUESTIONS } from "../../productBoardCommentsQuestion/list/ProductCommentsQustionList.queries";
 
 const schema = yup.object({
   // 검증하기
@@ -40,19 +41,21 @@ export default function CommentsAnswer(props: ICommentsAnswerProps) {
     IMutationUpdateUseditemQuestionAnswerArgs
   >(UPDATE_USED_ITEM_QUESTION_ANSWER);
 
-  const onClickCommentSubmit = async (data: IFormCommentData) => {
+  const onClickAnswerSubmit = async (data: IFormCommentData) => {
+    if (typeof props.id !== "string") return;
+
     try {
       const result = await createUseditemQuestionAnswer({
         variables: {
-          useditemQuestionId: String(router.query._id),
+          useditemQuestionId: props.id,
           createUseditemQuestionAnswerInput: {
             contents: data.contents,
           },
         },
         refetchQueries: [
           {
-            query: FETCH_USED_ITEM_QUESTION_ANSWERS,
-            variables: { useditemQuestionId: router.query._id },
+            query: FETCH_USED_ITEM_QUESTIONS,
+            variables: { useditemId: router.query._id },
           },
         ],
       });
@@ -68,10 +71,10 @@ export default function CommentsAnswer(props: ICommentsAnswerProps) {
       return;
     }
     try {
-      if (typeof router.query._id !== "string") return;
+      if (typeof props.id !== "string") return;
       await updateUseditemQuestionAnswer({
         variables: {
-          useditemQuestionAnswerId: props.el._id,
+          useditemQuestionAnswerId: props.id,
           updateUseditemQuestionAnswerInput: {
             contents: data.contents,
           },
@@ -79,7 +82,7 @@ export default function CommentsAnswer(props: ICommentsAnswerProps) {
         refetchQueries: [
           {
             query: FETCH_USED_ITEM_QUESTION_ANSWERS,
-            variables: { useditemQuestionId: props.el._id },
+            variables: { useditemId: router.query._id },
           },
         ],
       });
@@ -94,12 +97,14 @@ export default function CommentsAnswer(props: ICommentsAnswerProps) {
   return (
     <CommentsAnswerUI
       handleSubmit={handleSubmit}
-      onClickCommentSubmit={onClickCommentSubmit}
+      onClickAnswerSubmit={onClickAnswerSubmit}
       register={register}
       formState={formState}
       el={props.el}
       onClickEditFinish={onClickEditFinish}
       isEdit={props.isEdit}
+      isHaveAnswer={props.isHaveAnswer}
+      setIsHaveAnswer={props.setIsHaveAnswer}
     />
   );
 }

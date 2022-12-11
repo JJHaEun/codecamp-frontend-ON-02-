@@ -26,35 +26,7 @@ export const UPDATE_USED_ITEM_QUESTION = gql`
     ) {
       _id
       contents
-      useditem {
-        _id
-        name
-        remarks
-        contents
-        price
-        tags
-        images
-        pickedCount
-        useditemAddress {
-          _id
-          zipcode
-          address
-          addressDetail
-          createdAt
-          lat
-          lng
-        }
-        seller {
-          _id
-          email
-          name
-        }
-        buyer {
-          _id
-          email
-          name
-        }
-      }
+
       user {
         _id
         email

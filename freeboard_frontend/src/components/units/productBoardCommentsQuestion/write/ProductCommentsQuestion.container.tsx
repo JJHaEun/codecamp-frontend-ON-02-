@@ -19,6 +19,7 @@ import {
   FETCH_USED_ITEM_QUESTIONS,
   UPDATE_USED_ITEM_QUESTION,
 } from "../list/ProductCommentsQustionList.queries";
+import { FETCH_USED_ITEM } from "../../productBoard/write/ProductWrite.queries";
 const schema = yup.object({
   // 검증하기
 
@@ -80,8 +81,8 @@ export default function CommentsQuestion(props: ICommentsQuestionProps) {
         },
         refetchQueries: [
           {
-            query: FETCH_USED_ITEM_QUESTIONS,
-            variables: { useditemId: router.query._id },
+            query: FETCH_USED_ITEM,
+            variables: { useditemQuestionId: props.el._id },
           },
         ],
       });

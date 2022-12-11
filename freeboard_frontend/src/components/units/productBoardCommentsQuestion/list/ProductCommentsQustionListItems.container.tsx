@@ -27,7 +27,13 @@ export default function CommentsListItems(props: ICommentsListItemsProps) {
   const onClickEdit = () => {
     setIsEdit(true);
   };
+
   const onClickAnswer = () => {
+    if (!localStorage.getItem("accessToken")) {
+      Modal.info({ content: "권한이 없습니다" });
+      void router.push("/login");
+      return;
+    }
     setIsHaveAnswer(true);
   };
   const OnclickDeleteComment = async (event: MouseEvent<HTMLElement>) => {

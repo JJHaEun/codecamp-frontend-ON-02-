@@ -20,7 +20,6 @@ export default function CommentsAnswerList() {
   });
 
   const onLoadMore = async () => {
-    console.log(data?.fetchUseditemQuestionAnswers);
     if (!data) return;
     await fetchMore({
       variables: {
@@ -42,6 +41,7 @@ export default function CommentsAnswerList() {
         };
       },
     });
+    console.log(data?.fetchUseditemQuestionAnswers);
   };
 
   return <CommentsAnswerListUI onLoadMore={onLoadMore} data={data} />;

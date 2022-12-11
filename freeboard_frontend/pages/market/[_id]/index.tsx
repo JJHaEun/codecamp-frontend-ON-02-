@@ -10,10 +10,48 @@ export default function freeboardWriteRouted() {
       <CommentsWrite 댓글등록/>
       <CommentWritList 댓글목록/> */}
       <ProductDetail />
-      <CommentsQuestion />
-      <CommentsList>
-        <CommentsAnswerList />
-      </CommentsList>
+      <CommentsQuestion
+        isEdit={false}
+        el={{
+          __typename: undefined,
+          _id: "",
+          contents: "",
+          createdAt: undefined,
+          deletedAt: undefined,
+          updatedAt: undefined,
+          useditem: {
+            __typename: undefined,
+            _id: "",
+            buyer: undefined,
+            contents: "",
+            createdAt: undefined,
+            deletedAt: undefined,
+            images: undefined,
+            name: "",
+            pickedCount: undefined,
+            price: undefined,
+            remarks: "",
+            seller: undefined,
+            soldAt: undefined,
+            tags: undefined,
+            updatedAt: undefined,
+            useditemAddress: undefined,
+          },
+          user: {
+            __typename: undefined,
+            _id: "",
+            createdAt: undefined,
+            deletedAt: undefined,
+            email: "",
+            name: "",
+            picture: undefined,
+            updatedAt: undefined,
+            userPoint: undefined,
+          },
+        }}
+      />
+      <CommentsList />
+      <CommentsAnswerList />
     </>
   );
 }

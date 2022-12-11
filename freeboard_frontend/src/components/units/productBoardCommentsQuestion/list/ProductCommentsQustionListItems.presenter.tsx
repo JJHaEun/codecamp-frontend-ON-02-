@@ -14,7 +14,9 @@ export default function CommentsListItemsUI(props: ICommentsListItemsUIProps) {
           onOk={props.OnclickDeleteComment}
           onCancel={props.handleCancel}
           cancelText="취소"
-        ></Modal>
+        >
+          <div>삭제하시겠습니까?</div>
+        </Modal>
       )}
       {!props.isEdit && (
         <div key={props.el._id}>
