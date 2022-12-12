@@ -41,12 +41,14 @@ export default function ProductDetailUI(props: IProductDetailUIProps) {
       <div>
         <div>
           <div>{props.data?.fetchUseditem.seller?.name}</div>
+
           <div>Date:{getDate(props.data?.fetchUseditem.createdAt)}</div>
         </div>
         <div>
           <button onClick={props.onClickPick}>pick!!</button>
           <span>{props.data?.fetchUseditem.pickedCount}</span>
-        </div>
+        </div>{" "}
+        <div>{props.data?.fetchUseditem.price} 원</div>
         <div>
           <h2>{props.data?.fetchUseditem.name}</h2>
           <div>
@@ -64,7 +66,8 @@ export default function ProductDetailUI(props: IProductDetailUIProps) {
                 ),
               }}
             ></div>
-          )}{" "}
+          )}
+
           <div>{props.data?.fetchUseditem.useditemAddress?.address}</div>
         </div>{" "}
       </div>

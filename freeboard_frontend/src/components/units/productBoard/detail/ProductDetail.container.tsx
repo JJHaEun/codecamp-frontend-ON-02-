@@ -40,19 +40,20 @@ export default function ProductDetail() {
   // console.log(data?.fetchUserLoggedIn?.email ?? "");
   console.log(String(router.query._id));
   const onClickPick = async () => {
-    if (typeof router.query?._id !== "string") return;
+    // if (typeof router.query._id !== "string") return;
 
     await toggleUseditemPick({
       variables: {
-        useditemId: router.query?._id,
+        useditemId: router.query._id,
       },
       refetchQueries: [
         {
           query: FETCH_USED_ITEM,
-          variables: { useditemId: router.query?._id },
+          variables: { useditemId: router.query._id },
         },
       ],
     });
+    console.log(data?.fetchUseditem.pickedCount);
   };
   const onClickDelete = async () => {
     if (typeof router.query._id !== "string") return;
@@ -99,12 +100,12 @@ export default function ProductDetail() {
     console.log(data?.fetchUseditem.buyer);
 
     const IMP = window.IMP; // 생략 가능
-    IMP.init("imp40037636"); // Example: imp00000000
+    IMP.init("imp49910675"); // Example: imp00000000
     IMP.request_pay(
       {
         // param
         pg: "nice",
-        pay_method: data?.fetchUseditem.buyer?.userPoint,
+        pay_method: data?.fetchUseditem.buyer?.userPoint?.amount,
         // merchant_uid: "ORD20180131-0000011",
         name: data?.fetchUseditem.name,
         amount: data?.fetchUseditem.price,

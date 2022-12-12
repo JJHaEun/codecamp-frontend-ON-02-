@@ -10,7 +10,6 @@ export const CREATE_USED_ITEM = gql`
       remarks
       tags
       images
-      pickedCount
       seller {
         _id
         name
@@ -80,6 +79,7 @@ export const FETCH_USED_ITEM = gql`
       name
       remarks
       contents
+      price
       pickedCount
       tags
       images

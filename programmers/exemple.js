@@ -2086,3 +2086,36 @@ function solution(board, moves) {
   });
   return answer;
 }
+
+// 3진법 뒤집기! -- 내가품. 물론 찾아서..
+function solution(n) {
+  // n= 10 진법의 숫자
+  // console.log(n.toString(3))
+  let three = n.toString(3); // toString(여기에 숫자를 넣으면 해당 진법으로 바꾸는것 가능)
+  let threeReverse = three.split("").reverse().join("");
+  return parseInt(threeReverse, 3);
+}
+
+// 수업중 풀이
+function solution(n) {
+  // n= 10 진법의 숫자
+
+  n = n.toString(3); //1. toString(여기에 숫자를 넣으면 해당 진법으로 바꾸는것 가능)// 타입은 문자
+  // 앞뒤바꾸기
+  let reverse = "";
+  //2. 마지막인덱스부터 시작해
+  for (let i = n.length - 1; i >= 0; i--) {
+    reverse += n[i];
+    // n의 3진법 숫자가 뒤집혀 reverse에 담김
+  }
+  //3. 원래의 10진법으로 표현
+  //parseInt(첫번째의 인자값을 숫자로바꿈,10진법으로 변환할 진법)
+  return parseInt(reverse, 3);
+}
+// 메서드 사용
+function solution(n) {
+  // n= 10 진법의 숫자
+
+  n = n.toString(3).split("").reverse().join("");
+  return parseInt(n, 3);
+}

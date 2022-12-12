@@ -32,7 +32,7 @@ export default function MyPage() {
   console.log(data?.fetchUserLoggedIn);
   const onClickCharge = () => {
     const IMP = window.IMP; // 생략 가능
-    IMP.init("imp40037636"); // Example: imp00000000
+    IMP.init("imp49910675"); // Example: imp00000000 imp49910675
     // IMP.request_pay(param, callback) 결제창 호출
     IMP.request_pay(
       {
@@ -51,7 +51,7 @@ export default function MyPage() {
       },
       async (rsp: any) => {
         // callback
-        console.log(rsp.imp_uid);
+        console.log(rsp);
         if (rsp.success) {
           // 결제 성공 시 로직,
 
@@ -62,8 +62,19 @@ export default function MyPage() {
               variables: {
                 impUid: rsp.imp_uid,
               },
+              update(cache, { data }) {
+                cache.modify({
+                  fields: {
+                    fetchUserLoggedIn: (prev) => {
+                      return [data?.createPointTransactionOfLoading, ...prev];
+                    },
+                  },
+                });
+              },
             });
             console.log(result);
+
+            Modal.success({ content: "포인트가 충전되었습니다" });
           } catch (error) {
             Modal.error({ content: "알수 없는 에러입니다" });
           }
