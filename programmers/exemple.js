@@ -2119,3 +2119,58 @@ function solution(n) {
   n = n.toString(3).split("").reverse().join("");
   return parseInt(n, 3);
 }
+
+// 이진변황 반복하기 ---*****
+function solution(s) {
+  let count = 0; // 변환횟수
+  let remove = 0; // 0 이 제거된 수
+  //for문 ==> 일정범위 안에서일경우 사용
+  //문자열 1이 나올때까지니 for 반복문 말고 while문 사용
+  while (s !== "1") {
+    count++; // 변환 횟수는 반복횟수와 동일함.(즉 1이될때까지 변환하는 횟수)
+    // 1. 0을 모두 제거
+    let temp = "";
+    for (let i = 0; i < s.length; i++) {
+      if (s[i] === "0") {
+        // 0이 있을때를 찾음. 제거 필요. 그리고 remove에 1더하기
+        remove++;
+        continue; // 다음반복문으로 넘어가기.
+      }
+      //문자열이 1일경우만 실행됨temp 에 문자열 1만 넣기
+      temp += s[i];
+    }
+    s = temp.length; // 1만 담겨있는 전체를 다시 s에 담음
+    s = s.toString(2); // 2진법으로 변환. 결과가 1이 아니라면 다시 반복문 실행
+  }
+
+  return [count, remove];
+}
+
+//recursion함수
+function solution(s) {
+  let [count, remove] = [0, 0]; //비구조할당(구조분해할당 사용)
+
+  //while대체할 수 있는 .. 해당 데이터가 나올때까지.while대체하는 문법.
+  // 해당함수를 무한적으로 실행해 결과 나올때 멈추기 == 재귀함수(recursion함수)// 꼭 멈춰주는 조건문 필요!
+  //while문과 동일한 방식으로 사용됨. while문 대체 가능
+  //function recursion (num) {
+  //if(num === 3){
+  //  return num;
+  //}
+  //num--
+  //return recursion(num)
+  // }
+  //recursion(10)
+  function recursion(s) {
+    // 여기의 리턴값을 받아
+    if (s === "1") {
+      return [count, remove];
+    }
+    count++;
+    const removeList = s.split("").filter((el) => el === "0"); //문자열이 0인것만 남김
+    remove += removeList.length;
+    s = s.split("").filter((el) => el !== "0").length; // 0 제거된것을 s에..
+    return recursion(s.toString(2)); //2진법
+  }
+  return recursion(s); //리턴함
+}

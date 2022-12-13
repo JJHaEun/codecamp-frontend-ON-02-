@@ -67,8 +67,8 @@ export default function ApolloSetting(props: IApolloSettingProps) {
   });
 
   const uploadLink = createUploadLink({
-    // uri: "https://backendonline.codebootcamp.co.kr/graphql",
-    uri: "https://backend10.codebootcamp.co.kr/graphql",
+    uri: "https://backendonline.codebootcamp.co.kr/graphql",
+    // uri: "https://backend10.codebootcamp.co.kr/graphql",
     headers: { Authorization: `Bearer ${accessToken}` }, // 모든 API에 토큰이 첨부되어 요청들어감. 토큰이 없는경우에는 빈문자열로
     credentials: "include",
   });

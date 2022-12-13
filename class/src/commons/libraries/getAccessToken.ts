@@ -11,8 +11,8 @@ const RESTORE_ACCESS_TOKEN = gql`
 export const getAccessToken = async () => {
   try {
     const graphQLClient = new GraphQLClient(
-      // "https://backendonline.codebootcamp.co.kr/graphql",
-      "https://backend10.codebootcamp.co.kr/graphql",
+      "https://backendonline.codebootcamp.co.kr/graphql",
+      // "https://backend10.codebootcamp.co.kr/graphql",
       {
         // /graphql이라는 단일 앤드포인트를 가진 단일 rest-API의 post방식이다.
         credentials: "include",

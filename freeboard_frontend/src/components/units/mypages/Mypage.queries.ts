@@ -17,3 +17,39 @@ export const CREATE_POINT_TRANSACTION_OF_LOADING = gql`
 //     fetchPointTransactionsCountOfLoading
 //   }
 // `;
+export const FETCH_USED_ITEMS_I_PICKED = gql`
+  query fetchUseditemsIPicked($search: String, $page: Int) {
+    fetchUseditemsIPicked(search: $search, page: $page) {
+      _id
+      name
+      remarks
+
+      useditemAddress {
+        _id
+        zipcode
+        address
+      }
+      seller {
+        _id
+        email
+        name
+      }
+    }
+  }
+`;
+
+export const FETCH_USED_ITEM_IBOUGHT = gql`
+  query fetchUseditemsIBought($search: String, $page: Int) {
+    fetchUseditemsIBought(search: $search, page: $page) {
+      _id
+      name
+      remarks
+      price
+      seller {
+        _id
+        email
+        name
+      }
+    }
+  }
+`;

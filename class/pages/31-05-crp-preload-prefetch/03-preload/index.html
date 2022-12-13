@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <!-- 프리로드: 한 번에 6개씩 받아오므로, body태그의 이미지는 가장 마지막에 다운로드 -->
+    <!--         눈에 보이는 이미지를 먼저 다운로드 받아서 보여주고, 클릭하면 실행되는 JS는 나중에 받아오기 -->
+    <!--         따라서, DOMContentedLoaded 이후, Load까지 완료되는 최종 로드 시간이 더 짧아짐 -->
+    <title>프리로드</title>
+    <link rel="preload" as="image" href="./dog.jpeg" />
+    <!--  as ="image"  preload를 image로 썼을것이다. 주소는 href="./dog.jpeg" ==> 이미지주소 -->
+
+    <!-- 일반로드 -->
+    <link rel="stylesheet" href="./index.css" />
+    <script src="./index1.js"></script>
+    <script src="./index2.js"></script>
+    <script src="./index3.js"></script>
+    <script src="./index4.js"></script>
+    <script src="./index5.js"></script>
+    <!-- 여기까지가 6개. 위에부터 6개가 먼저 받아지고 그다음 6개정도를 받음 -->
+    <script src="./index6.js"></script>
+  </head>
+  <body>
+    <img src="./dog.jpeg" />
+  </body>
+</html>

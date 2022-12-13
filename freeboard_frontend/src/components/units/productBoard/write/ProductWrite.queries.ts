@@ -48,12 +48,7 @@ export const UPDATE_USED_ITEM = gql`
       price
       tags
       images
-      pickedCount
-      seller {
-        name
-        _id
-        email
-      }
+
       createdAt
       useditemAddress {
         _id
@@ -62,11 +57,6 @@ export const UPDATE_USED_ITEM = gql`
         addressDetail
         lat
         lng
-      }
-      buyer {
-        _id
-        email
-        name
       }
     }
   }

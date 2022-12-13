@@ -1,4 +1,5 @@
 import Head from "next/head";
+
 import { IMypageUIProps } from "./Mypage.types";
 
 export default function MypageUI(props: IMypageUIProps) {
@@ -17,38 +18,58 @@ export default function MypageUI(props: IMypageUIProps) {
         ></script>
       </Head>
       <div>
-        보유포인트:{" "}
+        보유포인트:
         <div>{props.data?.fetchUserLoggedIn.userPoint?.amount ?? 0}</div>
       </div>
-      <input
-        type="radio"
-        value="1000"
-        name="가격"
-        onChange={props.onChangeRadio}
-      />
-      <span>1000원</span>
-      <input
-        type="radio"
-        value="5000"
-        name="가격"
-        onChange={props.onChangeRadio}
-      />
-      <span>5000원</span>
-      <input
-        type="radio"
-        value="10000"
-        name="가격"
-        onChange={props.onChangeRadio}
-      />
-      <span>10000원</span>
-      <input
-        type="radio"
-        value="50000"
-        name="가격"
-        onChange={props.onChangeRadio}
-      />
-      <span>50000원</span>
+      <div>
+        <input
+          type="radio"
+          value="100"
+          name="가격"
+          onChange={props.onChangeRadio}
+        />
+        <span>100원</span>
+        <input
+          type="radio"
+          value="500"
+          name="가격"
+          onChange={props.onChangeRadio}
+        />
+        <span>500원</span>
+        <input
+          type="radio"
+          value="1000"
+          name="가격"
+          onChange={props.onChangeRadio}
+        />
+        <span>1000원</span>
+        <input
+          type="radio"
+          value="5000"
+          name="가격"
+          onChange={props.onChangeRadio}
+        />
+        <span>5000원</span>
+        <input
+          type="radio"
+          value="10000"
+          name="가격"
+          onChange={props.onChangeRadio}
+        />
+        <span>10000원</span>
+        <input
+          type="radio"
+          value="50000"
+          name="가격"
+          onChange={props.onChangeRadio}
+        />
+        <span>50000원</span>
+      </div>
       <button onClick={props.onClickCharge}>충전하기</button>
+      <div>
+        <h2>내가 좋아요 한 상품</h2>
+        <button onClick={props.onClickMyPick}>좋아요 가기!!</button>
+      </div>
     </>
   );
 }

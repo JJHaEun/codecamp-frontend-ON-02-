@@ -43,8 +43,8 @@ export default function ProductListMainUI(props: IProductListMainUIProps) {
               {getDate(props.el?.createdAt)}
             </div>
           </div>
-
-          <S.SellerName> {props.el?.seller?.name}</S.SellerName>
+          <div>{props.el.buyer?.name ?? ""}</div>
+          <S.SellerName>{props.el?.seller?.name}</S.SellerName>
         </S.ListSetting>
         <S.PickCount>
           <div>

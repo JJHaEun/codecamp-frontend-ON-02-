@@ -41,7 +41,6 @@ export default function ProductDetailUI(props: IProductDetailUIProps) {
       <div>
         <div>
           <div>{props.data?.fetchUseditem.seller?.name}</div>
-
           <div>Date:{getDate(props.data?.fetchUseditem.createdAt)}</div>
         </div>
         <div>

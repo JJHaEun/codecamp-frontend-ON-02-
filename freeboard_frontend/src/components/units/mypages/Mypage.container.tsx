@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { Modal } from "antd";
+import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import {
   IMutation,
@@ -17,6 +18,8 @@ declare const window: typeof globalThis & {
 
 export default function MyPage() {
   useAuth();
+
+  const router = useRouter();
   const [point, setPoint] = useState("");
   const [createPointTransactionOfLoading] = useMutation<
     Pick<IMutation, "createPointTransactionOfLoading">,
@@ -62,13 +65,9 @@ export default function MyPage() {
               variables: {
                 impUid: rsp.imp_uid,
               },
-              update(cache, { data }) {
+              update(cache) {
                 cache.modify({
-                  fields: {
-                    fetchUserLoggedIn: (prev) => {
-                      return [data?.createPointTransactionOfLoading, ...prev];
-                    },
-                  },
+                  fields: () => {},
                 });
               },
             });
@@ -85,12 +84,16 @@ export default function MyPage() {
     );
   };
 
+  const onClickMyPick = () => {
+    void router.push(`/market/IPicked`);
+  };
   return (
     <>
       <MypageUI
         onChangeRadio={onChangeRadio}
         onClickCharge={onClickCharge}
         data={data}
+        onClickMyPick={onClickMyPick}
       />
     </>
   );
