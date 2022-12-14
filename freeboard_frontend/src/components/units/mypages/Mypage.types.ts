@@ -6,6 +6,9 @@ export interface IMypageUIProps {
   onClickCharge: () => void;
   data?: Pick<IQuery, "fetchUserLoggedIn">;
   onClickMyPick: () => void;
+  CountIPick?: Pick<IQuery, "fetchUseditemsCountIPicked">;
+  IBought?: Pick<IQuery, "fetchUseditemsCountIBought">;
+  onClickIBought: () => void;
 }
 
 export interface IIPikedPageUIProps {
@@ -17,4 +20,13 @@ export interface IIPikedPageUIProps {
 export interface IMyPickedMainProps {
   el: IUseditem;
   onClickProductDetail: (event: MouseEvent<HTMLDivElement>) => void;
+}
+
+export interface IBoughtProductUIProps {
+  data?: Pick<IQuery, "fetchUseditemsIBought">;
+  onLoadMore: () => void;
+}
+
+export interface IIBoughtMainProps {
+  el: IUseditem;
 }

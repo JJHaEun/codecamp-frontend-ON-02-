@@ -53,3 +53,13 @@ export const FETCH_USED_ITEM_IBOUGHT = gql`
     }
   }
 `;
+export const FETCH_USED_ITEMS_COUNT_IBOUGHT = gql`
+  query fetchUseditemsCountIBought {
+    fetchUseditemsCountIBought
+  }
+`;
+export const FETCH_USED_ITEMS_COUNT_IPICKED = gql`
+  query fetchUseditemsCountIPicked {
+    fetchUseditemsCountIPicked
+  }
+`;

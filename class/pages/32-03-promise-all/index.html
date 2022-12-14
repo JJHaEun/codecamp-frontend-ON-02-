@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>Promise.all</title>
+    <script>
+      const startPromise = async () => {
+        console.time("== 개별 Promise 각각 ==="); // 여기서부터
+        const result1 = await new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve("성공!!");
+          }, 2000); // 2초뒤에 result로 결과 받을수 있음. 아니면 await말고 .then()을 사용한다면 2초 뒤에 성공하면.then()이 실행됨.
+        });
+        const result2 = await new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve("성공!!");
+          }, 3000);
+        });
+        const result3 = await new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve("성공!!");
+          }, 1000);
+        });
+        console.timeEnd("== 개별 Promise 각각 =="); // (time ~ timeEnd)여기까지 얼마나 걸렸는지 시간찍어줌. 단, 안에 이름등 들어있는것 같아야함. 시작부분이 "== 개별 Promise 각각 =="이니 끝부분에도 "== 개별 Promise 각각 =="로
+        // 총  하나씩 보내니 6초걸림
+      };
+      const startPromiseAll = async () => {
+        // 동시에 보내고 한번 기다릴것임.
+        // await Promise.all([promise, promise, promise]); // 프로미스들을 감싸는 배열로 넣음. 한번에 다 보내고, 기다림. 먼저끝나는 순서로 담기고, 다 받아오기전까지 아래 실행 못하게 await걸기
+        console.time("=== 한방  Promise.all ===");
+        const result = Promise.all([
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve("성공!!");
+            }, 2000);
+          }),
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve("성공!!");
+            }, 3000);
+          }),
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve("성공!!");
+            }, 1000);
+          }),
+        ]);
+        console.log(result); // 배열안에 각각의 결과가 담긴다.
+        console.timeEnd("=== 한방  Promise.all ===");
+        //  한번에 보내고 먼저끝나는 순서로 받아오기때문에 총 3초 걸림
+      };
+    </script>
+  </head>
+  <body>
+    <button onclick="startPromise()">Promise 연습하기</button>
+    <button onclick="startPromiseAll()">Promise.all 연습하기</button>
+  </body>
+</html>

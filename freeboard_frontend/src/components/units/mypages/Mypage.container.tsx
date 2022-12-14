@@ -6,11 +6,17 @@ import {
   IMutation,
   IMutationCreatePointTransactionOfLoadingArgs,
   IQuery,
+  IQueryFetchUseditemsIBoughtArgs,
+  IQueryFetchUseditemsIPickedArgs,
 } from "../../../commons/types/generated/types";
 import { useAuth } from "../../commons/hooks/useAuth";
 import { FETCH_USER_LOGGED_IN } from "../../commons/login-sucess/01/LoginSuccess.queries";
 import MypageUI from "./Mypage.presenter";
-import { CREATE_POINT_TRANSACTION_OF_LOADING } from "./Mypage.queries";
+import {
+  CREATE_POINT_TRANSACTION_OF_LOADING,
+  FETCH_USED_ITEMS_COUNT_IBOUGHT,
+  FETCH_USED_ITEMS_COUNT_IPICKED,
+} from "./Mypage.queries";
 
 declare const window: typeof globalThis & {
   IMP: any;
@@ -28,6 +34,16 @@ export default function MyPage() {
 
   const { data } =
     useQuery<Pick<IQuery, "fetchUserLoggedIn">>(FETCH_USER_LOGGED_IN);
+
+  const { data: CountIPick } = useQuery<
+    Pick<IQuery, "fetchUseditemsCountIPicked">,
+    IQueryFetchUseditemsIPickedArgs
+  >(FETCH_USED_ITEMS_COUNT_IPICKED);
+
+  const { data: IBought } = useQuery<
+    Pick<IQuery, "fetchUseditemsCountIBought">,
+    IQueryFetchUseditemsIBoughtArgs
+  >(FETCH_USED_ITEMS_COUNT_IBOUGHT);
 
   const onChangeRadio = (event: ChangeEvent<HTMLInputElement>) => {
     setPoint(event.target.value);
@@ -87,6 +103,10 @@ export default function MyPage() {
   const onClickMyPick = () => {
     void router.push(`/market/IPicked`);
   };
+
+  const onClickIBought = () => {
+    void router.push(`/market/IBought`);
+  };
   return (
     <>
       <MypageUI
@@ -94,6 +114,9 @@ export default function MyPage() {
         onClickCharge={onClickCharge}
         data={data}
         onClickMyPick={onClickMyPick}
+        CountIPick={CountIPick}
+        IBought={IBought}
+        onClickIBought={onClickIBought}
       />
     </>
   );
