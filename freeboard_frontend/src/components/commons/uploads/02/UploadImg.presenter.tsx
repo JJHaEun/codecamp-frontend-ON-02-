@@ -18,7 +18,7 @@ export default function Upload02UI(props: IUpload01UIProps) {
           type="file"
           ref={props.fileRef}
           onChange={props.onChangeFile}
-          accept="image/jpeg,image/png,image/jpg"
+          accept="image/*"
         />
       </form>
     </div>

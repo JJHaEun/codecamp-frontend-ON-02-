@@ -16,6 +16,7 @@ export interface IBoardListUIProps {
   refetchBoardsCount: any;
   countBoards?: number;
   keyword: string;
+  preFetchBoard: (event: MouseEvent<HTMLDivElement>) => void;
 }
 export interface ITextTokenProps {
   isMatch: boolean;

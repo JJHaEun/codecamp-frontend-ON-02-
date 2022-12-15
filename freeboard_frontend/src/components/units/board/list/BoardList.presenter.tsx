@@ -26,7 +26,12 @@ export default function BoardListUI(props: IBoardListUIProps) {
               <S.Column>날짜</S.Column>
             </S.Row>
             {props.data?.fetchBoards.map((el, index: number) => (
-              <S.Row key={el._id} id={el._id} onClick={props.onClickMoveDetail}>
+              <S.Row
+                key={el._id}
+                id={el._id}
+                onClick={props.onClickMoveDetail}
+                onMouseOver={props.preFetchBoard}
+              >
                 <S.Column1_1>{index + 1}</S.Column1_1>
                 <S.Column_1>{el.writer}</S.Column_1>
                 <S.Column_1>

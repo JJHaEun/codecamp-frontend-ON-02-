@@ -39,20 +39,21 @@ export default function ProductWriteUI(props: IProductWriteUIProps) {
         console.log(map);
         // 주소-좌표 변환 객체를 생성합니다
         const geocoder = new window.kakao.maps.services.Geocoder();
+        console.log(geocoder);
         // 마커를 미리 생성
         const marker = new window.kakao.maps.Marker({
-          position: new window.kakao.maps.LatLng(37.511826, 127.058388),
+          position: new window.kakao.maps.LatLng(33.450701, 126.570667),
           map,
         });
-        console.log(marker.position);
+        console.log(marker.Rc.x, marker.Rc.y);
         // 주소로 좌표를 검색합니다
         geocoder.addressSearch(
           props.data?.fetchUseditem.useditemAddress?.zipcode,
           props.data?.fetchUseditem.useditemAddress?.address,
-          props.data?.fetchUseditem.useditemAddress?.addressDetail,
           function (result: any, status: any) {
             // 정상적으로 검색이 완료됐으면
             console.log(result);
+            console.log(status);
             if (status === window.kakao.maps.services.Status.OK()) {
               console.log(status);
               const coords = new window.kakao.maps.LatLng(

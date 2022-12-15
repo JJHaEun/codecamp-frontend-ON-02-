@@ -6,8 +6,6 @@ import {
   IMutation,
   IMutationCreatePointTransactionOfLoadingArgs,
   IQuery,
-  IQueryFetchUseditemsIBoughtArgs,
-  IQueryFetchUseditemsIPickedArgs,
 } from "../../../commons/types/generated/types";
 import { useAuth } from "../../commons/hooks/useAuth";
 import { FETCH_USER_LOGGED_IN } from "../../commons/login-sucess/01/LoginSuccess.queries";
@@ -16,6 +14,8 @@ import {
   CREATE_POINT_TRANSACTION_OF_LOADING,
   FETCH_USED_ITEMS_COUNT_IBOUGHT,
   FETCH_USED_ITEMS_COUNT_IPICKED,
+  FETCH_USED_ITEMS_COUNT_I_SOLD,
+  // LOG_OUT_USER,
 } from "./Mypage.queries";
 
 declare const window: typeof globalThis & {
@@ -32,18 +32,22 @@ export default function MyPage() {
     IMutationCreatePointTransactionOfLoadingArgs
   >(CREATE_POINT_TRANSACTION_OF_LOADING);
 
+  // const [logoutUser]=useMutation<Pick<IMutation,"logoutUser">>(LOG_OUT_USER)
+
   const { data } =
     useQuery<Pick<IQuery, "fetchUserLoggedIn">>(FETCH_USER_LOGGED_IN);
 
   const { data: CountIPick } = useQuery<
-    Pick<IQuery, "fetchUseditemsCountIPicked">,
-    IQueryFetchUseditemsIPickedArgs
+    Pick<IQuery, "fetchUseditemsCountIPicked">
   >(FETCH_USED_ITEMS_COUNT_IPICKED);
 
   const { data: IBought } = useQuery<
-    Pick<IQuery, "fetchUseditemsCountIBought">,
-    IQueryFetchUseditemsIBoughtArgs
+    Pick<IQuery, "fetchUseditemsCountIBought">
   >(FETCH_USED_ITEMS_COUNT_IBOUGHT);
+
+  const { data: ISold } = useQuery<Pick<IQuery, "fetchUseditemsCountISold">>(
+    FETCH_USED_ITEMS_COUNT_I_SOLD
+  );
 
   const onChangeRadio = (event: ChangeEvent<HTMLInputElement>) => {
     setPoint(event.target.value);
@@ -107,6 +111,24 @@ export default function MyPage() {
   const onClickIBought = () => {
     void router.push(`/market/IBought`);
   };
+
+  const onClickISold = () => {
+    void router.push(`/market/ISold`);
+  };
+
+  //   const onClickLogOut = async()=>{
+  //     try{
+  // const result2 = await logoutUser({
+  //   logoutUser:true
+  // })
+  // if(result2){
+  //   localStorage.removeItem("accessToken")
+  //  void router.push()
+  // }
+  //     }catch{
+
+  //     }
+  //   }
   return (
     <>
       <MypageUI
@@ -117,6 +139,9 @@ export default function MyPage() {
         CountIPick={CountIPick}
         IBought={IBought}
         onClickIBought={onClickIBought}
+        ISold={ISold}
+        onClickISold={onClickISold}
+        // onClickLogOut={onClickLogOut}
       />
     </>
   );

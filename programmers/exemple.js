@@ -2174,3 +2174,115 @@ function solution(s) {
   }
   return recursion(s); //리턴함
 }
+
+// 다트게임
+
+const bonus = ["S", "D", "T"]; // 보너스를 잡아내기위해 배열에 저장
+const options = ["#", "*"]; // 옵션을
+
+function solution(dartResult) {
+  // dartResult에는 각 점수들. 한번에 들어가있음.
+  let score = ""; // 점수를 저장하기 위해 사용하는 변수
+  const answer = [];
+  for (let i = 0; i < dartResult.length; i++) {
+    if (isNaN(dartResult[i]) === false) {
+      // NaN값인 경우에는 true값을 리턴 false일때는 Number타입으로 제대로 받아올 수 있는경우임.
+      // 숫자타입으로 변환한 데이터가 숫자가 맞는 경우
+      score += dartResult[i]; // 점수만 뽑음
+    } else {
+      // 숫자타입으로 변환한 데이터가 NaN값인경우(숫자가 아닌경우)
+      // 보너스 : S , D , T
+
+      if (bonus.includes(dartResult[i])) {
+        score = Number(score); // 점수를 숫자타입으로 변경
+        if (dartResult[i] === "D") {
+          // 더블일 경우에는 현재스코어에 2제곱
+          score = Math.pow(score, 2); //score = score ** 2
+        } else if (dartResult[i] === "T") {
+          //3제곱
+          score = Math.pow(score, 3); //score = score ** 3
+        }
+      }
+      if (score !== "") {
+        answer.push(score); // 연산된 값을 score에 넣기
+      }
+
+      score = ""; // 다음턴 점수넣기 위해 처음부터 넣으라고 score을 비워줌
+
+      if (options.includes(dartResult[i])) {
+        //옵션이 있는경우
+        if (dartResult[i] === "#") {
+          // 아차상의 경우 해당점수 *-1
+          answer[answer.length - 1] *= -1;
+        } else {
+          // 스타상의 경우 *2
+          answer[answer.length - 1] *= 2;
+
+          if (answer.length > 1) {
+            // 앞에 점수가 있으므로 앞의 점수도 2를 곱해준다.
+            answer[answer.length - 2] *= 2; // 마지막 데이터의 앞에있는 데이터에도 2를 곱함
+          }
+        }
+      }
+    }
+  }
+  let sum = 0;
+  for (let i = 0; i < answer.length; i++) {
+    sum += answer[i];
+  }
+  return sum;
+}
+
+//reduce 사용
+const bonus = ["S", "D", "T"]; // 보너스를 잡아내기위해 배열에 저장
+
+function solution(dartResult) {
+  let score = ""; // 문자열의 점수만 저장
+  let currentValue = 0; // 현재턴 점수 저장
+  let last = false;
+  const answer = dartResult
+    .split("")
+    .reduce((acc, cur, i) => {
+      if (isNaN(cur) === false) {
+        score += cur;
+        last = false; // 새 턴의 시작을 알림
+      } else if (bonus.includes(cur)) {
+        // 보너스를 찾기
+        score = Number(score);
+        const squared = bonus.indexOf(cur) + 1; // 만약 cur의 데이터가 S라면 D라면,... 보너스 라는 배열에서 각 해당 인덱스를 가져옴. + 1 // 각각 1제곱, 2제곱 3제곱이니까 그것을 담아주는 것.
+
+        currentValue = score ** squared;
+        score = "";
+
+        // 옵션이 없다면 다음 cur의 데이터를 보기.
+        if (
+          isNaN(dartResult[i + 1]) === false ||
+          i + 1 === dartResult.length // 배열의 마지각데이터일경우
+        ) {
+          // 즉, 숫자라면
+          last = true; // 현재턴이 종료됨.
+        }
+      } else {
+        //옵션
+        last = true;
+        if (cur === "*") {
+          currentValue *= 2;
+          if (acc.length > 0) {
+            acc[acc.length - 1] *= 2;
+          }
+        } else {
+          // 아차상
+          currentValue *= -1;
+        }
+      }
+      if (last) {
+        acc.push(currentValue);
+      }
+      return acc;
+    }, [])
+    .reduce((acc, cur) => {
+      return acc + cur;
+    }, 0);
+  // 초기값으로 배열!
+  return answer;
+}

@@ -9,6 +9,8 @@ export interface IMypageUIProps {
   CountIPick?: Pick<IQuery, "fetchUseditemsCountIPicked">;
   IBought?: Pick<IQuery, "fetchUseditemsCountIBought">;
   onClickIBought: () => void;
+  ISold?: Pick<IQuery, "fetchUseditemsCountISold">;
+  onClickISold: () => void;
 }
 
 export interface IIPikedPageUIProps {
@@ -28,5 +30,12 @@ export interface IBoughtProductUIProps {
 }
 
 export interface IIBoughtMainProps {
+  el: IUseditem;
+}
+export interface IISoldUIProps {
+  data?: Pick<IQuery, "fetchUseditemsISold">;
+  onLoadMore: () => void;
+}
+export interface IISoldMainProps {
   el: IUseditem;
 }

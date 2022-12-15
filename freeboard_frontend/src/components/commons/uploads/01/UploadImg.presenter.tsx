@@ -15,7 +15,7 @@ export default function Upload01UI(props: IUpload01UIProps) {
         type="file"
         ref={props.fileRef}
         onChange={props.onChangeFile}
-        accept="image/jpeg,image/png,image/jpg"
+        accept="image/*"
       />
     </>
   );

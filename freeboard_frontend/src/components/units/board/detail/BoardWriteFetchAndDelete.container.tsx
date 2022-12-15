@@ -39,6 +39,9 @@ export default function BoardWriteFetch() {
       variables: {
         boardId: router.query._id,
       },
+      optimisticResponse: {
+        likeBoard: (data?.fetchBoard.likeCount ?? 0) + 1,
+      },
       refetchQueries: [
         { query: FETCH_BOARD, variables: { boardId: router.query._id } },
       ],
@@ -48,6 +51,9 @@ export default function BoardWriteFetch() {
     await dislikeBoard({
       variables: {
         boardId: router.query._id,
+      },
+      optimisticResponse: {
+        dislikeBoard: (data?.fetchBoard.dislikeCount ?? 0) + 1,
       },
       refetchQueries: [
         { query: FETCH_BOARD, variables: { boardId: router.query._id } },

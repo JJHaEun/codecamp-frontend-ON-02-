@@ -63,3 +63,29 @@ export const FETCH_USED_ITEMS_COUNT_IPICKED = gql`
     fetchUseditemsCountIPicked
   }
 `;
+export const FETCH_USED_ITEMS_COUNT_I_SOLD = gql`
+  query fetchUseditemsCountISold {
+    fetchUseditemsCountISold
+  }
+`;
+
+export const FETCH_USED_ITEMS_I_SOLD = gql`
+  query fetchUseditemsISold($search: String, $page: Int) {
+    fetchUseditemsISold(search: $search, page: $page) {
+      _id
+      name
+      remarks
+      price
+      buyer {
+        _id
+        email
+        name
+      }
+    }
+  }
+`;
+// export const LOG_OUT_USER = gql`
+//   mutation logoutUser {
+//     logoutUser
+//   }
+// `;

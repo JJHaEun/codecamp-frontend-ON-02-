@@ -69,10 +69,13 @@ export default function MypageUI(props: IMypageUIProps) {
       <div>
         <h3>내가 좋아요 한 상품</h3>
         <span>개수: {props.CountIPick?.fetchUseditemsCountIPicked}</span>
-        <a onClick={props.onClickMyPick}>좋아요 가기!!</a>
+        <a onClick={props.onClickMyPick}>내 찜 가기!!</a>
         <h3>내 구매내역</h3>
         <span>구매횟수 총 : {props.IBought?.fetchUseditemsCountIBought}</span>
         <a onClick={props.onClickIBought}>구매내역보기</a>
+        <h3>내 판매내역</h3>
+        <span>판매물품개수 : {props.ISold?.fetchUseditemsCountISold}</span>
+        <a onClick={props.onClickISold}>판매내역보기</a>
       </div>
     </>
   );
