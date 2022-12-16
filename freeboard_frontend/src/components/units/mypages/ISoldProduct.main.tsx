@@ -1,12 +1,13 @@
 import { IISoldMainProps } from "./Mypage.types";
-
+import * as S from "./Mypage.styles";
 export default function ISoldMain(props: IISoldMainProps) {
   return (
-    <div>
-      <div>구매자: {props.el.buyer?.name}</div>
-      <div>{props.el.name}</div>
-      <div>{props.el.price}</div>
-      <div>=================</div>
-    </div>
+    <>
+      <S.BuyerAndProductName>
+        구매자: {props.el.buyer?.name}
+      </S.BuyerAndProductName>
+      <S.BuyerAndProductName>{props.el.name}</S.BuyerAndProductName>
+      <S.BottomLinePrice>{props.el.price} ₩</S.BottomLinePrice>
+    </>
   );
 }

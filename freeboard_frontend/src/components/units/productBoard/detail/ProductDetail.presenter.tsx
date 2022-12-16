@@ -1,4 +1,4 @@
-import { Modal } from "antd";
+import { Modal, Tooltip } from "antd";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 import { isOpenDeleteState } from "../../../../commons/libraries/store";
@@ -38,52 +38,75 @@ export default function ProductDetailUI(props: IProductDetailUIProps) {
           <div> 취소(취소)</div>
         </Modal>
       )}
-      <div>
-        <div>
-          <div>{props.data?.fetchUseditem.seller?.name}</div>
-          <div>Date:{getDate(props.data?.fetchUseditem.createdAt)}</div>
-        </div>
-        <div>
-          <button onClick={props.onClickPick}>pick!!</button>
-          <span>{props.data?.fetchUseditem.pickedCount}</span>
-        </div>{" "}
-        <div>{props.data?.fetchUseditem.price} 원</div>
-        <div>
-          <h2>{props.data?.fetchUseditem.name}</h2>
+      <S.DetailPage>
+        <S.SellerAndDate>
           <div>
-            {props.data?.fetchUseditem.images
-              ?.filter((el: string) => el)
-              .map((el: string) => (
-                <img key={el} src={`https://storage.googleapis.com/${el}`} />
-              ))}
+            <div>{props.data?.fetchUseditem.seller?.name}</div>
+            <div>Date:{getDate(props.data?.fetchUseditem.createdAt)}</div>
           </div>
-          {typeof window !== "undefined" && (
-            <div
-              dangerouslySetInnerHTML={{
-                __html: Dompurify.sanitize(
-                  String(props.data?.fetchUseditem.contents)
-                ),
-              }}
-            ></div>
-          )}
+          <div>
+            {props.data?.fetchUseditem.useditemAddress && (
+              <Tooltip
+                placement="topRight"
+                color="geekblue"
+                // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+                title={`${props.data?.fetchUseditem.useditemAddress?.address}  ${props.data?.fetchUseditem.useditemAddress?.addressDetail}`}
+              >
+                <S.LocationToggleImg />
+              </Tooltip>
+            )}
+          </div>
+        </S.SellerAndDate>
+        <div>
+          <S.Heart onClick={props.onClickPick} />내 카트
+          <span> {props.data?.fetchUseditem.pickedCount}</span>
+        </div>{" "}
+        <div>{props.data?.fetchUseditem.price} ₩</div>
+        <div>
+          <S.ProductName>{props.data?.fetchUseditem.name}</S.ProductName>
+          <S.Contents>
+            <div>
+              {props.data?.fetchUseditem.images
+                ?.filter((el: string) => el)
+                .map((el: string) => (
+                  <S.ProductImages
+                    key={el}
+                    src={`https://storage.googleapis.com/${el}`}
+                  />
+                ))}
+            </div>
 
+            {typeof window !== "undefined" && (
+              <S.ContentsText
+                dangerouslySetInnerHTML={{
+                  __html: Dompurify.sanitize(
+                    String(props.data?.fetchUseditem.contents)
+                  ),
+                }}
+              ></S.ContentsText>
+            )}
+          </S.Contents>
           <div>{props.data?.fetchUseditem.useditemAddress?.address}</div>
         </div>{" "}
-      </div>
-      <S.Buttons>
-        <button onClick={props.onClickMoveToPage(`/market`)}>목록으로</button>
-        <button
-          onClick={props.onClickMoveToPage(
-            `/market/${String(router.query._id)}/edit`
-          )}
-        >
-          수정하기
-        </button>
-        <button onClick={props.onClickcheckPermissionDeleteModal}>
-          삭제하기
-        </button>
-        <button onClick={props.onClickBuy}>구매하기</button>
-      </S.Buttons>
+      </S.DetailPage>
+      <S.AllButtons>
+        <S.Buttons>
+          <S.Button onClick={props.onClickMoveToPage(`/market`)}>
+            목록으로
+          </S.Button>
+          <S.Button
+            onClick={props.onClickMoveToPage(
+              `/market/${String(router.query._id)}/edit`
+            )}
+          >
+            수정하기
+          </S.Button>
+          <S.Button onClick={props.onClickcheckPermissionDeleteModal}>
+            삭제하기
+          </S.Button>
+        </S.Buttons>
+        <S.Button onClick={props.onClickBuy}>구매하기</S.Button>
+      </S.AllButtons>
     </>
   );
 }

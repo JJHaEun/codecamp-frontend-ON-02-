@@ -22,7 +22,7 @@ export default function CommentsAnswerUI(props: ICommentsAnswerUIProps) {
         ></CommentButtonPage>
       </form>
 
-      {!props.isHaveAnswer && <CommentsAnswerListItems el={props.el} />}
+      {props.isHaveAnswer && <CommentsAnswerListItems el={props.el} />}
     </div>
   );
 }

@@ -12,11 +12,11 @@ export const CREATE_POINT_TRANSACTION_OF_LOADING = gql`
     }
   }
 `;
-// export const FETCH_POINT_TRANSACTIONS_COUNT_OF_LOADING = gql`
-//   query fetchPointTransactionsCountOfLoading {
-//     fetchPointTransactionsCountOfLoading
-//   }
-// `;
+export const FETCH_POINT_TRANSACTIONS_COUNT_OF_LOADING = gql`
+  query fetchPointTransactionsCountOfLoading {
+    fetchPointTransactionsCountOfLoading
+  }
+`;
 export const FETCH_USED_ITEMS_I_PICKED = gql`
   query fetchUseditemsIPicked($search: String, $page: Int) {
     fetchUseditemsIPicked(search: $search, page: $page) {
@@ -84,8 +84,26 @@ export const FETCH_USED_ITEMS_I_SOLD = gql`
     }
   }
 `;
-// export const LOG_OUT_USER = gql`
-//   mutation logoutUser {
-//     logoutUser
-//   }
-// `;
+export const LOG_OUT_USER = gql`
+  mutation logoutUser {
+    logoutUser
+  }
+`;
+export const FETCH_POINT_TRANSCATIONS = gql`
+  query fetchPointTransactions($search: String, $page: Int) {
+    fetchPointTransactions(search: $search, page: $page) {
+      _id
+      impUid
+      amount
+      status
+      balance
+      statusDetail
+      useditem {
+        _id
+        name
+        price
+      }
+      createdAt
+    }
+  }
+`;

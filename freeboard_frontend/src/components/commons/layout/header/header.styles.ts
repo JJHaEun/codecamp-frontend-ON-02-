@@ -57,6 +57,20 @@ export const Login = styled.div`
     top: 1px;
   }
 `;
+export const LogOut = styled.div`
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-weight: 600;
+  font-style: italic;
+  cursor: pointer;
+  :hover {
+    color: aliceblue;
+  }
+  :active {
+    position: relative;
+    left: 1px;
+    top: 1px;
+  }
+`;
 export const CreateUsers = styled.span`
   font-weight: 600;
   cursor: pointer;

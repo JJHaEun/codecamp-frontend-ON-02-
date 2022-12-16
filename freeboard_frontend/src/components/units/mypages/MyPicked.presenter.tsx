@@ -1,12 +1,17 @@
 import InfiniteScroll from "react-infinite-scroller";
 import { IIPikedPageUIProps } from "./Mypage.types";
 import MyPickedMain from "./MyPicked.main";
-
+import {
+  ReturnToMyPage,
+  MyList,
+  MyPageScroll,
+  MyPageMyPick,
+} from "./Mypage.styles";
 export default function IPikedPageUI(props: IIPikedPageUIProps) {
   return (
-    <>
-      <h2>나의 픽!</h2>
-      <div>
+    <MyPageMyPick>
+      <MyList>나의 픽!</MyList>
+      <MyPageScroll>
         <InfiniteScroll
           pageStart={0}
           loadMore={props.onLoadMore}
@@ -21,7 +26,10 @@ export default function IPikedPageUI(props: IIPikedPageUIProps) {
             />
           ))}
         </InfiniteScroll>
-      </div>
-    </>
+      </MyPageScroll>
+      <ReturnToMyPage onClick={props.onClickMyPageMain}>
+        목록으로
+      </ReturnToMyPage>
+    </MyPageMyPick>
   );
 }

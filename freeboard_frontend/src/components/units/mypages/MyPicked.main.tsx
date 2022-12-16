@@ -1,5 +1,5 @@
 import { IMyPickedMainProps } from "./Mypage.types";
-
+import { BottomLinePrice } from "./Mypage.styles";
 export default function MyPickedMain(props: IMyPickedMainProps) {
   return (
     <>
@@ -11,7 +11,7 @@ export default function MyPickedMain(props: IMyPickedMainProps) {
           {props.el.remarks}
         </div>
         <div>{props.el.seller?.name}</div>
-        <div>{props.el.price}</div>
+        <BottomLinePrice>{props.el.price}</BottomLinePrice>
       </div>
     </>
   );

@@ -2,50 +2,50 @@ import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import {
   IQuery,
-  IQueryFetchUseditemsISoldArgs,
+  IQueryFetchPointTransactionsArgs,
 } from "../../../commons/types/generated/types";
-import ISoldProductsUI from "./ISoldProduct.presenter";
-import { FETCH_USED_ITEMS_I_SOLD } from "./Mypage.queries";
+import { FETCH_POINT_TRANSCATIONS } from "./Mypage.queries";
+import MyPointListUI from "./MyPointList.presenter";
 
-export default function ISoldProducts() {
+export default function MyPointList() {
   const router = useRouter();
   const { data, fetchMore } = useQuery<
-    Pick<IQuery, "fetchUseditemsISold">,
-    IQueryFetchUseditemsISoldArgs
-  >(FETCH_USED_ITEMS_I_SOLD, {
+    Pick<IQuery, "fetchPointTransactions">,
+    IQueryFetchPointTransactionsArgs
+  >(FETCH_POINT_TRANSCATIONS, {
     variables: { search: "" },
   });
 
   const onLoadMore = async () => {
     if (!data) return;
-
     await fetchMore({
       variables: {
-        page: Math.ceil(data?.fetchUseditemsISold?.length / 10) + 1,
+        page: Math.ceil(data?.fetchPointTransactions?.length / 10) + 1,
       },
       updateQuery: (prev, { fetchMoreResult }) => {
-        if (fetchMoreResult.fetchUseditemsISold === undefined) {
+        if (fetchMoreResult.fetchPointTransactions === undefined) {
           return {
-            fetchUseditemsISold: [...prev.fetchUseditemsISold],
+            fetchPointTransactions: [...prev.fetchPointTransactions],
           };
         }
         return {
           // prettier-ignore
-          fetchUseditemsISold: ([
-                    ...prev.fetchUseditemsISold,
-                    ...fetchMoreResult.fetchUseditemsISold,
+          fetchPointTransactions: ([
+                    ...prev.fetchPointTransactions,
+                    ...fetchMoreResult.fetchPointTransactions,
                   ]),
         };
       },
     });
   };
+
   const onClickMyPageMain = () => {
     void router.push(`/mypage`);
   };
   return (
-    <ISoldProductsUI
-      data={data}
+    <MyPointListUI
       onLoadMore={onLoadMore}
+      data={data}
       onClickMyPageMain={onClickMyPageMain}
     />
   );

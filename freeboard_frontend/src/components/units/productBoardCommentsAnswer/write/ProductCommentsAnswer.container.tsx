@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { Modal } from "antd";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import {
   IMutation,
   IMutationCreateUseditemQuestionAnswerArgs,
@@ -16,8 +16,8 @@ import { CREATE_USED_ITEM_QUESTION_ANSWER } from "./ProductCommentsAnswer.querie
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
-import { ICommentsAnswerProps } from "./ProductCommentsAnswer.types";
 import { FETCH_USED_ITEM_QUESTIONS } from "../../productBoardCommentsQuestion/list/ProductCommentsQustionList.queries";
+import { ICommentsAnswerProps } from "./ProductCommentsAnswer.types";
 
 const schema = yup.object({
   // 검증하기
@@ -25,7 +25,7 @@ const schema = yup.object({
   contents: yup.string().required("내용을 입력해주세요"),
 });
 export default function CommentsAnswer(props: ICommentsAnswerProps) {
-  const router = useRouter();
+  // const router = useRouter();
   // const [isEdit, setIsEdit] = useState(false);
   const { register, handleSubmit, formState } = useForm<IFormCommentData>({
     resolver: yupResolver(schema),
@@ -41,13 +41,12 @@ export default function CommentsAnswer(props: ICommentsAnswerProps) {
     IMutationUpdateUseditemQuestionAnswerArgs
   >(UPDATE_USED_ITEM_QUESTION_ANSWER);
 
+  console.log(props.isHaveAnswer);
   const onClickAnswerSubmit = async (data: IFormCommentData) => {
-    if (typeof props.id !== "string") return;
-
     try {
       const result = await createUseditemQuestionAnswer({
         variables: {
-          useditemQuestionId: props.id,
+          useditemQuestionId: props.el._id,
           createUseditemQuestionAnswerInput: {
             contents: data.contents,
           },
@@ -55,7 +54,7 @@ export default function CommentsAnswer(props: ICommentsAnswerProps) {
         refetchQueries: [
           {
             query: FETCH_USED_ITEM_QUESTIONS,
-            variables: { useditemId: router.query._id },
+            variables: { useditemQuestionId: props.el._id },
           },
         ],
       });
@@ -74,7 +73,7 @@ export default function CommentsAnswer(props: ICommentsAnswerProps) {
       if (typeof props.id !== "string") return;
       await updateUseditemQuestionAnswer({
         variables: {
-          useditemQuestionAnswerId: props.id,
+          useditemQuestionAnswerId: props.el._id,
           updateUseditemQuestionAnswerInput: {
             contents: data.contents,
           },
@@ -82,7 +81,7 @@ export default function CommentsAnswer(props: ICommentsAnswerProps) {
         refetchQueries: [
           {
             query: FETCH_USED_ITEM_QUESTION_ANSWERS,
-            variables: { useditemId: router.query._id },
+            variables: { useditemQuestionId: props.el._id },
           },
         ],
       });

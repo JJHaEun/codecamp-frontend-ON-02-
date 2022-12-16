@@ -11,9 +11,9 @@ export default function ProductListMainUI(props: IProductListMainUIProps) {
           <div>
             {props.el.images
               ?.filter((el: string) => el)
-              .map((el: string) => (
+              .map((el: string, index: number) => (
                 <S.ImgList
-                  key={el}
+                  key={index}
                   src={`https://storage.googleapis.com/${el}`}
                 />
               ))}
@@ -38,7 +38,7 @@ export default function ProductListMainUI(props: IProductListMainUIProps) {
             >
               {props.el?.remarks}
             </S.ClicksDetail>
-
+            <div>{props.el.price} ₩</div>
             <div onClick={props.onClickProductDetail} id={props.el._id}>
               {getDate(props.el?.createdAt)}
             </div>

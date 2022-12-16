@@ -3,7 +3,11 @@ import { getDate } from "../../../commons/utils/utils";
 import CommentsAnswer from "../../productBoardCommentsAnswer/write/ProductCommentsAnswer.container";
 import CommentsQuestion from "../write/ProductCommentsQuestion.container";
 import { ICommentsListItemsUIProps } from "./ProductCommentsQustionList.types";
-
+import {
+  CommentButton,
+  ButtonReplyAndDelete,
+} from "./ProductCommentsQuestion.styles";
+import { ClearOutlined, CommentOutlined } from "@ant-design/icons";
 export default function CommentsListItemsUI(props: ICommentsListItemsUIProps) {
   return (
     <>
@@ -22,16 +26,19 @@ export default function CommentsListItemsUI(props: ICommentsListItemsUIProps) {
         <div key={props.el._id}>
           <div>{props.el.contents}</div>
           <div>{getDate(props.el?.createdAt)}</div>
-          <div>
+          <CommentButton>
             <button onClick={props.onClickEdit}>수정</button>
-            <button
+            <ButtonReplyAndDelete
               id={props.el._id}
               onClick={props.onClickcheckPermissionDeleteModal}
             >
-              삭제
-            </button>
-            <button onClick={props.onClickAnswer}>댓글</button>
-          </div>
+              <ClearOutlined /> 삭제
+            </ButtonReplyAndDelete>
+            <ButtonReplyAndDelete onClick={props.onClickAnswer}>
+              <CommentOutlined onClick={props.onClickAnswer} />
+              댓글
+            </ButtonReplyAndDelete>
+          </CommentButton>
         </div>
       )}
       {props.isEdit && (
@@ -43,8 +50,66 @@ export default function CommentsListItemsUI(props: ICommentsListItemsUIProps) {
       )}
       {props.isHaveAnswer && (
         <CommentsAnswer
-          isHaveAnswer={true}
           setIsHaveAnswer={props.setIsHaveAnswer}
+          isHaveAnswer={props.isHaveAnswer}
+          id={props.el._id}
+          el={{
+            __typename: undefined,
+            _id: "",
+            contents: "",
+            createdAt: undefined,
+            deletedAt: undefined,
+            updatedAt: undefined,
+            useditemQuestion: {
+              __typename: undefined,
+              _id: "",
+              contents: "",
+              createdAt: undefined,
+              deletedAt: undefined,
+              updatedAt: undefined,
+              useditem: {
+                __typename: undefined,
+                _id: "",
+                buyer: undefined,
+                contents: "",
+                createdAt: undefined,
+                deletedAt: undefined,
+                images: undefined,
+                name: "",
+                pickedCount: undefined,
+                price: undefined,
+                remarks: "",
+                seller: undefined,
+                soldAt: undefined,
+                tags: undefined,
+                updatedAt: undefined,
+                useditemAddress: undefined,
+              },
+              user: {
+                __typename: undefined,
+                _id: "",
+                createdAt: undefined,
+                deletedAt: undefined,
+                email: "",
+                name: "",
+                picture: undefined,
+                updatedAt: undefined,
+                userPoint: undefined,
+              },
+            },
+            user: {
+              __typename: undefined,
+              _id: "",
+              createdAt: undefined,
+              deletedAt: undefined,
+              email: "",
+              name: "",
+              picture: undefined,
+              updatedAt: undefined,
+              userPoint: undefined,
+            },
+          }}
+          isEdit={false}
         />
       )}
     </>

@@ -1,12 +1,19 @@
+import { useRecoilState } from "recoil";
+import { accessTokenState } from "../../../../commons/libraries/store";
 import LoginSuccess from "../../login-sucess/01/LoginSuccess.container";
 import * as S from "./header.styles";
 import { IPropsLayOutHeaderUI } from "./header.types";
 
 export default function LayOutHeaderUI(props: IPropsLayOutHeaderUI) {
+  const [accessToken] = useRecoilState(accessTokenState);
   return (
     <S.Wrapper>
       <S.Top>
-        <S.Login onClick={props.onClickHeaderLogin}>LogIn</S.Login>
+        {!accessToken ? (
+          <S.Login onClick={props.onClickHeaderLogin}>LogIn</S.Login>
+        ) : (
+          <S.LogOut onClick={props.onClickLogOut}>LogOut</S.LogOut>
+        )}
         <div onClick={props.onClickBoards}>
           <S.Home />
         </div>
@@ -19,7 +26,7 @@ export default function LayOutHeaderUI(props: IPropsLayOutHeaderUI) {
       <S.TitleBox>
         <S.Title>The Power To Do</S.Title>
       </S.TitleBox>{" "}
-      <div onClick={props.onClickBasket}>장바구니</div>
+      <div onClick={props.onClickBasket}>비회원 장바구니</div>
     </S.Wrapper>
   );
 }

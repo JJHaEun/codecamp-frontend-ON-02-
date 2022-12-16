@@ -20,7 +20,7 @@ export default function CommentsAnswerListItemsUI(
 
       {!props.isEdit && (
         <div key={props.el._id}>
-          <div>{props.el.contents}</div>
+          <div>{String(props.el?.contents)}</div>
           <div>{getDate(props.el?.createdAt)}</div>
           <div>
             <button onClick={props.onClickEdit}>수정</button>
@@ -38,6 +38,7 @@ export default function CommentsAnswerListItemsUI(
           el={props.el}
           isEdit={true}
           setIsEdit={props.setIsEdit}
+          id={props.el._id}
         />
       )}
     </>

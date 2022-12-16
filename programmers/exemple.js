@@ -2286,3 +2286,65 @@ function solution(dartResult) {
   // 초기값으로 배열!
   return answer;
 }
+
+// 비밀지도
+
+function solution(n, arr1, arr2) {
+  // 각 배열의 길이만큼 돌아 각 숫자를 이진수로 바꾸기
+  //  let a =[]
+  //  let b =[]
+  // for(let i = 0 ; i < arr1.length;i++){
+  //     a.push(arr1[i].toString(2))
+  //     b.push(arr2[i].toString(2))
+  // }
+  //  console.log(a,b)
+  // 하나라도 1을 가지면 벽이 되고 둘다 0이면 공백, 둘다 벽이면 벽
+
+  // 한 변의 길이는 n
+  const answer = [];
+  for (let i = 0; i < arr1.length; i++) {
+    answer[i] = ""; // 전체 지도가 의미하는 문자열로 받아오기위함
+    // 지도 1의 암호를 2진법으로 환산
+    const map1 = arr1[i].toString(2).padStart(n, "0"); // n만큼의 길이 나머지는 0으로 채우기
+    // 지도2의 암호를 2진법으로
+    const map2 = arr2[i].toString(2).padStart(n, "0");
+    console.log(map1, map2); // 1의 이진수가 1 . n만큼의 길이만큼 맞춰줘야함. 앞에를 다 0 으로 체우기
+    // 두지도 겹치기
+    for (let l = 0; l < map1.length; l++) {
+      console.log(map1, map1[l], map2, map2[l]);
+      if (map1[l] === "1" || map2[l] === "1") {
+        // 둘중 하나라도 벽일경우에는 무조건 벽
+        answer[i] += "#";
+      } else {
+        // 두개모두 "0"을 가진다면 공백
+        answer[i] += " ";
+      }
+    }
+  }
+  return answer;
+}
+
+//메서드 사ㅇ
+function solution(n, arr1, arr2) {
+  // 각 배열의 길이만큼 돌아 각 숫자를 이진수로 바꾸기
+  //  let a =[]
+  //  let b =[]
+  // for(let i = 0 ; i < arr1.length;i++){
+  //     a.push(arr1[i].toString(2))
+  //     b.push(arr2[i].toString(2))
+  // }
+  //  console.log(a,b)
+  // 하나라도 1을 가지면 벽이 되고 둘다 0이면 공백, 둘다 벽이면 벽
+
+  // 한 변의 길이는 n
+  const answer = arr1.map((map1, i) => {
+    // 2진법으로 바꾸기
+    map1 = map1.toString(2).padStart(n, "0"); // 매개변수재할당.단, 다른곳에서 이 매개변수 사용하지 않아야함.
+    const map2 = arr2[i].toString(2).padStart(n, "0");
+    return map1.split("").reduce((acc, cur, l) => {
+      // console.log(acc,cur,map1[l])
+      return acc + (cur === "1" || map2[l] === "1" ? "#" : " ");
+    }, "");
+  });
+  return answer;
+}

@@ -1,12 +1,17 @@
 import InfiniteScroll from "react-infinite-scroller";
 import ISoldMain from "./ISoldProduct.main";
 import { IISoldUIProps } from "./Mypage.types";
-
+import {
+  MyList,
+  MyPageISold,
+  MyPageScroll,
+  ReturnToMyPage,
+} from "./Mypage.styles";
 export default function ISoldProductsUI(props: IISoldUIProps) {
   return (
-    <>
-      <h2>내 판매내역</h2>
-      <div>
+    <MyPageISold>
+      <MyList>내 판매내역</MyList>
+      <MyPageScroll>
         <InfiniteScroll
           pageStart={0}
           loadMore={props.onLoadMore}
@@ -17,7 +22,10 @@ export default function ISoldProductsUI(props: IISoldUIProps) {
             <ISoldMain key={el._id} el={el} />
           ))}
         </InfiniteScroll>
-      </div>
-    </>
+      </MyPageScroll>
+      <ReturnToMyPage onClick={props.onClickMyPageMain}>
+        목록으로
+      </ReturnToMyPage>
+    </MyPageISold>
   );
 }

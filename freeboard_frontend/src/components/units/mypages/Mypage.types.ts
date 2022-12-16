@@ -1,5 +1,9 @@
 import { ChangeEvent, MouseEvent } from "react";
-import { IQuery, IUseditem } from "../../../commons/types/generated/types";
+import {
+  IPointTransaction,
+  IQuery,
+  IUseditem,
+} from "../../../commons/types/generated/types";
 
 export interface IMypageUIProps {
   onChangeRadio: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -11,12 +15,16 @@ export interface IMypageUIProps {
   onClickIBought: () => void;
   ISold?: Pick<IQuery, "fetchUseditemsCountISold">;
   onClickISold: () => void;
+  onClickLogOut: () => void;
+  MyPointList?: Pick<IQuery, "fetchPointTransactionsCountOfLoading">;
+  onClickMyPointList: () => void;
 }
 
 export interface IIPikedPageUIProps {
   data?: Pick<IQuery, "fetchUseditemsIPicked">;
   onLoadMore: () => void;
   onClickProductDetail: (event: MouseEvent<HTMLDivElement>) => void;
+  onClickMyPageMain: () => void;
 }
 
 export interface IMyPickedMainProps {
@@ -27,6 +35,7 @@ export interface IMyPickedMainProps {
 export interface IBoughtProductUIProps {
   data?: Pick<IQuery, "fetchUseditemsIBought">;
   onLoadMore: () => void;
+  onClickMyPageMain: () => void;
 }
 
 export interface IIBoughtMainProps {
@@ -35,7 +44,17 @@ export interface IIBoughtMainProps {
 export interface IISoldUIProps {
   data?: Pick<IQuery, "fetchUseditemsISold">;
   onLoadMore: () => void;
+  onClickMyPageMain: () => void;
 }
 export interface IISoldMainProps {
   el: IUseditem;
+}
+
+export interface IMyPointListUIProps {
+  data?: Pick<IQuery, "fetchPointTransactions">;
+  onLoadMore: () => void;
+  onClickMyPageMain: () => void;
+}
+export interface IMyPointListMainProps {
+  el: IPointTransaction;
 }

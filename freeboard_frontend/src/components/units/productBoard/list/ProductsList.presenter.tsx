@@ -7,14 +7,16 @@ import * as S from "./ProductsList.styles";
 export default function ProductListUI(props: IProductListUIProps) {
   return (
     <S.Main>
-      <S.MainTitle>상품리스트</S.MainTitle>
-      <div>
-        <Search02
-          refetch={props.refetch}
-          onChangeKeyword={props.onChangeKeyword}
-        />
-      </div>
-      <div></div>
+      <S.SearchAndTitle>
+        <S.MainTitle>상품리스트</S.MainTitle>
+        <div>
+          <Search02
+            refetch={props.refetch}
+            onChangeKeyword={props.onChangeKeyword}
+          />
+        </div>
+      </S.SearchAndTitle>
+
       <div>
         <S.Scroll>
           <InfiniteScroll
@@ -33,9 +35,9 @@ export default function ProductListUI(props: IProductListUIProps) {
             ))}
           </InfiniteScroll>
         </S.Scroll>
-        <button onClick={props.onClickMoveToPage(`/market/new`)}>
+        <S.SendButton onClick={props.onClickMoveToPage(`/market/new`)}>
           등록하기
-        </button>
+        </S.SendButton>
       </div>
     </S.Main>
   );

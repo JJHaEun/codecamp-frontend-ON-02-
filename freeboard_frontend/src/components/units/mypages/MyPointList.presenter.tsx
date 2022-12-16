@@ -1,16 +1,16 @@
 import InfiniteScroll from "react-infinite-scroller";
-import IBoughtMain from "./IBuyProduct.main";
-import { IBoughtProductUIProps } from "./Mypage.types";
 import {
   MyList,
-  MyPageIBought,
+  MyPageISold,
   MyPageScroll,
   ReturnToMyPage,
 } from "./Mypage.styles";
-export default function IBoughtProductUI(props: IBoughtProductUIProps) {
+import { IMyPointListUIProps } from "./Mypage.types";
+import MyPointListMain from "./MyPointList.main";
+export default function MyPointListUI(props: IMyPointListUIProps) {
   return (
-    <MyPageIBought>
-      <MyList>내 구매내역</MyList>
+    <MyPageISold>
+      <MyList>내 포인트 내역</MyList>
       <MyPageScroll>
         <InfiniteScroll
           pageStart={0}
@@ -18,14 +18,14 @@ export default function IBoughtProductUI(props: IBoughtProductUIProps) {
           hasMore={true}
           useWindow={false}
         >
-          {props.data?.fetchUseditemsIBought.map((el) => (
-            <IBoughtMain key={el._id} el={el} />
+          {props.data?.fetchPointTransactions.map((el) => (
+            <MyPointListMain key={el._id} el={el} />
           ))}
         </InfiniteScroll>
       </MyPageScroll>
       <ReturnToMyPage onClick={props.onClickMyPageMain}>
         목록으로
       </ReturnToMyPage>
-    </MyPageIBought>
+    </MyPageISold>
   );
 }

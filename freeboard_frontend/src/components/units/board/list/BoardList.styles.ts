@@ -112,7 +112,7 @@ export const H1title = styled.h1`
   background-clip: text;
 `;
 export const TextToken = styled.span`
-  color: ${(props: ITextTokenProps) => (props.isMatch ? "red" : "black")};
+  color: ${(props: ITextTokenProps) => (props.isMatch ? "red" : "default")};
 `;
 export const SearchBar = styled.div`
   margin-left: 100px;

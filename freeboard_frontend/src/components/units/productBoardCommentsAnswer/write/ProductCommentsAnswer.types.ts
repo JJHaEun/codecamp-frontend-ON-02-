@@ -15,16 +15,15 @@ export interface ICommentsAnswerUIProps {
   onClickEditFinish: (data: IFormCommentData) => void;
   isEdit: boolean;
   el: IUseditemQuestionAnswer;
-  isHaveAnswer: boolean;
+  isHaveAnswer?: boolean;
   setIsHaveAnswer?: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface ICommentsAnswerProps {
+  setIsHaveAnswer?: Dispatch<SetStateAction<boolean>>;
+  isHaveAnswer?: boolean;
+  id: any;
   el: IUseditemQuestionAnswer;
   isEdit: boolean;
   setIsEdit?: Dispatch<SetStateAction<boolean>>;
-  id?: string;
-  //   onClickAnswer: () => void;
-  isHaveAnswer: boolean;
-  setIsHaveAnswer?: Dispatch<SetStateAction<boolean>>;
 }

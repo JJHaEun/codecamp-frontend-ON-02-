@@ -42,6 +42,10 @@ export default function IPikedPage() {
     });
   };
 
+  const onClickMyPageMain = () => {
+    void router.push(`/mypage`);
+  };
+
   const onClickProductDetail = (event: MouseEvent<HTMLDivElement>) => {
     void router.push(`/market/${event?.currentTarget.id}`);
   };
@@ -51,6 +55,7 @@ export default function IPikedPage() {
       data={data}
       onLoadMore={onLoadMore}
       onClickProductDetail={onClickProductDetail}
+      onClickMyPageMain={onClickMyPageMain}
     />
   );
 }

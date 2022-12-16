@@ -12,9 +12,11 @@ import { FETCH_USER_LOGGED_IN } from "../../commons/login-sucess/01/LoginSuccess
 import MypageUI from "./Mypage.presenter";
 import {
   CREATE_POINT_TRANSACTION_OF_LOADING,
+  FETCH_POINT_TRANSACTIONS_COUNT_OF_LOADING,
   FETCH_USED_ITEMS_COUNT_IBOUGHT,
   FETCH_USED_ITEMS_COUNT_IPICKED,
   FETCH_USED_ITEMS_COUNT_I_SOLD,
+  LOG_OUT_USER,
   // LOG_OUT_USER,
 } from "./Mypage.queries";
 
@@ -31,8 +33,7 @@ export default function MyPage() {
     Pick<IMutation, "createPointTransactionOfLoading">,
     IMutationCreatePointTransactionOfLoadingArgs
   >(CREATE_POINT_TRANSACTION_OF_LOADING);
-
-  // const [logoutUser]=useMutation<Pick<IMutation,"logoutUser">>(LOG_OUT_USER)
+  const [logoutUser] = useMutation(LOG_OUT_USER);
 
   const { data } =
     useQuery<Pick<IQuery, "fetchUserLoggedIn">>(FETCH_USER_LOGGED_IN);
@@ -48,6 +49,9 @@ export default function MyPage() {
   const { data: ISold } = useQuery<Pick<IQuery, "fetchUseditemsCountISold">>(
     FETCH_USED_ITEMS_COUNT_I_SOLD
   );
+  const { data: MyPointList } = useQuery<
+    Pick<IQuery, "fetchPointTransactionsCountOfLoading">
+  >(FETCH_POINT_TRANSACTIONS_COUNT_OF_LOADING);
 
   const onChangeRadio = (event: ChangeEvent<HTMLInputElement>) => {
     setPoint(event.target.value);
@@ -115,6 +119,16 @@ export default function MyPage() {
   const onClickISold = () => {
     void router.push(`/market/ISold`);
   };
+  const onClickMyPointList = () => {
+    void router.push(`/market/MyPointList`);
+  };
+
+  const onClickLogOut = async () => {
+    await logoutUser();
+    localStorage.removeItem("accessToken");
+    router.reload();
+    Modal.success({ content: "성공적으로 로그아웃 되었습니다" });
+  };
 
   //   const onClickLogOut = async()=>{
   //     try{
@@ -141,7 +155,9 @@ export default function MyPage() {
         onClickIBought={onClickIBought}
         ISold={ISold}
         onClickISold={onClickISold}
-        // onClickLogOut={onClickLogOut}
+        onClickLogOut={onClickLogOut}
+        MyPointList={MyPointList}
+        onClickMyPointList={onClickMyPointList}
       />
     </>
   );

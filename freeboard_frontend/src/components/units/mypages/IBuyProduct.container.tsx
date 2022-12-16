@@ -1,4 +1,5 @@
 import { useQuery } from "@apollo/client";
+import { useRouter } from "next/router";
 import {
   IQuery,
   IQueryFetchUseditemsIBoughtArgs,
@@ -7,6 +8,7 @@ import IBoughtProductUI from "./IBuyProduct.presenter";
 import { FETCH_USED_ITEM_IBOUGHT } from "./Mypage.queries";
 
 export default function IBoughtProduct() {
+  const router = useRouter();
   const { data, fetchMore } = useQuery<
     Pick<IQuery, "fetchUseditemsIBought">,
     IQueryFetchUseditemsIBoughtArgs
@@ -36,6 +38,14 @@ export default function IBoughtProduct() {
       },
     });
   };
-
-  return <IBoughtProductUI data={data} onLoadMore={onLoadMore} />;
+  const onClickMyPageMain = () => {
+    void router.push(`/mypage`);
+  };
+  return (
+    <IBoughtProductUI
+      data={data}
+      onLoadMore={onLoadMore}
+      onClickMyPageMain={onClickMyPageMain}
+    />
+  );
 }

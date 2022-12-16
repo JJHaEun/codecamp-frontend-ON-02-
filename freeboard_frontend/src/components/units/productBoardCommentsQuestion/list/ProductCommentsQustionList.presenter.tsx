@@ -1,11 +1,11 @@
 import InfiniteScroll from "react-infinite-scroller";
 import { ICommentsListUIProps } from "./ProductCommentsQustionList.types";
 import CommentsListItems from "./ProductCommentsQustionListItems.container";
-
+import { CommentsList } from "./ProductCommentsQuestion.styles";
 export default function CommentsListUI(props: ICommentsListUIProps) {
   return (
     <>
-      <div>
+      <CommentsList>
         <InfiniteScroll
           pageStart={0}
           loadMore={props.onLoadMore}
@@ -16,7 +16,7 @@ export default function CommentsListUI(props: ICommentsListUIProps) {
             <CommentsListItems key={el._id} el={el} />
           ))}
         </InfiniteScroll>
-      </div>
+      </CommentsList>
     </>
   );
 }

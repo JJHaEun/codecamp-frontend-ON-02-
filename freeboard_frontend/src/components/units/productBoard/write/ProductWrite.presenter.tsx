@@ -17,7 +17,9 @@ declare const window: typeof globalThis & {
   kakao: any;
 };
 export default function ProductWriteUI(props: IProductWriteUIProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isEdit, setIsEdit] = useRecoilState(isEditState);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isOpen, setIsOpen] = useRecoilState(isOpenState);
 
   useEffect(() => {
