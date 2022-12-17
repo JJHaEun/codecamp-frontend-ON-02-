@@ -1,5 +1,6 @@
 import { IMyPointListMainProps } from "./Mypage.types";
 import { BottomLinePrice, StatusPoint } from "./Mypage.styles";
+
 export default function MyPointListMain(props: IMyPointListMainProps) {
   return (
     <>

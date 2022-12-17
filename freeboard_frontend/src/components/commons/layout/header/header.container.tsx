@@ -26,6 +26,9 @@ export default function LayOutHeader() {
     router.reload();
     Modal.success({ content: "성공적으로 로그아웃 되었습니다" });
   };
+  const onClickMyPick = () => {
+    void router.push(`/mypage/IPicked`);
+  };
   return (
     <LayOutHeaderUI
       onClickHeaderLogin={onClickHeaderLogin}
@@ -33,6 +36,7 @@ export default function LayOutHeader() {
       onClickCreateUsers={onClickCreateUsers}
       onClickBasket={onClickBasket}
       onClickLogOut={onClickLogOut}
+      onClickMyPick={onClickMyPick}
     />
   );
 }

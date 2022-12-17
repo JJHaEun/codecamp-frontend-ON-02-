@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { Modal } from "antd";
-// import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import {
   IMutation,
   IMutationCreateUseditemQuestionAnswerArgs,
@@ -25,7 +25,7 @@ const schema = yup.object({
   contents: yup.string().required("내용을 입력해주세요"),
 });
 export default function CommentsAnswer(props: ICommentsAnswerProps) {
-  // const router = useRouter();
+  const router = useRouter();
   // const [isEdit, setIsEdit] = useState(false);
   const { register, handleSubmit, formState } = useForm<IFormCommentData>({
     resolver: yupResolver(schema),
@@ -54,7 +54,7 @@ export default function CommentsAnswer(props: ICommentsAnswerProps) {
         refetchQueries: [
           {
             query: FETCH_USED_ITEM_QUESTIONS,
-            variables: { useditemQuestionId: props.el._id },
+            variables: { useditemId: router.query._id },
           },
         ],
       });
@@ -70,10 +70,10 @@ export default function CommentsAnswer(props: ICommentsAnswerProps) {
       return;
     }
     try {
-      if (typeof props.id !== "string") return;
+      if (typeof router.query._id !== "string") return;
       await updateUseditemQuestionAnswer({
         variables: {
-          useditemQuestionAnswerId: props.el._id,
+          useditemQuestionAnswerId: router.query._id,
           updateUseditemQuestionAnswerInput: {
             contents: data.contents,
           },
@@ -81,7 +81,7 @@ export default function CommentsAnswer(props: ICommentsAnswerProps) {
         refetchQueries: [
           {
             query: FETCH_USED_ITEM_QUESTION_ANSWERS,
-            variables: { useditemQuestionId: props.el._id },
+            variables: { useditemId: router.query._id },
           },
         ],
       });

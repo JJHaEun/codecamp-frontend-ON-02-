@@ -83,3 +83,21 @@ export const CreateUsers = styled.span`
     top: 1px;
   }
 `;
+export const UnUserBasket = styled.div`
+  margin-right: 20px;
+  :hover {
+    color: aliceblue;
+    cursor: pointer;
+  }
+`;
+
+export const MyBasketFont = styled.span`
+  margin-right: 20px;
+  * {
+    font-size: 20px;
+  }
+  :hover {
+    color: aliceblue;
+    cursor: pointer;
+  }
+`;

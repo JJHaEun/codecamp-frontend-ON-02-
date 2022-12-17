@@ -1,3 +1,4 @@
+import { ShoppingCartOutlined } from "@ant-design/icons";
 import { useRecoilState } from "recoil";
 import { accessTokenState } from "../../../../commons/libraries/store";
 import LoginSuccess from "../../login-sucess/01/LoginSuccess.container";
@@ -26,7 +27,16 @@ export default function LayOutHeaderUI(props: IPropsLayOutHeaderUI) {
       <S.TitleBox>
         <S.Title>The Power To Do</S.Title>
       </S.TitleBox>{" "}
-      <div onClick={props.onClickBasket}>비회원 장바구니</div>
+      {!accessToken ? (
+        <S.UnUserBasket onClick={props.onClickBasket}>
+          비회원 장바구니
+        </S.UnUserBasket>
+      ) : (
+        <S.MyBasketFont onClick={props.onClickMyPick}>
+          내 장바구니
+          <ShoppingCartOutlined />
+        </S.MyBasketFont>
+      )}
     </S.Wrapper>
   );
 }

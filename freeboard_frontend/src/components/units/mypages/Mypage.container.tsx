@@ -109,18 +109,18 @@ export default function MyPage() {
   };
 
   const onClickMyPick = () => {
-    void router.push(`/market/IPicked`);
+    void router.push(`/mypage/IPicked`);
   };
 
   const onClickIBought = () => {
-    void router.push(`/market/IBought`);
+    void router.push(`/mypage/IBought`);
   };
 
   const onClickISold = () => {
-    void router.push(`/market/ISold`);
+    void router.push(`/mypage/ISold`);
   };
   const onClickMyPointList = () => {
-    void router.push(`/market/MyPointList`);
+    void router.push(`/mypage/MyPointList`);
   };
 
   const onClickLogOut = async () => {

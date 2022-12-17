@@ -4,6 +4,7 @@ import {
   IQuery,
   IQueryFetchPointTransactionsArgs,
 } from "../../../commons/types/generated/types";
+
 import { FETCH_POINT_TRANSCATIONS } from "./Mypage.queries";
 import MyPointListUI from "./MyPointList.presenter";
 

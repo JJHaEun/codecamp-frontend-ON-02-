@@ -4,6 +4,7 @@ import {
   IQuery,
   IQueryFetchUseditemsISoldArgs,
 } from "../../../commons/types/generated/types";
+
 import ISoldProductsUI from "./ISoldProduct.presenter";
 import { FETCH_USED_ITEMS_I_SOLD } from "./Mypage.queries";
 

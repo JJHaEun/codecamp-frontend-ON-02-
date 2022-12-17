@@ -10,7 +10,7 @@ export default function CommentsAnswerUI(props: ICommentsAnswerUIProps) {
         <div>답변드립니다</div>
         <TextareaQuestion
           register={props.register("contents")}
-          value={props.register("contents") || (props.el?.contents ?? "")}
+          value={props.register("contents") || (props.el.contents ?? "")}
         />
         <div>{props.formState.errors.contents?.message}</div>
         <CommentButtonPage

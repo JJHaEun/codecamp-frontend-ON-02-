@@ -2348,3 +2348,89 @@ function solution(n, arr1, arr2) {
   });
   return answer;
 }
+
+// 신규 아이디 추천
+const filter = "qwertyuilopasdfghjklzxcvbnm213456789-_.";
+
+function solution(new_id) {
+  let answer = "";
+  //1 단계 대문자를 소문자로 치환
+  new_id = new_id.toLowerCase();
+  //2단계 소문자, 숫자, 빼기, 마침표 제외한 문자 제외
+  for (let i = 0; i < new_id.length; i++) {
+    if (filter.includes(new_id[i])) {
+      answer += new_id[i]; // 제거된 데이터를 answer에 담음
+    }
+  }
+  // 마침표가 두번이상 연속되어있다면 하나로.
+  // answer에서 마침표가 두번이상 있을경우를찾기
+  while (answer.includes("..")) {
+    answer = answer.replace("..", "."); // 연속되는 마침표가 없어질때까지 즉, 마침표가 하나일때까지 무한히 실행됨.
+  }
+  //4단계 마침표가 처음이나 끝에 위치하면 제거
+  if (answer[0] === ".") {
+    answer = answer.substr(1); // 1인덱스부터 끝까지자름.// 1부터 3까지 자르겠다(첫번째 인덱스부터 세번째까지자르겠다 ==> substr(1,3) // 두번째 인자까지 가져옴
+  }
+  function removeLastDot() {
+    if (answer[answer.length - 1] === ".") {
+      answer = answer.slice(0, answer.length - 1); // 마지막
+    }
+  }
+  removeLastDot();
+
+  //5단계 빈 문자열 이라면 a를 넣어줌.
+  if (answer === "") {
+    answer = "a";
+  }
+  //6단계 길이가 16자 이상이면 15까지 자름. 그리고 마지막에 마침표있으면 제거
+  if (answer.length >= 16) {
+    answer = answer.substr(0, 15);
+    removeLastDot();
+  }
+  //7단계 문자열 길이가 2이하면 3될때까지 반복해 추가
+  if (answer.length <= 2) {
+    answer = answer.padEnd(3, answer[answer.length - 1]); // 뒤에서부터 채워줌(마지막에 오는 문자로)
+  }
+  return answer;
+}
+
+//
+const filter = "qwertyuilopasdfghjklzxcvbnm213456789-_.";
+
+function solution(new_id) {
+  //1 단계 대문자를 소문자로 치환
+  new_id = new_id.toLowerCase();
+  //2단계 소문자, 숫자, 빼기, 마침표 제외한 문자 제외
+  let answer = new_id.split("").filter((str) => filter.includes(str));
+  //3단계  마침표가 두번이상 연속되어있다면 하나로.
+  answer = answer.filter((str, i) => {
+    return (str === "." && answer[i + 1] !== ".") || str !== ".";
+  });
+  //4단계 마침표가 처음이나 끝에 위치하면 제거
+  if (answer[0] === ".") {
+    answer.splice(0, 1); // 0번째 인덱스를 하나제거
+  }
+  function removeLastDot() {
+    if (answer[answer.length - 1] === ".") {
+      answer.splice(answer.length - 1, 1); // 마지막데이터 부터 하나를 제거
+    }
+  }
+  removeLastDot();
+
+  //5단계 빈 문자열 이라면 a를 넣어줌.
+  if (answer.length === 0) {
+    answer = ["a"];
+  }
+
+  //6단계 길이가 16자 이상이면 15까지 자름. 그리고 마지막에 마침표있으면 제거
+  if (answer.length >= 16) {
+    answer = answer.slice(0, 15);
+    removeLastDot();
+  }
+  //7단계 문자열 길이가 2이하면 3될때까지 반복해 추가
+  if (answer.length <= 2) {
+    const add = new Array(3 - answer.length).fill(answer[answer.length - 1]);
+    answer = answer.concat(add);
+  }
+  return answer.join("");
+}

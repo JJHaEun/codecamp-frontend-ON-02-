@@ -4,4 +4,5 @@ export interface IPropsLayOutHeaderUI {
   onClickCreateUsers: () => void;
   onClickBasket: () => void;
   onClickLogOut: () => void;
+  onClickMyPick: () => void;
 }

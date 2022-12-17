@@ -14,7 +14,7 @@ export default function CommentsListItemsUI(props: ICommentsListItemsUIProps) {
       {props.isOpenDelete && (
         <Modal
           title="삭제"
-          visible={true}
+          open={true}
           onOk={props.OnclickDeleteComment}
           onCancel={props.handleCancel}
           cancelText="취소"
@@ -53,6 +53,7 @@ export default function CommentsListItemsUI(props: ICommentsListItemsUIProps) {
           setIsHaveAnswer={props.setIsHaveAnswer}
           isHaveAnswer={props.isHaveAnswer}
           id={props.el._id}
+          isEdit={false}
           el={{
             __typename: undefined,
             _id: "",
@@ -109,7 +110,6 @@ export default function CommentsListItemsUI(props: ICommentsListItemsUIProps) {
               userPoint: undefined,
             },
           }}
-          isEdit={false}
         />
       )}
     </>

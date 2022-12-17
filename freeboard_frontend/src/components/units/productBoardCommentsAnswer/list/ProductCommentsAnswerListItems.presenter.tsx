@@ -11,7 +11,7 @@ export default function CommentsAnswerListItemsUI(
       {props.isOpenDelete && (
         <Modal
           title="삭제"
-          visible={true}
+          open={true}
           onOk={props.OnclickDeleteComment}
           onCancel={props.handleCancel}
           cancelText="취소"
