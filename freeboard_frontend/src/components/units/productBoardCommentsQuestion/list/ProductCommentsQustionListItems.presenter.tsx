@@ -1,13 +1,16 @@
 import { Modal } from "antd";
 import { getDate } from "../../../commons/utils/utils";
-import CommentsAnswer from "../../productBoardCommentsAnswer/write/ProductCommentsAnswer.container";
+// import CommentsAnswer from "../../productBoardCommentsAnswer/write/ProductCommentsAnswer.container";
 import CommentsQuestion from "../write/ProductCommentsQuestion.container";
 import { ICommentsListItemsUIProps } from "./ProductCommentsQustionList.types";
 import {
   CommentButton,
   ButtonReplyAndDelete,
 } from "./ProductCommentsQuestion.styles";
-import { ClearOutlined, CommentOutlined } from "@ant-design/icons";
+import {
+  ClearOutlined,
+  // , CommentOutlined
+} from "@ant-design/icons";
 export default function CommentsListItemsUI(props: ICommentsListItemsUIProps) {
   return (
     <>
@@ -34,10 +37,10 @@ export default function CommentsListItemsUI(props: ICommentsListItemsUIProps) {
             >
               <ClearOutlined /> 삭제
             </ButtonReplyAndDelete>
-            <ButtonReplyAndDelete onClick={props.onClickAnswer}>
-              <CommentOutlined onClick={props.onClickAnswer} />
-              댓글
-            </ButtonReplyAndDelete>
+            {/* <ButtonReplyAndDelete onClick={props.onClickAnswer}> */}
+            {/* <CommentOutlined onClick={props.onClickAnswer} /> */}
+            {/* 댓글 */}
+            {/* </ButtonReplyAndDelete> */}
           </CommentButton>
         </div>
       )}
@@ -48,7 +51,7 @@ export default function CommentsListItemsUI(props: ICommentsListItemsUIProps) {
           setIsEdit={props.setIsEdit}
         />
       )}
-      {props.isHaveAnswer && (
+      {/* {props.isHaveAnswer && (
         <CommentsAnswer
           setIsHaveAnswer={props.setIsHaveAnswer}
           isHaveAnswer={props.isHaveAnswer}
@@ -111,7 +114,7 @@ export default function CommentsListItemsUI(props: ICommentsListItemsUIProps) {
             },
           }}
         />
-      )}
+      )} */}
     </>
   );
 }

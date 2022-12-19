@@ -5,7 +5,7 @@ import BoardWrite from "../../../../src/components/units/board/write/BoardWrite.
 
 export default function EditPage() {
   const [isEdit, setIsEdit] = useRecoilState(isEditState);
-
+  console.log(isEdit);
   useEffect(() => {
     setIsEdit(true);
   }, []);

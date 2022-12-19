@@ -2434,3 +2434,128 @@ function solution(new_id) {
   }
   return answer.join("");
 }
+
+// 키패드 누르기
+
+const leftNumbers = [1, 4, 7]; // 왼쪽 키패드에 해당되는 숫자
+const rightNumbers = [3, 6, 9]; // 오른쪽 키패드에 해당되는 숫자
+
+function solution(numbers, hand) {
+  // 왼손 :  *,1,4,7
+  // 오른손 : #,3,6,9
+  // 2,5,8,0 => 현재 엄지손가락들 위치에서 더 가까운 엄지.거리 같으면 어느손잡이인지에띠리서 그 쪽 사용.
+  // 대각선으로는 움직이지x
+
+  let answer = ""; // 연속되는 손가락 위치를 담을것.
+
+  // 현재 손가락의 위치를 저장
+  const current = {
+    left: 10, // 맨 위 숫자로 부터 몇칸떨어져있는지 1~9 + 1 = * 의 자리
+    right: 12, // # 의 자리
+  };
+  for (let i = 0; i < numbers.length; i++) {
+    // 왼쪽 키패드에 해당시
+    if (leftNumbers.includes(numbers[i])) {
+      // 누를 번호가 왼쪽부분의 경우
+      answer += "L";
+      // 각 현재의 위치
+      current["left"] = numbers[i]; // 왼쪽 손가락 위치를 변경
+    } else if (rightNumbers.includes(numbers[i])) {
+      //오른쪽 부분..
+      answer += "R";
+      current["right"] = numbers[i]; // 오른쪽 손가락 위치를 변경
+    } else {
+      //가운데 번호를 누를때
+      // 가운데 번호에서 가까운 손가락 찾기
+      const locationObj = { ...current }; // 왼쪽과 오른쪽의 위치 차이를 차이를 저장
+      for (let hand in locationObj) {
+        // 객체를 반복
+        // 0 번을 눌렀을 시 예외처리. = 0 번은 11위치값으로 처리한다.
+        numbers[i] = numbers[i] === 0 ? 11 : numbers[i];
+        let location = Math.abs(numbers[i] - locationObj[hand]); // 음수로 처리된 데이터를 양수로 변경
+        if (location >= 3) {
+          // 상하 이동이 가능할 경우
+          //Math.trunc 는 소수점을 제거함
+          location = Math.trunc(location / 3) + (location % 3);
+        }
+        locationObj[hand] = location;
+      }
+      // console.log(numbers[i],locationObj)
+      // 거리차이가 같은경우
+      if (locationObj["left"] === locationObj["right"]) {
+        // 자기 손잡이의 손가락으로 누름
+        answer += hand === "left" ? "L" : "R";
+        current[hand] = numbers[i];
+      } else {
+        if (locationObj["left"] > locationObj["right"]) {
+          //오른쪽 손가락이 더 가까운경우
+          answer += "R";
+          current["right"] = numbers[i];
+        } else {
+          answer += "L";
+          current["left"] = numbers[i];
+        }
+      }
+    }
+  }
+  return answer;
+}
+// reduce라는 메서드 사용. 뭔가 잘못되어 한번 더 봐야할듯.
+
+// const leftNumbers = [1,4,7] ; // 왼쪽 키패드에 해당되는 숫자
+// const rightNumbers = [3,6,9];// 오른쪽 키패드에 해당되는 숫자
+
+const [leftNumbers, rightNumbers] = [
+  [1, 4, 7],
+  [3, 6, 9],
+]; // 비구조화 할당(구조분해할당)
+function solution(numbers, hand) {
+  // 왼손 :  *,1,4,7
+  // 오른손 : #,3,6,9
+  // 2,5,8,0 => 현재 엄지손가락들 위치에서 더 가까운 엄지.거리 같으면 어느손잡이인지에따라서 그 쪽 사용.
+  // 대각선으로는 움직이지x
+
+  // 현재 손가락의 위치를 저장
+  const current = {
+    left: 10, // 맨 위 숫자로 부터 몇칸떨어져있는지 1~9 + 1 = * 의 자리
+    right: 12, // # 의 자리
+  };
+  const answer = numbers.reduce((acc, cur, i) => {
+    let [useFinger, target, number] = ["", "", 0];
+    if (leftNumbers.includes(cur)) {
+      [useFinger, target, number] = ["L", "left", cur];
+    } else if (rightNumbers.includes(cur)) {
+      [useFinger, target, number] = ["R", "right", cur];
+    } else {
+      // 가운데 키패드 누를시
+      // 객체를 배열로 바꿔...
+      //Object.entries(객체명) ==> 배열안에 여러 배열들이 생성됨. 한배열의 앞음 키, 뒤는 값. [[키,값],[키,값],...]
+      const fingers = Object.entries(current).reduce((acc2, cur2) => {
+        const targetHand = cur2[0]; // 키를 가져옴
+
+        cur = cur === 0 ? 11 : cur; // 0번째 위치하는것을 11로 바꾸기
+        let location = Math.abs(cur - cur2[i]); // 거리차 구하기(정수로)
+        if (location > 2) {
+          // 3이상이면
+          location = Math.trunc(location / 3) + (location % 3);
+        }
+        acc2[targetHand] = location; // 왼쪽 손가락과 오른쪽 손가락에 해당되는 위치값을 받아올 수 있음.
+        return acc2;
+      }, {});
+      if (fingers["left"] === fingers["right"]) {
+        [useFinger, target, number] = [
+          hand === "left" ? "L" : "R",
+          hand === "left" ? hand : "right",
+          cur,
+        ];
+      } else if (fingers["left"] > fingers["right"]) {
+        [useFinger, target, number] = ["R", "right", cur];
+      } else {
+        [useFinger, target, number] = ["L", "left", cur];
+      }
+    }
+    current[target] = number;
+    return acc + useFinger; // 누적값 더하기 누른 손가락
+  }, "");
+  return answer;
+}

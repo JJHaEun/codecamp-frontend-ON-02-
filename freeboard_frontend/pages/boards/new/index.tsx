@@ -5,7 +5,7 @@ import BoardWrite from "../../../src/components/units/board/write/BoardWrite.con
 
 export default function freeboardWrite() {
   const [isEdit, setIsEdit] = useRecoilState(isEditState);
-
+  console.log(isEdit);
   useEffect(() => {
     setIsEdit(false);
   }, []);

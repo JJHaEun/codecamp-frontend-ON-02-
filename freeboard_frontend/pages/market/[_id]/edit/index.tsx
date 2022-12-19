@@ -5,7 +5,7 @@ import ProductWite from "../../../../src/components/units/productBoard/write/Pro
 
 export default function EditPage() {
   const [isEdit, setIsEdit] = useRecoilState(isEditState);
-
+  console.log(isEdit);
   useEffect(() => {
     setIsEdit(true);
   }, []);

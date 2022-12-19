@@ -47,33 +47,29 @@ export const TextArea = styled.textarea`
   }
 `;
 export const Button3 = styled.button`
-
- box-shadow:inset 0px 1px 0px 0px #29bbff;
- margin-top:10px;
- 	background:#a5d943;
- 	border-radius:6px;
- 	border:1px solid #b3cf8c;
- 	display:inline-block;
- 	cursor:pointer;
- 	color:#ffffff;
- 	font-family:Arial;
- 	font-size:15px;
- 	font-weight:bold;
- 	padding:6px 24px;
- 	text-decoration:none;
-   width: 110px;
-   height: 40px;
- &:hover{
-   background:#2471b5;
- }
- :active {
- 	position:relative;
- 	left:1px;
- }
-
- }
-
- `;
+  box-shadow: inset 0px 1px 0px 0px #29bbff;
+  margin-top: 10px;
+  background: #a5d943;
+  border-radius: 6px;
+  border: 1px solid #b3cf8c;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 6px 24px;
+  text-decoration: none;
+  width: 110px;
+  height: 40px;
+  &:hover {
+    background: #2471b5;
+  }
+  :active {
+    position: relative;
+    left: 1px;
+  }
+`;
 export const Bt = styled.div`
   margin-left: 1090px;
   margin-bottom: 10px;
