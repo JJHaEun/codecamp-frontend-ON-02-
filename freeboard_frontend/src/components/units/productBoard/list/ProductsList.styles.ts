@@ -44,6 +44,7 @@ export const ListSetting = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 30px;
+  margin-right: 30px;
   background-color: skyblue;
   padding-left: 15px;
   padding-bottom: 5px;

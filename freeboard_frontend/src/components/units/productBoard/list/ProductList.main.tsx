@@ -8,6 +8,7 @@ export default function ProductListMainUI(props: IProductListMainUIProps) {
     <>
       <S.AllLine key={props.el._id}>
         <S.ListSetting>
+          <S.SellerName>{props.el?.seller?.name}</S.SellerName>
           <div>
             {props.el.images
               ?.filter((el: string) => el)
@@ -43,8 +44,6 @@ export default function ProductListMainUI(props: IProductListMainUIProps) {
               {getDate(props.el?.createdAt)}
             </div>
           </div>
-          <div>{props.el.buyer?.name ?? ""}</div>
-          <S.SellerName>{props.el?.seller?.name}</S.SellerName>
         </S.ListSetting>
         <S.PickCount>
           <div>
