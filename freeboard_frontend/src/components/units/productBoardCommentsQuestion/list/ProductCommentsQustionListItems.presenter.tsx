@@ -5,10 +5,11 @@ import CommentsQuestion from "../write/ProductCommentsQuestion.container";
 import { ICommentsListItemsUIProps } from "./ProductCommentsQustionList.types";
 import {
   CommentButton,
-  ButtonReplyAndDelete,
+  ButtonEditAndDelete,
 } from "./ProductCommentsQuestion.styles";
 import {
   ClearOutlined,
+  EditOutlined,
   // , CommentOutlined
 } from "@ant-design/icons";
 export default function CommentsListItemsUI(props: ICommentsListItemsUIProps) {
@@ -30,13 +31,16 @@ export default function CommentsListItemsUI(props: ICommentsListItemsUIProps) {
           <div>{props.el.contents}</div>
           <div>{getDate(props.el?.createdAt)}</div>
           <CommentButton>
-            <button onClick={props.onClickEdit}>수정</button>
-            <ButtonReplyAndDelete
+            <ButtonEditAndDelete onClick={props.onClickEdit}>
+              <EditOutlined />
+              수정
+            </ButtonEditAndDelete>
+            <ButtonEditAndDelete
               id={props.el._id}
               onClick={props.onClickcheckPermissionDeleteModal}
             >
               <ClearOutlined /> 삭제
-            </ButtonReplyAndDelete>
+            </ButtonEditAndDelete>
             {/* <ButtonReplyAndDelete onClick={props.onClickAnswer}> */}
             {/* <CommentOutlined onClick={props.onClickAnswer} /> */}
             {/* 댓글 */}

@@ -16,7 +16,14 @@ export const CommentButton = styled.div`
   gap: 15px;
 `;
 
-export const ButtonReplyAndDelete = styled.button`
+// export const ButtonReplyAndDelete = styled.button`
+//   background-color: white;
+//   border: none;
+//   :hover {
+//     cursor: pointer;
+//   }
+// `;
+export const ButtonEditAndDelete = styled.button`
   background-color: white;
   border: none;
   :hover {

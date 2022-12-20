@@ -57,7 +57,7 @@ export const AllButtons = styled.div`
 export const SellerAndDate = styled.div`
   border-bottom: 2px solid skyblue;
   display: flex;
-  gap: 1125px;
+  gap: 1105px;
 `;
 export const LocationToggleImg = styled(EnvironmentOutlined)`
   * {

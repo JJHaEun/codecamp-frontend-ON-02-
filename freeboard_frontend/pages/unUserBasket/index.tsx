@@ -1,6 +1,14 @@
 import { gql, useQuery } from "@apollo/client";
 import { Modal } from "antd";
-
+import { useRouter } from "next/router";
+import { MouseEvent } from "react";
+import InfiniteScroll from "react-infinite-scroller";
+import {
+  IQuery,
+  IQueryFetchUseditemsArgs,
+} from "../../src/commons/types/generated/types";
+import styled from "@emotion/styled";
+import { ShoppingCartOutlined } from "@ant-design/icons";
 export const FETCH_USED_ITEMS = gql`
   query fetchUseditems($isSoldout: Boolean, $search: String, $page: Int) {
     fetchUseditems(isSoldout: $isSoldout, search: $search, page: $page) {
@@ -19,8 +27,36 @@ export const FETCH_USED_ITEMS = gql`
   }
 `;
 export default function UnUserBasketPage() {
-  const { data } = useQuery(FETCH_USED_ITEMS);
+  const router = useRouter();
 
+  const { data, fetchMore } = useQuery<
+    Pick<IQuery, "fetchUseditems">,
+    IQueryFetchUseditemsArgs
+  >(FETCH_USED_ITEMS);
+
+  const onLoadMore = async () => {
+    if (!data) return;
+    await fetchMore({
+      variables: { page: Math.ceil(data?.fetchUseditems?.length / 10) + 1 },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (fetchMoreResult.fetchUseditems === undefined) {
+          return {
+            fetchUseditems: [...prev.fetchUseditems],
+          };
+        }
+        return {
+          // prettier-ignore
+          fetchUseditems: ([
+            ...prev.fetchUseditems,
+            ...fetchMoreResult.fetchUseditems,
+          ]),
+        };
+      },
+    });
+  };
+  const onClickProductDetail = (event: MouseEvent<HTMLDivElement>) => {
+    void router.push(`/market/${event.currentTarget.id}`);
+  };
   const onClickBasket = (basket: any) => () => {
     const baskets = JSON.parse(localStorage.getItem("baskets") ?? "[]");
 
@@ -39,15 +75,44 @@ export default function UnUserBasketPage() {
   //   const baskets = JSON.parse(localStorage.getItem("basket") ?? "[]");
   //   setBesketItem(baskets);
   // }, []);
+  const Scroll = styled.div`
+    height: 300px;
+    overflow: auto;
+    width: 1000px;
+  `;
+  const All = styled.div`
+    display: flex;
+    justify-content: center;
+  `;
+  const ClicksDetail = styled.div`
+    :hover {
+      cursor: pointer;
+      color: blanchedalmond;
+    }
+  `;
   return (
-    <div>
-      {data?.fetchUseditems.map((el: any) => (
-        <div key={el._id}>
-          <div>{el.name}</div>
-          <div>{el.price}</div>
-          <button onClick={onClickBasket(el)}>장바구니담기</button>
-        </div>
-      ))}
-    </div>
+    <All>
+      <Scroll>
+        <InfiniteScroll
+          pageStart={0}
+          loadMore={onLoadMore}
+          hasMore={true}
+          useWindow={false}
+        >
+          {data?.fetchUseditems.map((el: any) => (
+            <div key={el._id}>
+              <ClicksDetail onClick={onClickProductDetail}>
+                {el.name}
+              </ClicksDetail>
+              <div>{el.price} ₩</div>
+              <button onClick={onClickBasket(el)}>
+                <ShoppingCartOutlined />
+                담기
+              </button>
+            </div>
+          ))}
+        </InfiniteScroll>
+      </Scroll>
+    </All>
   );
 }

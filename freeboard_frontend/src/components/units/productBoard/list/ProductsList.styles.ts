@@ -45,6 +45,8 @@ export const ListSetting = styled.div`
   flex-direction: column;
   margin-left: 30px;
   background-color: skyblue;
+  padding-left: 15px;
+  padding-bottom: 5px;
 `;
 export const PickCount = styled.div`
   margin-left: 100px;

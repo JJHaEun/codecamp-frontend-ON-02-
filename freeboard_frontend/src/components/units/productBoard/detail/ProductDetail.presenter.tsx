@@ -42,6 +42,7 @@ export default function ProductDetailUI(props: IProductDetailUIProps) {
         <S.SellerAndDate>
           <div>
             <div>{props.data?.fetchUseditem.seller?.name}</div>
+            <div>{props.data?.fetchUseditem.seller?.email}</div>
             <div>Date:{getDate(props.data?.fetchUseditem.createdAt)}</div>
           </div>
           <div>
