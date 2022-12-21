@@ -18,7 +18,7 @@ import { useRouter } from "next/router";
 import {
   FETCH_USED_ITEM_QUESTIONS,
   UPDATE_USED_ITEM_QUESTION,
-} from "../list/ProductCommentsQustionList.queries";
+} from "../list/ProductCommentsQuestionList.queries";
 import { FETCH_USED_ITEM } from "../../productBoard/write/ProductWrite.queries";
 const schema = yup.object({
   // 검증하기
@@ -43,6 +43,10 @@ export default function CommentsQuestion(props: ICommentsQuestionProps) {
   >(UPDATE_USED_ITEM_QUESTION);
 
   const onClickCommentSubmit = async (data: IFormCommentData) => {
+    if (!localStorage.getItem("accessToken")) {
+      Modal.info({ content: "로그인 후 이용 가능합니다" });
+      void router.push("/login");
+    }
     console.log(router.query._id);
     try {
       const result = await createUseditemQuestion({

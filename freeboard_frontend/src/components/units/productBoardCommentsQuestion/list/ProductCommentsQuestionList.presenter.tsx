@@ -1,6 +1,6 @@
 import InfiniteScroll from "react-infinite-scroller";
-import { ICommentsListUIProps } from "./ProductCommentsQustionList.types";
-import CommentsListItems from "./ProductCommentsQustionListItems.container";
+import { ICommentsListUIProps } from "./ProductCommentsQuestionList.types";
+import CommentsListItems from "./ProductCommentsQuestionListItems.container";
 import { CommentsList } from "./ProductCommentsQuestion.styles";
 export default function CommentsListUI(props: ICommentsListUIProps) {
   return (

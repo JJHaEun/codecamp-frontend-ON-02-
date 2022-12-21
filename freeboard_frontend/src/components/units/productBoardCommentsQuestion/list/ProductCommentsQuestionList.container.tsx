@@ -4,8 +4,8 @@ import {
   IQuery,
   IQueryFetchUseditemQuestionsArgs,
 } from "../../../../commons/types/generated/types";
-import CommentsListUI from "./ProductCommentsQustionList.presenter";
-import { FETCH_USED_ITEM_QUESTIONS } from "./ProductCommentsQustionList.queries";
+import CommentsListUI from "./ProductCommentsQuestionList.presenter";
+import { FETCH_USED_ITEM_QUESTIONS } from "./ProductCommentsQuestionList.queries";
 
 export default function CommentsList() {
   const router = useRouter();

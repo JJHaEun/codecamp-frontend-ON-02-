@@ -9,15 +9,15 @@ import {
 import {
   DELETE_USED_ITEM_QUESTION,
   FETCH_USED_ITEM_QUESTIONS,
-} from "./ProductCommentsQustionList.queries";
-import { ICommentsListItemsProps } from "./ProductCommentsQustionList.types";
-import CommentsListItemsUI from "./ProductCommentsQustionListItems.presenter";
+} from "./ProductCommentsQuestionList.queries";
+import { ICommentsListItemsProps } from "./ProductCommentsQuestionList.types";
+import CommentsListItemsUI from "./ProductCommentsQuestionListItems.presenter";
 
 export default function CommentsListItems(props: ICommentsListItemsProps) {
   const router = useRouter();
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
-  const [isHaveAnswer, setIsHaveAnswer] = useState(false);
+  // const [isHaveAnswer, setIsHaveAnswer] = useState(false);
   const [useditemQuestionId, setUsedItemQusetionId] = useState("");
   const [deleteUsedItemQuestion] = useMutation<
     Pick<IMutation, "deleteUseditemQuestion">,
@@ -28,14 +28,14 @@ export default function CommentsListItems(props: ICommentsListItemsProps) {
     setIsEdit(true);
   };
 
-  const onClickAnswer = () => {
-    if (!localStorage.getItem("accessToken")) {
-      Modal.info({ content: "권한이 없습니다" });
-      void router.push("/login");
-      return;
-    }
-    setIsHaveAnswer(true);
-  };
+  // const onClickAnswer = () => {
+  //   if (!localStorage.getItem("accessToken")) {
+  //     Modal.info({ content: "권한이 없습니다" });
+  //     void router.push("/login");
+  //     return;
+  //   }
+  //   setIsHaveAnswer(true);
+  // };
   const OnclickDeleteComment = async (event: MouseEvent<HTMLElement>) => {
     if (!(event.target instanceof HTMLElement)) return;
     try {
@@ -77,14 +77,14 @@ export default function CommentsListItems(props: ICommentsListItemsProps) {
     <CommentsListItemsUI
       isOpenDelete={isOpenDelete}
       isEdit={isEdit}
-      isHaveAnswer={isHaveAnswer}
+      // isHaveAnswer={isHaveAnswer}
       OnclickDeleteComment={OnclickDeleteComment}
       onClickcheckPermissionDeleteModal={onClickcheckPermissionDeleteModal}
       handleCancel={handleCancel}
       onClickEdit={onClickEdit}
-      onClickAnswer={onClickAnswer}
+      // onClickAnswer={onClickAnswer}
       setIsEdit={setIsEdit}
-      setIsHaveAnswer={setIsHaveAnswer}
+      // setIsHaveAnswer={setIsHaveAnswer}
       el={props.el}
     />
   );

@@ -6,7 +6,7 @@ import {
   IMutation,
   IMutationDeleteUseditemQuestionAnswerArgs,
 } from "../../../../commons/types/generated/types";
-import { FETCH_USED_ITEM_QUESTIONS } from "../../productBoardCommentsQuestion/list/ProductCommentsQustionList.queries";
+import { FETCH_USED_ITEM_QUESTIONS } from "../../productBoardCommentsQuestion/list/ProductCommentsQuestionList.queries";
 import { DELETE_USED_ITEM_QUESTION_ANSWER } from "./ProductCommentsAnswerList.queries";
 import { ICommentsAnswerListItems } from "./ProductCommentsAnswerList.types";
 import CommentsAnswerListItemsUI from "./ProductCommentsAnswerListItems.presenter";

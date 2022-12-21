@@ -7,7 +7,7 @@ import {
 export interface ICommentsListItemsUIProps {
   isOpenDelete: boolean;
   isEdit: boolean;
-  isHaveAnswer: boolean;
+  // isHaveAnswer: boolean;
   OnclickDeleteComment: (event: MouseEvent<HTMLElement>) => void;
   onClickcheckPermissionDeleteModal: (
     event: MouseEvent<HTMLButtonElement>
@@ -15,9 +15,9 @@ export interface ICommentsListItemsUIProps {
   handleCancel: () => void;
   el: IUseditemQuestion;
   onClickEdit: () => void;
-  onClickAnswer: () => void;
+  // onClickAnswer: () => void;
   setIsEdit?: Dispatch<SetStateAction<boolean>>;
-  setIsHaveAnswer: Dispatch<SetStateAction<boolean>>;
+  // setIsHaveAnswer: Dispatch<SetStateAction<boolean>>;
 }
 export interface ICommentsListUIProps {
   onLoadMore: () => void;

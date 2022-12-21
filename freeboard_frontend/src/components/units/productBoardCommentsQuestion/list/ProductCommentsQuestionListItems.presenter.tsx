@@ -2,7 +2,7 @@ import { Modal } from "antd";
 import { getDate } from "../../../commons/utils/utils";
 // import CommentsAnswer from "../../productBoardCommentsAnswer/write/ProductCommentsAnswer.container";
 import CommentsQuestion from "../write/ProductCommentsQuestion.container";
-import { ICommentsListItemsUIProps } from "./ProductCommentsQustionList.types";
+import { ICommentsListItemsUIProps } from "./ProductCommentsQuestionList.types";
 import {
   CommentButton,
   ButtonEditAndDelete,
@@ -28,6 +28,7 @@ export default function CommentsListItemsUI(props: ICommentsListItemsUIProps) {
       )}
       {!props.isEdit && (
         <div key={props.el._id}>
+          <div>{props.el.user.name}</div>
           <div>{props.el.contents}</div>
           <div>{getDate(props.el?.createdAt)}</div>
           <CommentButton>

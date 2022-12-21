@@ -16,7 +16,7 @@ import { CREATE_USED_ITEM_QUESTION_ANSWER } from "./ProductCommentsAnswer.querie
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
-import { FETCH_USED_ITEM_QUESTIONS } from "../../productBoardCommentsQuestion/list/ProductCommentsQustionList.queries";
+import { FETCH_USED_ITEM_QUESTIONS } from "../../productBoardCommentsQuestion/list/ProductCommentsQuestionList.queries";
 import { ICommentsAnswerProps } from "./ProductCommentsAnswer.types";
 
 const schema = yup.object({

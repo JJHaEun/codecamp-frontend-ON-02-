@@ -1,5 +1,5 @@
 import ProductDetail from "../../../src/components/units/productBoard/detail/ProductDetail.container";
-import CommentsList from "../../../src/components/units/productBoardCommentsQuestion/list/ProductCommentsQustionList.container";
+import CommentsList from "../../../src/components/units/productBoardCommentsQuestion/list/ProductCommentsQuestionList.container";
 import CommentsQuestion from "../../../src/components/units/productBoardCommentsQuestion/write/ProductCommentsQuestion.container";
 
 export default function freeboardWriteRouted() {
