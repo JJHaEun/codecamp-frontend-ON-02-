@@ -1,0 +1,17 @@
+# FROM ubuntu:22.04
+
+# Run curl -sL https://rpm.nodesource.com/setup_14.x | sudo bash
+# Run sudo yum install -y nodejs
+# RUN sudo npm install -g yarn
+
+FROM node:14
+
+COPY ./package.json /freeboard/
+COPY ./yarn.lock /freeboard/
+WORKDIR /freeboard/
+RUN yarn install
+# RUN mkdir class_build => 아래에서 COPY 할 때, 자동으로 만들어주므로 굳이 안써도 됨.
+COPY . /freeboard/
+
+RUN yarn build
+CMD yarn start
