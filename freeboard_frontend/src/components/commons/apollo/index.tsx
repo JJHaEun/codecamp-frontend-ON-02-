@@ -10,15 +10,19 @@ import { onError } from "@apollo/client/link/error";
 import { createUploadLink } from "apollo-upload-client";
 
 import { useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValueLoadable } from "recoil";
 import { getAccessToken } from "../../../commons/libraries/getAccessToken";
-import { accessTokenState } from "../../../commons/libraries/store";
+import {
+  accessTokenState,
+  restoreAccessTokenLoadable,
+} from "../../../commons/libraries/store";
 interface IApolloSettingProps {
   children: JSX.Element;
 }
 const GLOBAL_STATE = new InMemoryCache();
 export default function ApolloSetting(props: IApolloSettingProps) {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+  const restoreAccess = useRecoilValueLoadable(restoreAccessTokenLoadable);
 
   // 1.번 프리랜더링 예제 - process.browser방법
   if (process.browser) {
@@ -49,7 +53,7 @@ export default function ApolloSetting(props: IApolloSettingProps) {
     // if (result) setAccessToken(result);
 
     // 2. 새로운 방식 (refreshToken 적용후)// 로컬스토리지 더이상 사용 않함
-    void getAccessToken().then((newAccessToken) => {
+    void restoreAccess.toPromise().then((newAccessToken) => {
       setAccessToken(newAccessToken);
     });
   }, []);
@@ -87,7 +91,7 @@ export default function ApolloSetting(props: IApolloSettingProps) {
   const uploadLink = createUploadLink({
     // uri: "http://backendonline.codebootcamp.co.kr/graphql",
     // uri: "https://backend10.codebootcamp.co.kr/graphql",
-    uri: "https://backendonline.codebootcamp.co.kr/graphql",
+    uri: "https://backend-practice.codebootcamp.co.kr/graphql",
     headers: { Authorization: `Bearer ${accessToken}` }, // 모든 API에 토큰이 첨부되어 요청들어감. 토큰이 없는경우에는 빈문자열로
     credentials: "include",
   });

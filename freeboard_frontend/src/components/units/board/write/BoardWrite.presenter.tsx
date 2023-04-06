@@ -39,7 +39,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
               <St.NamePw>비밀번호</St.NamePw>
               <St.Empty1>{props.pwEmpty}</St.Empty1>
               <St.Input
-                type="text"
+                type="password"
                 placeholder="비밀번호를 작성해주세요."
                 onChange={props.onChangePw}
               />

@@ -1,8 +1,10 @@
+import { useAuth } from "../../../src/components/commons/hooks/useAuth";
 import ProductDetail from "../../../src/components/units/productBoard/detail/ProductDetail.container";
 import CommentsList from "../../../src/components/units/productBoardCommentsQuestion/list/ProductCommentsQuestionList.container";
 import CommentsQuestion from "../../../src/components/units/productBoardCommentsQuestion/write/ProductCommentsQuestion.container";
 
 export default function freeboardWriteRouted() {
+  useAuth();
   return (
     <>
       {/* <BoardWriteFetch  상세보기/>

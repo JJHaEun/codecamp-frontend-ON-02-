@@ -26,7 +26,7 @@ export default function LayOutHeaderUI(props: IPropsLayOutHeaderUI) {
       </S.Top>
       <S.TitleBox>
         <S.Title>The Power To Do</S.Title>
-      </S.TitleBox>{" "}
+      </S.TitleBox>
       {!accessToken ? (
         <S.UnUserBasket onClick={props.onClickBasket}>
           비회원 장바구니

@@ -63,8 +63,7 @@ export default function LogIn() {
         return;
       }
       Token[1](accessToken);
-      // 로컬스토리지에 저장
-      localStorage.setItem("accessToken", accessToken); // 임시 사용. (나중에 지울예정)
+      // setAccessToken(accessToken);
 
       void router.push(`/`);
     } catch (error) {

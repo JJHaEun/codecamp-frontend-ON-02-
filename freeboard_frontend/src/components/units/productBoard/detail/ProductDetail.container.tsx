@@ -2,7 +2,6 @@ import { useMutation, useQuery } from "@apollo/client";
 import { Modal } from "antd";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
-// import { FETCH_USED_ITEMS } from "../../../../../pages/unUserBasket";
 import { isOpenDeleteState } from "../../../../commons/libraries/store";
 import {
   IQuery,
@@ -40,11 +39,7 @@ export default function ProductDetail() {
 
   const onClickPick = async () => {
     // if (typeof router.query._id !== "string") return;
-    if (!localStorage.getItem("accessToken")) {
-      Modal.info({ content: "로그인이 필요합니다" });
-      void router.push("/login");
-      return;
-    }
+
     await toggleUseditemPick({
       variables: {
         useditemId: router.query._id,
@@ -97,14 +92,6 @@ export default function ProductDetail() {
     void router.push(`/market/${router.query._id}`);
   };
   const onClickBuy = async () => {
-    if (!localStorage.getItem("accessToken")) {
-      Modal.info({ content: "로그인 후 이용 가능합니다" });
-      void router.push("/login");
-      return;
-    }
-
-    console.log(data?.fetchUseditem.buyer);
-
     if (typeof router.query._id !== "string") return;
 
     try {

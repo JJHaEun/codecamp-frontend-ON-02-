@@ -39,7 +39,7 @@ export default function BoardWriteFetchUI(props: IBoardWriteFetchUIProps) {
 
               <St.TopRight>
                 <div>
-                  {props.data?.fetchBoard.youtubeUrl && (
+                  {props.data?.fetchBoard.youtubeUrl !=="" &&props.data?.fetchBoard.youtubeUrl !== " "  && (
                     <Tooltip
                       placement="topRight"
                       color="cyan"

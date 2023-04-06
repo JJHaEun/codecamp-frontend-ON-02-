@@ -54,10 +54,19 @@ export const AllButtons = styled.div`
   margin-top: 20px;
   gap: 650px;
 `;
+export const Sales = styled.div`
+  width: auto;
+`;
 export const SellerAndDate = styled.div`
   border-bottom: 2px solid skyblue;
   display: flex;
   gap: 1105px;
+`;
+export const SellerEmail = styled.div`
+  font-size: 12px;
+`;
+export const Date = styled.div`
+  font-size: 3px;
 `;
 export const LocationToggleImg = styled(EnvironmentOutlined)`
   * {

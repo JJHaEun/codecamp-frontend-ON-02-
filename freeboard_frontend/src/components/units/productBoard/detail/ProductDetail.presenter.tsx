@@ -7,10 +7,57 @@ import { IProductDetailUIProps } from "./ProductDetail.types";
 import Dompurify from "dompurify";
 import * as S from "./ProductDetail.styles";
 import Head from "next/head";
+import { useEffect } from "react";
+declare const window: typeof globalThis & {
+  kakao: any;
+};
 export default function ProductDetailUI(props: IProductDetailUIProps) {
   const router = useRouter();
   const [isOpenDelete] = useRecoilState(isOpenDeleteState);
+  useEffect(() => {
+    const script = document.createElement("script"); // <script></script>
+    script.src =
+      "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=9ecf273b277c32cd53c83567d7c10bb2&libraries=services";
+    document.head.appendChild(script);
+    script.onload = () => {
+      // 스크립트가 로드가 다 되고
+      window.kakao.maps.load(function () {
+        const container = document.getElementById("map"); // 지도를 담을 영역의 DOM 레퍼런스
+        const options = {
+          center: new window.kakao.maps.LatLng(37.511826, 127.058388), // 지도의 중심좌표.
+          level: 3,
+        };
 
+        const map = new window.kakao.maps.Map(container, options);
+
+        const geocoder = new window.kakao.maps.services.Geocoder();
+        geocoder.addressSearch(
+          props.data?.fetchUseditem.useditemAddress?.address,
+          function (result: any, status: any) {
+            if (status === window.kakao.maps.services.Status.OK) {
+              const coords = new window.kakao.maps.LatLng(
+                result[0].y,
+                result[0].x
+              );
+
+              const marker = new window.kakao.maps.Marker({
+                map,
+                position: coords,
+              });
+
+              const infowindow = new window.kakao.maps.InfoWindow({
+                content:
+                  '<div style="width:150px;text-align:center;padding:6px 0;">거래위치</div>',
+              });
+              infowindow.open(map, marker);
+
+              map.setCenter(coords);
+            }
+          }
+        );
+      });
+    };
+  }, []);
   return (
     <>
       <Head>
@@ -40,11 +87,13 @@ export default function ProductDetailUI(props: IProductDetailUIProps) {
       )}
       <S.DetailPage>
         <S.SellerAndDate>
-          <div>
+          <S.Sales>
             <div>{props.data?.fetchUseditem.seller?.name}</div>
-            <div>{props.data?.fetchUseditem.seller?.email}</div>
-            <div>Date:{getDate(props.data?.fetchUseditem.createdAt)}</div>
-          </div>
+            <S.SellerEmail>
+              {props.data?.fetchUseditem.seller?.email}
+            </S.SellerEmail>
+            <S.Date>Date:{getDate(props.data?.fetchUseditem.createdAt)}</S.Date>
+          </S.Sales>
           <div>
             {props.data?.fetchUseditem.useditemAddress && (
               <Tooltip
@@ -61,7 +110,7 @@ export default function ProductDetailUI(props: IProductDetailUIProps) {
         <div>
           <S.Heart onClick={props.onClickPick} />내 카트
           <span> {props.data?.fetchUseditem.pickedCount}</span>
-        </div>{" "}
+        </div>
         <div>{props.data?.fetchUseditem.price} ₩</div>
         <div>
           <S.ProductName>{props.data?.fetchUseditem.name}</S.ProductName>
@@ -76,7 +125,6 @@ export default function ProductDetailUI(props: IProductDetailUIProps) {
                   />
                 ))}
             </div>
-
             {typeof window !== "undefined" && (
               <S.ContentsText
                 dangerouslySetInnerHTML={{
@@ -87,8 +135,9 @@ export default function ProductDetailUI(props: IProductDetailUIProps) {
               ></S.ContentsText>
             )}
           </S.Contents>
+          <div id="map" style={{ width: 300, height: 300 }}></div>
           <div>{props.data?.fetchUseditem.useditemAddress?.address}</div>
-        </div>{" "}
+        </div>
       </S.DetailPage>
       <S.AllButtons>
         <S.Buttons>

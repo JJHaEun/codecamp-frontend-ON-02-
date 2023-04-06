@@ -11,83 +11,15 @@ import { IProductWriteUIProps } from "./ProductWrite.types";
 // import PostSearchButton from "../../../commons/buttons/postSearch/button";
 import * as S from "./ProductWrite.styles";
 import "react-quill/dist/quill.snow.css";
-import { useEffect } from "react";
-// import Head from "next/head";
-declare const window: typeof globalThis & {
-  kakao: any;
-};
+
 export default function ProductWriteUI(props: IProductWriteUIProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isEdit, setIsEdit] = useRecoilState(isEditState);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isOpen, setIsOpen] = useRecoilState(isOpenState);
 
-  useEffect(() => {
-    const script = document.createElement("script"); // <script></script>
-    script.src =
-      "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=9ecf273b277c32cd53c83567d7c10bb2&libraries=services";
-    document.head.appendChild(script);
-    script.onload = () => {
-      window.kakao.maps.load(function () {
-        const container = document.getElementById("map"); // 지도를 담을 영역의 DOM 레퍼런스
-        const options = {
-          // 지도를 생성할 때 필요한 기본 옵션
-          center: new window.kakao.maps.LatLng(37.511826, 127.058388), // 지도의 중심좌표.
-          level: 3, // 지도의 레벨(확대, 축소 정도)
-        };
-
-        const map = new window.kakao.maps.Map(container, options); // 지도 생성 및 객체 리턴
-        // map의 빨간줄 없애기위해 한번 사용함
-        console.log(map);
-        // 주소-좌표 변환 객체를 생성합니다
-        const geocoder = new window.kakao.maps.services.Geocoder();
-        console.log(geocoder);
-        // 마커를 미리 생성
-        const marker = new window.kakao.maps.Marker({
-          position: new window.kakao.maps.LatLng(33.450701, 126.570667),
-          map,
-        });
-        console.log(marker.Rc.x, marker.Rc.y);
-        // 주소로 좌표를 검색합니다
-        geocoder.addressSearch(
-          props.data?.fetchUseditem.useditemAddress?.zipcode,
-          props.data?.fetchUseditem.useditemAddress?.address,
-          function (result: any, status: any) {
-            // 정상적으로 검색이 완료됐으면
-            console.log(result);
-            console.log(status);
-            if (status === window.kakao.maps.services.Status.OK()) {
-              console.log(status);
-              const coords = new window.kakao.maps.LatLng(
-                result[0].y,
-                result[0].x
-              );
-              console.log(coords.getLat);
-              // 지도를 보여준다.
-              // container.style.display = "block";
-              map.relayout();
-              // 지도 중심을 변경한다.
-              map.setCenter(coords);
-              // 마커를 결과값으로 받은 위치로 옮긴다.
-              marker.setPosition(coords);
-
-              // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-              map.setCenter(coords);
-            }
-          }
-          // window.kakao.maps.services.AnalyzeType.ANALYZE_TYPE
-        );
-      });
-    };
-  }, []);
   return (
     <>
-      {/* <Head>
-        <script
-          type="text/javascript"
-          src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9ecf273b277c32cd53c83567d7c10bb2&libraries=services,clusterer,drawing"
-        ></script>
-      </Head> */}
       {isOpen && (
         <Modal open={true} onCancel={props.cancelModal}>
           <DaumPostcode onComplete={props.onCompleteAddress} />
@@ -119,7 +51,7 @@ export default function ProductWriteUI(props: IProductWriteUIProps) {
               defaultValue={props.data?.fetchUseditem.remarks}
             />
             <div>{props.remarksEmpty}</div>
-          </div>{" "}
+          </div>
           <div>
             <div>상품 설명</div>
             <S.ReactQuillTextarea
@@ -159,9 +91,6 @@ export default function ProductWriteUI(props: IProductWriteUIProps) {
             // ))} */}
           {/* </div> */}
           <div>
-            <div>거래위치</div>
-            {/* 위치 이미지? */}
-            <div id="map" style={{ width: 300, height: 300 }}></div>
             <div>
               <div>주소</div>
               <input
